@@ -1,0 +1,213 @@
+#! C:/Program Files/Nuke7.0v4/Nuke7.0.exe -nx
+version 7.0 v4
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="1936" h="1160" screen="0">
+        <splitter orientation="1">
+            <split size="887"/>
+            <splitter orientation="1">
+                <split size="40"/>
+                <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                    <page id="Toolbar.1"/>
+                </dock>
+                <split size="843"/>
+                <splitter orientation="2">
+                    <split size="548"/>
+                    <dock id="" activePageId="Viewer.1">
+                        <page id="Viewer.1"/>
+                    </dock>
+                    <split size="547"/>
+                    <dock id="" activePageId="DAG.1">
+                        <page id="DAG.1"/>
+                        <page id="Curve Editor.1"/>
+                        <page id="DopeSheet.1"/>
+                        <page id="DAG.2"/>
+                    </dock>
+                </splitter>
+            </splitter>
+            <split size="1029"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="Script Editor.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/SYSENV/Nuke/Gizmos/Global_Config/Dev/Config_Image_Reader/Config_Image_Reader_v02.nk
+ frame 2
+ format "3700 2081 0 0 3700 2081 1 Global_Config_Int"
+ proxy_format "3656 3112 0 0 3656 3112 2 4K_Cinemascope"
+ views "Image_Seq_Asset #ffffff"
+}
+Group {
+ inputs 0
+ name Config_Image_Reader
+ selected true
+ xpos 338160
+ ypos -110
+ addUserKnob {20 read_node_knobs l "Read Node"}
+ addUserKnob {1 base_image_folder l "Base Image Folder"}
+ base_image_folder Ren
+ addUserKnob {1 working_sub_folder l "Working Sub Folder" -STARTLINE}
+ working_sub_folder WFinals
+ addUserKnob {1 image_prefix l "Image Prefix" -STARTLINE}
+ addUserKnob {1 image_sufix l "Image Sufix" -STARTLINE}
+ addUserKnob {3 image_frame_padding l "Frame Padding" -STARTLINE}
+ image_frame_padding 4
+ addUserKnob {1 image_ext l "Image Extshion" -STARTLINE}
+ image_ext exr
+ addUserKnob {41 file T Config_Image_Read_Seq.file}
+ addUserKnob {41 proxy T Config_Image_Read_Seq.proxy}
+ addUserKnob {41 first l "frame range" T Config_Image_Read_Seq.first}
+ addUserKnob {41 last l "" -STARTLINE T Config_Image_Read_Seq.last}
+ addUserKnob {41 view T OneView170.view}
+ addUserKnob {6 egnore_asset_check l "Egnore Asset Check" +STARTLINE}
+ egnore_asset_check true
+ addUserKnob {20 config_image_data l "Config Image Data"}
+ addUserKnob {1 config_image_name l "Config Image Name"}
+ addUserKnob {3 config_image_id l "Config Image ID"}
+ addUserKnob {6 painted l Painted +STARTLINE}
+ addUserKnob {6 finished l Finished +STARTLINE}
+ addUserKnob {3 finish_type_id l "Finish Type ID"}
+ addUserKnob {1 finish_type_name l "Finish Type Name"}
+ addUserKnob {1 finish_type_code l "Finish Type Code"}
+}
+ Constant {
+  inputs 0
+  channels rgb
+  name Constant1
+  xpos 160
+  ypos -634
+ }
+ Text {
+  message "Can not Find Image At Frame \[frame] For Config Image \[value parent.config_image_name]\nThe Fallowing Channals Have Been Forced Into This Pipe\nSo That Batch Renders Will Not Error Out\n\[value AddChannels_set_01.channels] : \[value AddChannels_set_01.channels2] : \[value AddChannels_set_01.channels3] : \[value AddChannels_set_01.channels4]\n\[value AddChannels_set_02.channels] : \[value AddChannels_set_02.channels2] : \[value AddChannels_set_02.channels3] : \[value AddChannels_set_02.channels4]\n\[value AddChannels_set_03.channels] : \[value AddChannels_set_03.channels2] : \[value AddChannels_set_03.channels3] : \[value AddChannels_set_03.channels4]\n\[value AddChannels_set_04.channels] : \[value AddChannels_set_04.channels2] : \[value AddChannels_set_04.channels3] : \[value AddChannels_set_04.channels4]\n\[value AddChannels_set_05.channels] : \[value AddChannels_set_05.channels2]"
+  font C:/Windows/Fonts/arial.ttf
+  size 100
+  leading 1
+  xjustify center
+  yjustify center
+  Transform 1
+  box {{format.x} {format.y} {format.r} {format.t}}
+  center {{format.r/2} {format.t/2}}
+  color {1 0 0 1}
+  name Text1
+  xpos 160
+  ypos -510
+ }
+add_layer {diffuse diffuse.red diffuse.green diffuse.blue}
+add_layer {lighting lighting.red lighting.green lighting.blue}
+add_layer {SuperAmbient_SuperAmbient SuperAmbient_SuperAmbient.red SuperAmbient_SuperAmbient.green SuperAmbient_SuperAmbient.blue SuperAmbient_SuperAmbient.alpha}
+add_layer {normals normals.X normals.Y normals.Z}
+ AddChannels {
+  channels diffuse
+  channels2 lighting
+  channels3 SuperAmbient_SuperAmbient
+  channels4 normals
+  name AddChannels_set_01
+  xpos 160
+  ypos -416
+ }
+add_layer {mI_1 mI_1.red mI_1.green mI_1.blue}
+add_layer {mI_2 mI_2.red mI_2.green mI_2.blue}
+add_layer {mI_3 mI_3.red mI_3.green mI_3.blue}
+add_layer {mI_4 mI_4.red mI_4.green mI_4.blue}
+ AddChannels {
+  channels mI_1
+  channels2 mI_2
+  channels3 mI_3
+  channels4 mI_4
+  name AddChannels_set_02
+  xpos 160
+  ypos -316
+ }
+add_layer {mI_5 mI_5.red mI_5.green mI_5.blue}
+add_layer {mI_6 mI_6.red mI_6.green mI_6.blue}
+add_layer {mI_7 mI_7.red mI_7.green mI_7.blue}
+add_layer {rawGI rawGI.red rawGI.green rawGI.blue}
+ AddChannels {
+  channels mI_5
+  channels2 mI_6
+  channels3 mI_7
+  channels4 rawGI
+  name AddChannels_set_03
+  xpos 160
+  ypos -216
+ }
+add_layer {rawLight rawLight.red rawLight.green rawLight.blue}
+add_layer {reflect reflect.red reflect.green reflect.blue}
+add_layer {refract refract.red refract.green refract.blue}
+add_layer {selfIllum selfIllum.red selfIllum.green selfIllum.blue}
+ AddChannels {
+  channels rawLight
+  channels2 reflect
+  channels3 refract
+  channels4 selfIllum
+  name AddChannels_set_04
+  xpos 160
+  ypos -116
+ }
+add_layer {specular specular.red specular.green specular.blue}
+add_layer {totalLight totalLight.red totalLight.green totalLight.blue}
+ AddChannels {
+  channels specular
+  channels2 totalLight
+  name AddChannels_set_05
+  xpos 160
+  ypos -16
+ }
+ Assert {
+  expression {{"Config_Image_Read_Seq.error == 1 && parent.egnore_asset_check == true"}}
+  message "Can not Find Image At Frame \[frame] For Config Image \[value parent.config_image_name]"
+  name Config_Image_File_Assert_Check
+  xpos 67
+  ypos -10
+ }
+ Read {
+  inputs 0
+  file "\[value base_image_folder]/\[value working_sub_folder]/\[value config_image_name]\[value image_sufix]/\[value image_prefix]\[value config_image_name]\[value image_sufix]_%0\[value image_frame_padding]d.\[value image_ext]"
+  last 12
+  origlast 12
+  origset true
+  version 1
+  name Config_Image_Read_Seq
+  xpos -40
+  ypos -240
+  disable {{error}}
+ }
+ Switch {
+  inputs 2
+  which {{"Config_Image_Read_Seq.error == 1"}}
+  name Switch1
+  label "\n"
+  xpos -40
+  ypos -10
+ }
+ OneView {
+  name OneView170
+  xpos -40
+  ypos 190
+ }
+set N18886130 [stack 0]
+ Output {
+  name Output1
+  xpos -40
+  ypos 290
+ }
+push $N18886130
+ Viewer {
+  frame 4
+  input_process false
+  name Viewer1
+  xpos -203
+  ypos 47
+ }
+end_group
+Viewer {
+ input_process false
+ name Viewer1
+ xpos 338160
+ ypos -10
+}

@@ -1,0 +1,158 @@
+set cut_paste_input [stack 0]
+version 7.0 v4
+Group {
+ inputs 0
+ name Group1
+ selected true
+ xpos 338160
+ ypos -110
+ addUserKnob {20 read_node_knobs l "Read Node"}
+ addUserKnob {1 base_image_folder l "Base Image Folder"}
+ base_image_folder Ren
+ addUserKnob {1 working_sub_folder l "Working Sub Folder" -STARTLINE}
+ working_sub_folder WFinals
+ addUserKnob {1 image_prefix l "Image Prefix" -STARTLINE}
+ image_prefix Q50_INT_
+ addUserKnob {1 image_sufix l "Image Sufix" -STARTLINE}
+ image_sufix _RL
+ addUserKnob {3 image_frame_padding l "Frame Padding" -STARTLINE}
+ image_frame_padding 4
+ addUserKnob {1 image_ext l "Image Extshion" -STARTLINE}
+ image_ext exr
+ addUserKnob {41 file T Read170.file}
+ addUserKnob {41 proxy T Read170.proxy}
+ addUserKnob {41 first l "frame range" T Read170.first}
+ addUserKnob {41 last l "" -STARTLINE T Read170.last}
+ addUserKnob {41 view T OneView170.view}
+ addUserKnob {20 config_image_data l "Config Image Data"}
+ addUserKnob {1 config_image_name l "Config Image Name"}
+ config_image_name _COMMON_RHD
+ addUserKnob {3 config_image_id l "Config Image ID"}
+ addUserKnob {6 painted l Painted +STARTLINE}
+ addUserKnob {6 finished l Finished +STARTLINE}
+ addUserKnob {3 finish_type_id l "Finish Type ID"}
+ addUserKnob {1 finish_type_name l "Finish Type Name"}
+ addUserKnob {1 finish_type_code l "Finish Type Code"}
+}
+ Read {
+  inputs 0
+  file "\[value base_image_folder]/\[value working_sub_folder]/\[value config_image_name]\[value image_sufix]/\[value image_prefix]\[value config_image_name]\[value image_sufix]_%0\[value image_frame_padding]d.\[value image_ext]"
+  last 12
+  name Read170
+  xpos -40
+  ypos -140
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  name Constant1
+  xpos 160
+  ypos -734
+ }
+ Text {
+  message "Can not Find Image At Frame \[frame] For Config Image \[value parent.config_image_name]\nThe Fallowing Channals Have Been Forced Into This Pipe\nSo That Batch Renders Will Not Error Out\n\[value AddChannels_set_01.channels] : \[value AddChannels_set_01.channels2] : \[value AddChannels_set_01.channels3] : \[value AddChannels_set_01.channels4]\n\[value AddChannels_set_02.channels] : \[value AddChannels_set_02.channels2] : \[value AddChannels_set_02.channels3] : \[value AddChannels_set_02.channels4]\n\[value AddChannels_set_03.channels] : \[value AddChannels_set_03.channels2] : \[value AddChannels_set_03.channels3] : \[value AddChannels_set_03.channels4]\n\[value AddChannels_set_04.channels] : \[value AddChannels_set_04.channels2] : \[value AddChannels_set_04.channels3] : \[value AddChannels_set_04.channels4]\n\[value AddChannels_set_05.channels] : \[value AddChannels_set_05.channels2]"
+  font C:/Windows/Fonts/arial.ttf
+  size 100
+  leading 1
+  xjustify center
+  yjustify center
+  Transform 1
+  box {{format.x} {format.y} {format.r} {format.t}}
+  center {1850 1040.5}
+  color {1 0 0 1}
+  name Text1
+  xpos 160
+  ypos -610
+ }
+add_layer {diffuse diffuse.red diffuse.green diffuse.blue}
+add_layer {lighting lighting.red lighting.green lighting.blue}
+add_layer {SuperAmbient_SuperAmbient SuperAmbient_SuperAmbient.red SuperAmbient_SuperAmbient.green SuperAmbient_SuperAmbient.blue SuperAmbient_SuperAmbient.alpha}
+add_layer {normals normals.X normals.Y normals.Z}
+ AddChannels {
+  channels diffuse
+  channels2 lighting
+  channels3 SuperAmbient_SuperAmbient
+  channels4 normals
+  name AddChannels_set_01
+  xpos 160
+  ypos -516
+ }
+add_layer {mI_1 mI_1.red mI_1.green mI_1.blue}
+add_layer {mI_2 mI_2.red mI_2.green mI_2.blue}
+add_layer {mI_3 mI_3.red mI_3.green mI_3.blue}
+add_layer {mI_4 mI_4.red mI_4.green mI_4.blue}
+ AddChannels {
+  channels mI_1
+  channels2 mI_2
+  channels3 mI_3
+  channels4 mI_4
+  name AddChannels_set_02
+  xpos 160
+  ypos -416
+ }
+add_layer {mI_5 mI_5.red mI_5.green mI_5.blue}
+add_layer {mI_6 mI_6.red mI_6.green mI_6.blue}
+add_layer {mI_7 mI_7.red mI_7.green mI_7.blue}
+add_layer {rawGI rawGI.red rawGI.green rawGI.blue}
+ AddChannels {
+  channels mI_5
+  channels2 mI_6
+  channels3 mI_7
+  channels4 rawGI
+  name AddChannels_set_03
+  xpos 160
+  ypos -316
+ }
+add_layer {rawLight rawLight.red rawLight.green rawLight.blue}
+add_layer {reflect reflect.red reflect.green reflect.blue}
+add_layer {refract refract.red refract.green refract.blue}
+add_layer {selfIllum selfIllum.red selfIllum.green selfIllum.blue}
+ AddChannels {
+  channels rawLight
+  channels2 reflect
+  channels3 refract
+  channels4 selfIllum
+  name AddChannels_set_04
+  xpos 160
+  ypos -216
+ }
+add_layer {specular specular.red specular.green specular.blue}
+add_layer {totalLight totalLight.red totalLight.green totalLight.blue}
+ AddChannels {
+  channels specular
+  channels2 totalLight
+  name AddChannels_set_05
+  xpos 160
+  ypos -116
+ }
+ Dot {
+  name Dot1
+  xpos 193
+  ypos -7
+ }
+ Switch {
+  inputs 2
+  name Switch1
+  xpos -40
+  ypos -10
+ }
+set N17120e70 [stack 0]
+ OneView {
+  name OneView170
+  xpos -40
+  ypos 190
+ }
+ Output {
+  name Output1
+  xpos -40
+  ypos 290
+ }
+push $N17120e70
+ Viewer {
+  frame 4
+  input_process false
+  name Viewer1
+  xpos -215
+  ypos -10
+ }
+end_group

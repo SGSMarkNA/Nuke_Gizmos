@@ -1,0 +1,91 @@
+#! C:/Program Files/Nuke7.0v4/Nuke7.0.exe -nx
+version 7.0 v4
+Gizmo {
+ inputs 2
+ onCreate nuke.thisNode().knob('exterior_colors').setValues(nuke.thisNode().knob('exterior_colors_string').value().split())
+ note_font Verdana
+ addUserKnob {20 clobal_config_data_editing l "Comp Editing"}
+ addUserKnob {1 script_save_state_values l INVISIBLE +INVISIBLE}
+ addUserKnob {1 exterior_colors_string l INVISIBLE +INVISIBLE}
+ addUserKnob {1 interior_colors_string l INVISIBLE +INVISIBLE}
+ addUserKnob {1 finisher_names_string l INVISIBLE +INVISIBLE}
+ addUserKnob {1 finisher_codes_string l INVISIBLE +INVISIBLE}
+ addUserKnob {1 config_images_string l INVISIBLE +INVISIBLE}
+ addUserKnob {1 non_painted_config_images_string l INVISIBLE +INVISIBLE}
+ addUserKnob {1 painted_config_images_string l INVISIBLE +INVISIBLE}
+ addUserKnob {1 finished_config_images_string l INVISIBLE +INVISIBLE}
+ addUserKnob {1 Body_string l INVISIBLE +INVISIBLE}
+ addUserKnob {1 Engine_string l INVISIBLE +INVISIBLE}
+ addUserKnob {1 Axle_string l INVISIBLE +INVISIBLE}
+ addUserKnob {1 Drive_string l INVISIBLE +INVISIBLE}
+ addUserKnob {1 Grade_string l INVISIBLE +INVISIBLE}
+ addUserKnob {1 Transmission_string l INVISIBLE +INVISIBLE}
+ addUserKnob {1 Model_string l INVISIBLE +INVISIBLE}
+ addUserKnob {1 Intake_string l INVISIBLE +INVISIBLE}
+ addUserKnob {1 Zone_string l INVISIBLE +INVISIBLE}
+ addUserKnob {1 Equipment_string l INVISIBLE +INVISIBLE}
+ addUserKnob {1 Option1_string l INVISIBLE +INVISIBLE}
+ addUserKnob {1 Option2_string l INVISIBLE +INVISIBLE}
+ addUserKnob {1 Option3_string l INVISIBLE +INVISIBLE}
+ addUserKnob {1 Option4_string l INVISIBLE +INVISIBLE}
+ addUserKnob {1 Option5_string l INVISIBLE +INVISIBLE}
+ addUserKnob {22 reset_PullDown_Knobs +STARTLINE}
+ addUserKnob {22 build_nuke_views l "Build views" +STARTLINE}
+ addUserKnob {22 create_read_nodes l "create read nodes" +STARTLINE}
+ addUserKnob {22 create_ext_color_correction l INVISIBLE +INVISIBLE +STARTLINE}
+ addUserKnob {20 config_project_setting_tab l "Config Project Settings"}
+ addUserKnob {2 config_file}
+ config_file N:/Jobs/Misc/NIMC-12-002_2013_Infiniti_Global_Config_Assets/CGI/Work/seq_04_my14-Assets/s102_Ext_QX70/Other/Config_files/Config_Data.awconfig
+ addUserKnob {1 config_vic_name}
+ addUserKnob {3 frame_count}
+ frame_count 8
+ addUserKnob {4 config_prj_type M {EXT INT ""}}
+ addUserKnob {20 config_asset_options_tab l "Config Asset Options"}
+ addUserKnob {4 exterior_colors M {}}
+ addUserKnob {4 interior_colors M {"" ""}}
+ addUserKnob {4 finisher_names M {"" ""}}
+ addUserKnob {4 finisher_codes M {""}}
+ addUserKnob {20 config_image_assets_tab l "Config Images"}
+ addUserKnob {4 config_images M {"" ""}}
+ addUserKnob {4 non_painted_config_images M {"" ""}}
+ addUserKnob {4 painted_config_images M {"" ""}}
+ addUserKnob {4 finished_config_images M {"" ""}}
+ addUserKnob {20 config_model_definitions l "Model Definitions"}
+ addUserKnob {4 Body M {}}
+ addUserKnob {4 Engine M {}}
+ addUserKnob {4 Axle M {}}
+ addUserKnob {4 Drive M {}}
+ addUserKnob {4 Grade M {}}
+ addUserKnob {4 Transmission M {}}
+ addUserKnob {4 Model M {}}
+ addUserKnob {4 Intake M {}}
+ addUserKnob {4 Zone M {}}
+ addUserKnob {4 Equipment M {}}
+ addUserKnob {4 Option1 M {}}
+ addUserKnob {4 Option2 M {}}
+ addUserKnob {4 Option3 M {}}
+ addUserKnob {4 Option4 M {}}
+ addUserKnob {4 Option5 M {}}
+ addUserKnob {3 gizmo_version l INVISIBLE +INVISIBLE}
+ addUserKnob {3 gizmo_sub_version l INVISIBLE +INVISIBLE}
+}
+ Input {
+  inputs 0
+  name Config_Image_Writer
+  xpos 70
+  ypos -177
+  number 1
+ }
+ Input {
+  inputs 0
+  name Config_Images_Group
+  xpos -150
+  ypos -177
+ }
+ Output {
+  name Output1
+  note_font Verdana
+  xpos -40
+  ypos 39
+ }
+end_group

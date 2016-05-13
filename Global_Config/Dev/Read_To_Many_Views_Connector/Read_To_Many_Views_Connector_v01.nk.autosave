@@ -1,0 +1,58 @@
+#! C:/Program Files/Nuke7.0v4/Nuke7.0.exe -nx
+version 7.0 v4
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="1936" h="1160" screen="0">
+        <splitter orientation="1">
+            <split size="887"/>
+            <splitter orientation="1">
+                <split size="40"/>
+                <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                    <page id="Toolbar.1"/>
+                </dock>
+                <split size="843"/>
+                <splitter orientation="2">
+                    <split size="548"/>
+                    <dock id="" activePageId="Viewer.1">
+                        <page id="Viewer.1"/>
+                    </dock>
+                    <split size="547"/>
+                    <dock id="" activePageId="DAG.1">
+                        <page id="DAG.1"/>
+                        <page id="Curve Editor.1"/>
+                        <page id="DopeSheet.1"/>
+                    </dock>
+                </splitter>
+            </splitter>
+            <split size="1029"/>
+            <dock id="" activePageId="Script Editor.1">
+                <page id="Properties.1"/>
+                <page id="Script Editor.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/SYSENV/Nuke/Gizmos/Global_Config/Dev/Read_To_Many_Views_Connector/Read_To_Many_Views_Connector_v01.nk
+}
+Group {
+ inputs 0
+ name Read_To_Many_Views_Connector
+ xpos -25
+ ypos -110
+ addUserKnob {20 User}
+ addUserKnob {1 view_names}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 0
+ }
+ Output {
+  name Output1
+  xpos 0
+  ypos 300
+ }
+end_group

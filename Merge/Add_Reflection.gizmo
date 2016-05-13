@@ -1,0 +1,150 @@
+#! C:/Program Files/Nuke6.3v8/Nuke6.3.exe -nx
+version 6.3 v8
+add_layer {Paint_Window_Rimz Paint_Window_Rimz.red Paint_Window_Rimz.green Paint_Window_Rimz.blue}
+Gizmo {
+ inputs 2
+ note_font Verdana
+ mapsize {0.15 0.15}
+ addUserKnob {20 User}
+ addUserKnob {26 info l "Please Note: " T "Source must contain a Normals pass"}
+ addUserKnob {26 ""}
+ addUserKnob {6 usemask l "Use Mask" +STARTLINE}
+ addUserKnob {41 from0 l Mask T Copy2.from0}
+ addUserKnob {26 ""}
+ addUserKnob {41 falloffamount l "Falloff Amount" T Grade3.gamma}
+ addUserKnob {41 fallofintensity l "Falloff Intensity" T Grade1.white}
+ addUserKnob {41 brightness l Brightness T Grade2.white}
+ addUserKnob {41 blursize l Blur T Blur1.size}
+ addUserKnob {41 filter T Blur1.filter}
+ addUserKnob {6 reflectiononly l "Reflection Only" +STARTLINE}
+}
+ Input {
+  inputs 0
+  name Source
+  xpos 1172
+  ypos -507
+ }
+ Dot {
+  name Dot2
+  xpos 1206
+  ypos -345
+ }
+set N29334bb0 [stack 0]
+ Dot {
+  name Dot1
+  xpos 1206
+  ypos -44
+ }
+set N29334ee0 [stack 0]
+push $N29334bb0
+push $N29334bb0
+add_layer {VRayNormals VRayNormals.X VRayNormals.Y VRayNormals.Z}
+ Shuffle {
+  in VRayNormals
+  name Shuffle1
+  xpos 978
+  ypos -348
+ }
+ Input {
+  inputs 0
+  name Reflection
+  xpos 745
+  ypos -250
+  number 1
+ }
+add_layer {rgb rgb.red}
+ STMap {
+  inputs 2
+  uv rgb
+  name STMap1
+  xpos 978
+  ypos -256
+ }
+ ShuffleCopy {
+  inputs 2
+  in VRayNormals
+  in2 VRayNormals
+  red red
+  green green
+  blue blue
+  out VRayNormals
+  name ShuffleCopy1
+  xpos 978
+  ypos -170
+ }
+ Shuffle {
+  alpha white
+  name Shuffle2
+  xpos 978
+  ypos -117
+ }
+ Copy {
+  inputs 2
+  from0 -Paint_Window_Rimz.red
+  to0 rgba.alpha
+  name Copy2
+  xpos 978
+  ypos -53
+  disable {{(parent.usemask)-1 i x1245286 0}}
+ }
+ Grade {
+  channels VRayNormals
+  name Grade3
+  xpos 978
+  ypos 14
+ }
+ Grade {
+  white 0
+  multiply 1.06
+  maskChannelInput VRayNormals.Z
+  name Grade1
+  xpos 978
+  ypos 50
+ }
+ Grade {
+  name Grade2
+  xpos 978
+  ypos 86
+ }
+ Blur {
+  name Blur1
+  selected true
+  xpos 978
+  ypos 122
+ }
+ Premult {
+  name Premult1
+  xpos 978
+  ypos 158
+ }
+set N295a9dc0 [stack 0]
+push $N295a9dc0
+push $N29334ee0
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge6
+  xpos 1172
+  ypos 148
+ }
+ Switch {
+  inputs 2
+  which {{parent.reflectiononly i}}
+  name Switch1
+  xpos 1172
+  ypos 224
+ }
+set Nc75a5f0 [stack 0]
+ Output {
+  name Output1
+  xpos 1172
+  ypos 306
+ }
+push $Nc75a5f0
+ Viewer {
+  input_process false
+  name Viewer1
+  xpos 965
+  ypos 256
+ }
+end_group

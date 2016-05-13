@@ -1,0 +1,118 @@
+#! C:/Program Files/Nuke9.0v4/nuke-9.0.4.dll -nx
+version 9.0 v4
+Gizmo {
+ help "TIP:\nWhen using SAMPLE White and SAMPLE Black to set the white and black points, make sure to sample from the *original* image, not from the result. Using a Wipe in the Viewer can be helpful."
+ label "\n"
+ addUserKnob {20 User}
+ addUserKnob {7 exp l Exposure R -5 5}
+ addUserKnob {7 Contrast R -1 5}
+ addUserKnob {26 ""}
+ addUserKnob {19 sampleWhite l "SAMPLE WHITE"}
+ sampleWhite {1 1 1 1}
+ addUserKnob {6 sampleWhite_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 Whitebalance l "White Balance" R -1 1}
+ addUserKnob {7 Whitepoint R 0 4}
+ Whitepoint 1
+ addUserKnob {26 ""}
+ addUserKnob {19 sampleBlack l "SAMPLE BLACK"}
+ sampleBlack {0 0 0 0}
+ addUserKnob {6 sampleBlack_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 Blackbalance l "Black Balance" R -0.1 0.1}
+ addUserKnob {7 Blackpoint R -1 1}
+ addUserKnob {41 add l "Black offset" T Grade4.add}
+ addUserKnob {26 ""}
+ addUserKnob {7 degreen l "Green Balance" R -5 5}
+ addUserKnob {7 dered l "Red Balance" R -5 5}
+ addUserKnob {7 deblue l "Blue Balance" R -5 5}
+ addUserKnob {26 ""}
+ addUserKnob {7 saturation l Saturation R -1 1}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 version l "Version: " T "1.0 - RKB"}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 92
+  ypos -506
+ }
+ EXPTool {
+  mode Stops
+  red {{parent.exp}}
+  green {{parent.exp}}
+  blue {{parent.exp}}
+  name EXPTool1
+  label EXPOSURE
+  xpos 92
+  ypos -432
+ }
+ Grade {
+  blackpoint {{parent.sampleBlack} {parent.sampleBlack} {parent.sampleBlack} {parent.sampleBlack}}
+  whitepoint {{parent.sampleWhite.r/((parent.sampleWhite.r+parent.sampleWhite.g+parent.sampleWhite.b)/3)} {parent.sampleWhite.g/((parent.sampleWhite.r+parent.sampleWhite.g+parent.sampleWhite.b)/3)} {parent.sampleWhite.b/((parent.sampleWhite.r+parent.sampleWhite.g+parent.sampleWhite.b)/3)} {parent.sampleWhite}}
+  name Grade4
+  label "SAMPLE WHITE AND BLACK POINTS"
+  xpos 92
+  ypos -360
+  addUserKnob {20 User}
+  addUserKnob {18 white_balance l "SAMPLE WHITE POINT: "}
+  white_balance {1 1 1}
+  addUserKnob {6 white_balance_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {18 black_balance l "SAMPLE BLACK POINT: "}
+  black_balance {0 0 0}
+  addUserKnob {6 black_balance_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ Grade {
+  blackpoint {{.1*(parent.Blackpoint)}}
+  whitepoint {{parent.Whitepoint}}
+  name Grade1
+  label "BLACK AND WHITE POINTS"
+  xpos 92
+  ypos -288
+ }
+ ColorCorrect {
+  contrast {{parent.Contrast+1}}
+  name ColorCorrect1
+  label CONTRAST
+  xpos 92
+  ypos -216
+ }
+ Grade {
+  black {{parent.Grade3.add.r-(parent.Blackbalance/2)} 0 {parent.Grade3.add.b-(parent.Blackbalance/2)} 0}
+  white {{parent.Grade3.gamma.r-(parent.Whitebalance/2)} 1 {parent.Grade3.gamma.b+(parent.Whitebalance/2)} 1}
+  name Grade3
+  label "WHITEBALANCE GAIN"
+  xpos 92
+  ypos -152
+ }
+ Grade {
+  white {{parent.Grade2.white.r-(.25*(parent.degreen/3))} {parent.Grade2.white.g+(.25*(2*(parent.degreen/3)))} {parent.Grade2.white.b-(.25*(parent.degreen/3))} 1}
+  name Grade2
+  label "GREEN BALANCE"
+  xpos 92
+  ypos -80
+ }
+ Grade {
+  white {{parent.Grade5.white.r+(.25*(2*(parent.dered/3)))} {parent.Grade5.white.g-(.25*(parent.dered/3))} {parent.Grade5.white.b-(.25*(parent.dered/3))} 1}
+  name Grade5
+  label "RED BALANCE"
+  xpos 92
+  ypos -23
+ }
+ Grade {
+  white {{parent.Grade6.white.r-(.25*(parent.deblue/3))} {parent.Grade6.white.g-(.25*(parent.deblue/3))} {parent.Grade6.white.b+(.25*(2*(parent.deblue/3)))} 1}
+  name Grade6
+  label "BLUE BALANCE"
+  xpos 92
+  ypos 33
+ }
+ Saturation {
+  saturation {{parent.saturation+1}}
+  name Saturation1
+  xpos 92
+  ypos 105
+ }
+ Output {
+  name Output1
+  xpos 92
+  ypos 165
+ }
+end_group

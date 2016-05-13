@@ -1,0 +1,191 @@
+#! C:/Program Files/Nuke7.0v4/Nuke7.0.exe -nx
+version 7.0 v4
+Gizmo {
+ help "Use for image pixel offsets. Can be animated with motion blur, if desired.\n\nTip:\nInput image size is displayed at the bottom of the menu to help with offset calculations. For example, if the Read_Size width says \"11500\", you can enter an offset of 11500*.5 or 11500/2 to get an offset of 1/2 the width. "
+ addUserKnob {20 User}
+ addUserKnob {12 origin l Offsets}
+ addUserKnob {41 motionblur T Transform2.motionblur}
+ addUserKnob {41 shutter T Transform2.shutter}
+ addUserKnob {41 shutteroffset l "shutter offset" T Transform2.shutteroffset}
+ addUserKnob {41 shuttercustomoffset l "" -STARTLINE T Transform2.shuttercustomoffset}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {26 read_size l "Input Image Size:" T "(FOR REFERENCE ONLY)"}
+ addUserKnob {41 Read_Size T Get_Read_Size.Read_Size}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -52
+  ypos -515
+ }
+ Assert {
+  expression {{"\[python -execlocal if\\ nuke.thisGroup().input(0)\\ and\\ nuke.thisGroup().input(0).Class()\\ ==\\ (\\\"Read\\\"):\\n\\ \\ \\ \\ ret\\ =\\ 1\\nelif\\ not\\ nuke.thisGroup().input(0):\\n\\ \\ \\ \\ ret\\ =\\ 1\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ 0]"}}
+  message "Input is not connected to a Read node."
+  name Assert1
+  selected true
+  xpos -52
+  ypos -455
+ }
+ Crop {
+  box {0 0 2560 1278}
+  name Crop3
+  label "Might expose this to allow user to\ncut off garbage edge pixels..."
+  xpos -52
+  ypos -386
+  disable true
+ }
+ Crop {
+  box {0 0 {"\[python -execlocal ret\\ =\\ nuke.toNode(nuke.thisGroup().name()\\ +\\ '.Get_Read_Size').knob('Read_Size').value(0)]"} {"\[python -execlocal ret\\ =\\ nuke.toNode(nuke.thisGroup().name()\\ +\\ '.Get_Read_Size').knob('Read_Size').value(1)]"}}
+  name Crop2
+  xpos -52
+  ypos -281
+ }
+ Dot {
+  name Dot1
+  xpos -18
+  ypos -197
+ }
+set N40d25a20 [stack 0]
+ Dot {
+  name Dot8
+  xpos -220
+  ypos -197
+ }
+ Transform {
+  translate {{parent.origin%(width*2)-width} 0}
+  center {1024 778}
+  name Transform1
+  label X0
+  xpos -254
+  ypos -151
+ }
+set N41dc0350 [stack 0]
+ Transform {
+  translate {0 {parent.origin%(height*2)-height}}
+  center {1024 778}
+  motionblur {{Transform2.motionblur}}
+  shutter {{Transform2.shutter}}
+  shutteroffset {{Transform2.shutteroffset}}
+  shuttercustomoffset {{Transform2.shuttercustomoffset}}
+  name Transform4
+  label Y0
+  xpos -121
+  ypos -151
+ }
+ Dot {
+  name Dot3
+  xpos -87
+  ypos -41
+ }
+push $N40d25a20
+ Dot {
+  name Dot7
+  xpos 168
+  ypos -197
+ }
+ Transform {
+  translate {{(parent.origin+width)%(width*2)-width} 0}
+  center {1024 778}
+  name Transform3
+  label X1
+  xpos 134
+  ypos -149
+ }
+set N41dc1110 [stack 0]
+ Transform {
+  translate {0 {parent.origin%(height*2)-height}}
+  center {1024 778}
+  motionblur {{Transform2.motionblur}}
+  shutter {{Transform2.shutter}}
+  shutteroffset {{Transform2.shutteroffset}}
+  shuttercustomoffset {{Transform2.shuttercustomoffset}}
+  name Transform5
+  label Y0
+  xpos -5
+  ypos -149
+ }
+ Dot {
+  name Dot2
+  xpos 29
+  ypos -40
+ }
+push 0
+push $N41dc1110
+ Transform {
+  translate {0 {(parent.origin+height)%(height*2)-height i}}
+  center {1024 778}
+  shutteroffset centred
+  name Transform2
+  label Y1
+  xpos 134
+  ypos -74
+ }
+ Dot {
+  name Dot6
+  xpos 168
+  ypos -2
+ }
+push $N41dc0350
+ Transform {
+  translate {0 {(parent.origin+height)%(height*2)-height}}
+  center {1024 778}
+  motionblur {{Transform2.motionblur}}
+  shutter {{Transform2.shutter}}
+  shutteroffset {{Transform2.shutteroffset}}
+  shuttercustomoffset {{Transform2.shuttercustomoffset}}
+  name Transform6
+  label Y1
+  xpos -254
+  ypos -79
+ }
+ Dot {
+  name Dot5
+  xpos -220
+  ypos -2
+ }
+ Merge2 {
+  inputs 4+1
+  operation disjoint-over
+  also_merge all
+  name Merge1
+  xpos -55
+  ypos -5
+ }
+ Crop {
+  box {0 0 {"\[python -execlocal ret\\ =\\ nuke.toNode(nuke.thisGroup().name()\\ +\\ '.Get_Read_Size').knob('Read_Size').value(0)]"} {"\[python -execlocal ret\\ =\\ nuke.toNode(nuke.thisGroup().name()\\ +\\ '.Get_Read_Size').knob('Read_Size').value(1)]"}}
+  reformat true
+  crop false
+  name Crop1
+  xpos -55
+  ypos 74
+ }
+ Output {
+  name Output1
+  xpos -55
+  ypos 157
+ }
+ NoOp {
+  inputs 0
+  name Get_Read_Size
+  tile_color 0x8e2929ff
+  note_font_color 0xffffffff
+  xpos -161
+  ypos -282
+  addUserKnob {20 User}
+  addUserKnob {14 Read_Size R 0 100}
+  Read_Size {{"\[python -execlocal if\\ \\ nuke.thisGroup().input(0):\\n\\ \\ \\ \\ ret\\ =\\ nuke.thisGroup().input(0).width()\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ nuke.root().format().width()]" i} {"\[python -execlocal if\\ \\ nuke.thisGroup().input(0):\\n\\ \\ \\ \\ ret\\ =\\ nuke.thisGroup().input(0).height()\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ nuke.root().format().height()]" i}}
+ }
+ NoOp {
+  inputs 0
+  name Offset_Amount
+  label "This has funky calculations that seem to\nbe affected by the shutter settings..."
+  note_font_size 15
+  xpos 269
+  ypos -302
+  addUserKnob {20 User}
+  addUserKnob {7 x_amount R -1 1}
+  x_amount {{"\[python -execlocal read_width\\ =\\ nuke.thisGroup().node('Get_Read_Size').knob('Read_Size').value(0)\\noffset_x\\ =\\ int(nuke.thisParent().knob('origin').value(0))\\n\\nif\\ offset_x\\ ==\\ 0:\\n\\ \\ \\ \\ ret\\ =\\ 0\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ (offset_x/read_width)]" i}}
+  addUserKnob {7 y_amount R -1 1}
+  y_amount {{"\[python -execlocal read_height\\ =\\ nuke.thisGroup().node('Get_Read_Size').knob('Read_Size').value(1)\\noffset_y\\ =\\ nuke.thisParent().knob('origin').value(1)\\n\\nif\\ offset_y\\ ==\\ 0:\\n\\ \\ \\ \\ ret\\ =\\ 0\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ (offset_y/read_height)]" i}}
+ }
+end_group

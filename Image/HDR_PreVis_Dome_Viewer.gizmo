@@ -1,0 +1,666 @@
+#! C:/Program Files/Nuke7.0v4/Nuke7.0.exe -nx
+version 7.0 v4
+Gizmo {
+ inputs 2
+ help "Use this tool to preview Latitude-Longitude format HDR images in the Nuke Viewer.\n\nA background image (\"HDR_INPUT\") can be combined with a vehicle interior image with alpha (\"VEHICLE_INTERIOR_INPUT\") to preview background images from the vehicle interior point of view.\n\nGeneral Requirements:\n-- Read nodes should be directly connected to the inputs - i.e., no intervening nodes.\n\n-- Images should be in the Lat-Long map format in order to be displayed properly (width = 2x height).\n\n-- If you use both an interior and a background image, they should be the same size.\n\n-- To interactively set the Camera focal length, switch to 3D view, select the \"Camera_VIEWER\" camera and click the camera lock icon. After you are finished, click to unlock the camera for interactive movement.\n\n\nTips:\n-- You don't have to connect images to both inputs. For instance, if you want to just see what your Lat-Long map image looks like in a 3d environment (a.k.a. a \"dome\"), just attach it to either input and interact with the 3D Camera_VIEWER.\n\n-- To change the resolution of the realtime 3D viewer preview, you can change the settings for the viewer's texture resolution. Go to Edit/Preferences/Viewers(tab). Use the dropdown menu, \"texture size\", to change the resolution. Note that your graphics card may not support higher resolutions.\n\n-- To switch between the 3D View and 2D View, make sure you have the Nuke Viewer window selected and your mouse is hovering over the viewer. You can switch back and forth by hitting the TAB key.\n\n-- When interacting with the 3D Camera_VIEWER, you can automatically change the 2D render view by CNTRL-clicking the camera lock button. It will turn green to let you know that you are modifying the camera. Then, when you switch between 3D and 2D views, they will be the same.\n\n-- If the sphere geometry wireframe becomes selected, click in the Viewer window to set the context and use CNTRL-a (select all) to deselect the wireframe.\n\n-- You can animate and render camera and pixel offsets. Set keyframes for the Camera and for the image offsets. These can also be motion blurred. Attach a Write node to the output to render the sequence, as usual.\n\n\n\nAny Questions:  Ask Rich Bobo -- rich.bobo@armstrong-white.com\n\n\n\n"
+ addUserKnob {20 User}
+ addUserKnob {26 ""}
+ addUserKnob {26 hdr_section_title l "HDR Input Offsets:"}
+ addUserKnob {41 Horizontal l "Mirror X" T Mirror1.Horizontal}
+ addUserKnob {41 Vertical l "Mirror Y" -STARTLINE T Mirror1.Vertical}
+ addUserKnob {41 origin l Offsets T HDR_Input_Offset.origin}
+ addUserKnob {41 motionblur T HDR_Input_Offset.motionblur}
+ addUserKnob {41 shutter T HDR_Input_Offset.shutter}
+ addUserKnob {41 shutteroffset l "shutter offset" T HDR_Input_Offset.shutteroffset}
+ addUserKnob {41 shuttercustomoffset l "" -STARTLINE T HDR_Input_Offset.shuttercustomoffset}
+ addUserKnob {26 hdr_offsets_text l "" +STARTLINE T "****** INFO SECTION ONLY - DO NOT EDIT! ******"}
+ addUserKnob {41 Read_Size T Get_Read_Size_HDR.Read_Size}
+ addUserKnob {41 offset_x l "Offset Amount X" T Offsets_HDR.offset_x}
+ addUserKnob {41 offset_y l "Offset Amount Y" T Offsets_HDR.offset_y}
+ addUserKnob {26 info_section_end_1 l "" +STARTLINE T *******************************************}
+ addUserKnob {26 ""}
+ addUserKnob {26 ""}
+ addUserKnob {26 vehicle_section_title l "Iinterior Input Offsets:"}
+ addUserKnob {41 Horizontal_1 l "Mirror X" T Mirror2.Horizontal}
+ addUserKnob {41 Vertical_1 l "Mirror Y" -STARTLINE T Mirror2.Vertical}
+ addUserKnob {41 origin_1 l Offsets T Vehicle_Interior_Offset.origin}
+ addUserKnob {41 motionblur_1 l motionblur T Vehicle_Interior_Offset.motionblur}
+ addUserKnob {41 shutter_1 l shutter T Vehicle_Interior_Offset.shutter}
+ addUserKnob {41 shutteroffset_1 l "shutter offset" T Vehicle_Interior_Offset.shutteroffset}
+ addUserKnob {41 shuttercustomoffset_1 l "" -STARTLINE T Vehicle_Interior_Offset.shuttercustomoffset}
+ addUserKnob {26 interior_offsets_text l "" +STARTLINE T "****** INFO SECTION ONLY - DO NOT EDIT! ******"}
+ addUserKnob {41 Read_Size_1 l Read_Size T Get_Read_Size_Vehicle.Read_Size}
+ addUserKnob {41 offset_x_1 l "Offset Amount X" T Offsets_Interior.offset_x}
+ addUserKnob {41 offset_y_1 l "Offset Amount Y" T Offsets_Interior.offset_y}
+ addUserKnob {26 info_section_end_2 l "" +STARTLINE T *******************************************}
+ addUserKnob {26 ""}
+ addUserKnob {26 ""}
+ addUserKnob {26 camera_section_title l "Camera Settings:"}
+ addUserKnob {41 rotate T Camera_VIEWER.rotate}
+ addUserKnob {41 focal l "focal length" T Camera_VIEWER.focal}
+ addUserKnob {26 camera_notes l "" +STARTLINE T "NOTE: In 3D view, to see interactive focal length adjustments,"}
+ addUserKnob {26 camera_notes_2 l "" +STARTLINE T "click the camera icon to lock to the \"Camera_Viewer\" camera."}
+ addUserKnob {41 samples T ScanlineRender1.samples}
+ addUserKnob {41 shutter_2 l shutter T ScanlineRender1.shutter}
+ addUserKnob {41 shutteroffset_2 l "shutter offset" T ScanlineRender1.shutteroffset}
+ addUserKnob {41 shuttercustomoffset_2 l "" -STARTLINE T ScanlineRender1.shuttercustomoffset}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0x8e2929ff
+  label "HDR INPUT OFFSET"
+  note_font_size 30
+  note_font_color 0xffffffff
+  xpos 980
+  ypos -768
+  bdwidth 658
+  bdheight 202
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x8e2929ff
+  label "VEHICLE INTERIOR OFFSET"
+  note_font_size 30
+  note_font_color 0xffffffff
+  xpos 1776
+  ypos -768
+  bdwidth 717
+  bdheight 203
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0x8e2929ff
+  label "Logic for what to display,\nbased on what's connected..."
+  note_font_size 30
+  note_font_color 0xffffffff
+  xpos 981
+  ypos -514
+  bdwidth 657
+  bdheight 209
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x8e6464ff
+  label "RENDER CURRENT COMBINATION\n(Name of file is same as HDR input.)\n\nFor future development..."
+  note_font_size 30
+  note_font_color 0xffffffff
+  xpos 321
+  ypos -289
+  bdwidth 584
+  bdheight 260
+ }
+ Camera2 {
+  inputs 0
+  display off
+  selectable false
+  focal 10
+  name Camera_VIEWER
+  label "             SWITCH TO 3D IN THE VIEWER...\nSELECT THIS CAMERA...\n                   USE CNTRL-LEFT TO LOOK AROUND...\n"
+  note_font_size 30
+  note_font_color 0xffffffff
+  xpos 1702
+  ypos -102
+ }
+set N2e5eb560 [stack 0]
+ Dot {
+  name Dot1
+  xpos 1726
+  ypos 21
+ }
+ Input {
+  inputs 0
+  name VEHICLE_INTERIOR_INPUT
+  tile_color 0x8e2929ff
+  label "Lat_Long vehicle interior with alpha"
+  note_font_size 20
+  xpos 2100
+  ypos -1052
+  number 1
+ }
+ Assert {
+  expression {{"\[python -execlocal if\\ nuke.thisGroup().input(1)\\ and\\ nuke.thisGroup().input(1).Class()\\ ==\\ (\\\"Read\\\"):\\n\\ \\ \\ \\ ret\\ =\\ 1\\nelif\\ not\\ nuke.thisGroup().input(1):\\n\\ \\ \\ \\ ret\\ =\\ 1\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ 0]"}}
+  message "VEHICLE_INTERIOR_INPUT is not connected to a Read node."
+  name Assert2
+  xpos 2100
+  ypos -981
+ }
+ Crop {
+  box {0 0 2560 1278}
+  name Crop
+  label "Might expose this to allow user to\ncut off garbage edge pixels..."
+  xpos 2100
+  ypos -921
+  disable true
+ }
+ Mirror {
+  Horizontal true
+  name Mirror2
+  xpos 2100
+  ypos -837
+ }
+ Group {
+  name Vehicle_Interior_Offset
+  xpos 2100
+  ypos -659
+  addUserKnob {20 User}
+  addUserKnob {12 origin}
+  addUserKnob {41 motionblur T Transform2.motionblur}
+  addUserKnob {41 shutter T Transform2.shutter}
+  addUserKnob {41 shutteroffset l "shutter offset" T Transform2.shutteroffset}
+  addUserKnob {41 shuttercustomoffset l "" -STARTLINE T Transform2.shuttercustomoffset}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos -52
+   ypos -373
+  }
+  Crop {
+   box {0 0 {"\[python -execlocal ret\\ =\\ nuke.toNode(nuke.thisGroup().name()\\ +\\ '.Get_Read_Size').knob('Read_Size').value(0)]"} {"\[python -execlocal ret\\ =\\ nuke.toNode(nuke.thisGroup().name()\\ +\\ '.Get_Read_Size').knob('Read_Size').value(1)]"}}
+   name Crop2
+   xpos -52
+   ypos -281
+  }
+  Dot {
+   name Dot1
+   xpos -18
+   ypos -197
+  }
+set N2e6c3820 [stack 0]
+  Dot {
+   name Dot8
+   xpos -220
+   ypos -197
+  }
+  Transform {
+   translate {{parent.origin%(width*2)-width} 0}
+   center {1024 778}
+   name Transform1
+   label X0
+   xpos -254
+   ypos -150
+  }
+set N2e6c3f00 [stack 0]
+  Transform {
+   translate {0 {parent.origin%(height*2)-height}}
+   center {1024 778}
+   motionblur {{Transform2.motionblur}}
+   shutter {{Transform2.shutter}}
+   shutteroffset {{Transform2.shutteroffset}}
+   shuttercustomoffset {{Transform2.shuttercustomoffset}}
+   name Transform4
+   label Y0
+   xpos -121
+   ypos -150
+  }
+  Dot {
+   name Dot3
+   xpos -87
+   ypos -41
+  }
+push $N2e6c3820
+  Dot {
+   name Dot7
+   xpos 168
+   ypos -197
+  }
+  Transform {
+   translate {{(parent.origin+width)%(width*2)-width} 0}
+   center {1024 778}
+   name Transform3
+   label X1
+   xpos 134
+   ypos -149
+  }
+set N2e6c4cc0 [stack 0]
+  Transform {
+   translate {0 {parent.origin%(height*2)-height}}
+   center {1024 778}
+   motionblur {{Transform2.motionblur}}
+   shutter {{Transform2.shutter}}
+   shutteroffset {{Transform2.shutteroffset}}
+   shuttercustomoffset {{Transform2.shuttercustomoffset}}
+   name Transform5
+   label Y0
+   xpos -5
+   ypos -149
+  }
+  Dot {
+   name Dot2
+   xpos 29
+   ypos -40
+  }
+push 0
+push $N2e6c4cc0
+  Transform {
+   translate {0 {(parent.origin+height)%(height*2)-height}}
+   center {1024 778}
+   motionblur 1
+   shutteroffset centred
+   name Transform2
+   label Y1
+   xpos 134
+   ypos -75
+  }
+  Dot {
+   name Dot6
+   xpos 168
+   ypos -2
+  }
+push $N2e6c3f00
+  Transform {
+   translate {0 {(parent.origin+height)%(height*2)-height}}
+   center {1024 778}
+   motionblur {{Transform2.motionblur}}
+   shutter {{Transform2.shutter}}
+   shutteroffset {{Transform2.shutteroffset}}
+   shuttercustomoffset {{Transform2.shuttercustomoffset}}
+   name Transform6
+   label Y1
+   xpos -254
+   ypos -79
+  }
+  Dot {
+   name Dot5
+   xpos -220
+   ypos -2
+  }
+  Merge2 {
+   inputs 4+1
+   operation disjoint-over
+   also_merge all
+   name Merge1
+   xpos -55
+   ypos -5
+  }
+  Crop {
+   box {0 0 {"\[python -execlocal ret\\ =\\ nuke.toNode(nuke.thisGroup().name()\\ +\\ '.Get_Read_Size').knob('Read_Size').value(0)]"} {"\[python -execlocal ret\\ =\\ nuke.toNode(nuke.thisGroup().name()\\ +\\ '.Get_Read_Size').knob('Read_Size').value(1)]"}}
+   reformat true
+   crop false
+   name Crop1
+   selected true
+   xpos -55
+   ypos 73
+  }
+  Output {
+   name Output1
+   xpos -55
+   ypos 157
+  }
+  NoOp {
+   inputs 0
+   name Get_Read_Size
+   tile_color 0x8e2929ff
+   note_font_color 0xffffffff
+   xpos -178
+   ypos -281
+   addUserKnob {20 User}
+   addUserKnob {14 Read_Size R 0 100}
+   Read_Size {{"\[python -execlocal ret\\ =\\ nuke.thisGroup().input(0).width()]"} {"\[python -execlocal ret\\ =\\ nuke.thisGroup().input(0).height()]"}}
+  }
+ end_group
+ Premult {
+  name Premult
+  tile_color 0x8e2929ff
+  note_font_color 0xffffffff
+  xpos 1853
+  ypos -659
+ }
+ Dot {
+  name Dot4
+  xpos 1699
+  ypos -656
+ }
+ Dot {
+  name Dot2
+  xpos 1699
+  ypos -359
+ }
+ Dot {
+  name Dot5
+  xpos 1501
+  ypos -359
+ }
+set N2e77be40 [stack 0]
+push $N2e77be40
+ Dot {
+  name Dot6
+  xpos 1501
+  ypos -405
+ }
+ Input {
+  inputs 0
+  name HDR_INPUT
+  tile_color 0x8e2929ff
+  label "Lat_Long format image input"
+  note_font_size 20
+  xpos 1235
+  ypos -1052
+ }
+ Assert {
+  expression {{"\[python -execlocal if\\ nuke.thisGroup().input(0)\\ and\\ nuke.thisGroup().input(0).Class()\\ ==\\ (\\\"Read\\\"):\\n\\ \\ \\ \\ ret\\ =\\ 1\\nelif\\ not\\ nuke.thisGroup().input(0):\\n\\ \\ \\ \\ ret\\ =\\ 1\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ 0]"}}
+  message "HDR_INPUT is not connected to a Read node."
+  name Assert1
+  xpos 1235
+  ypos -981
+ }
+ Crop {
+  box {0 0 2560 1278}
+  name Crop1
+  label "Might expose this to allow user to\ncut off garbage edge pixels..."
+  xpos 1235
+  ypos -921
+  disable true
+ }
+ Mirror {
+  Horizontal true
+  name Mirror1
+  xpos 1235
+  ypos -837
+ }
+ Group {
+  name HDR_Input_Offset
+  xpos 1235
+  ypos -680
+  addUserKnob {20 User}
+  addUserKnob {12 origin t "kdsfklfkljadfhkajldfhadkjlfh adfkjadfhkljadh adkljahkljhkljdsh adkljadfhkljdh"}
+  addUserKnob {41 motionblur T Transform2.motionblur}
+  addUserKnob {41 shutter T Transform2.shutter}
+  addUserKnob {41 shutteroffset l "shutter offset" T Transform2.shutteroffset}
+  addUserKnob {41 shuttercustomoffset l "" -STARTLINE T Transform2.shuttercustomoffset}
+ }
+  Input {
+   inputs 0
+   name Input1
+   xpos -52
+   ypos -373
+  }
+  Crop {
+   box {0 0 {"\[python -execlocal ret\\ =\\ nuke.toNode(nuke.thisGroup().name()\\ +\\ '.Get_Read_Size').knob('Read_Size').value(0)]"} {"\[python -execlocal ret\\ =\\ nuke.toNode(nuke.thisGroup().name()\\ +\\ '.Get_Read_Size').knob('Read_Size').value(1)]"}}
+   name Crop2
+   xpos -52
+   ypos -280
+  }
+  Dot {
+   name Dot1
+   xpos -18
+   ypos -197
+  }
+set N2e77d9c0 [stack 0]
+  Dot {
+   name Dot8
+   xpos -220
+   ypos -197
+  }
+  Transform {
+   translate {{parent.origin%(width*2)-width} 0}
+   center {1024 778}
+   name Transform1
+   label X0
+   xpos -254
+   ypos -151
+  }
+set N2e77e0a0 [stack 0]
+  Transform {
+   translate {0 {parent.origin%(height*2)-height}}
+   center {1024 778}
+   motionblur {{Transform2.motionblur}}
+   shutter {{Transform2.shutter}}
+   shutteroffset {{Transform2.shutteroffset}}
+   shuttercustomoffset {{Transform2.shuttercustomoffset}}
+   name Transform4
+   label Y0
+   xpos -121
+   ypos -151
+  }
+  Dot {
+   name Dot3
+   xpos -87
+   ypos -41
+  }
+push $N2e77d9c0
+  Dot {
+   name Dot7
+   xpos 168
+   ypos -197
+  }
+  Transform {
+   translate {{(parent.origin+width)%(width*2)-width} 0}
+   center {1024 778}
+   name Transform3
+   label X1
+   xpos 134
+   ypos -149
+  }
+set N2e801b80 [stack 0]
+  Transform {
+   translate {0 {parent.origin%(height*2)-height}}
+   center {1024 778}
+   motionblur {{Transform2.motionblur}}
+   shutter {{Transform2.shutter}}
+   shutteroffset {{Transform2.shutteroffset}}
+   shuttercustomoffset {{Transform2.shuttercustomoffset}}
+   name Transform5
+   label Y0
+   xpos -5
+   ypos -149
+  }
+  Dot {
+   name Dot2
+   xpos 29
+   ypos -40
+  }
+push 0
+push $N2e801b80
+  Transform {
+   translate {0 {(parent.origin+height)%(height*2)-height}}
+   center {1024 778}
+   motionblur 1
+   shutteroffset centred
+   name Transform2
+   label Y1
+   xpos 134
+   ypos -75
+  }
+  Dot {
+   name Dot6
+   xpos 168
+   ypos -2
+  }
+push $N2e77e0a0
+  Transform {
+   translate {0 {(parent.origin+height)%(height*2)-height}}
+   center {1024 778}
+   motionblur {{Transform2.motionblur}}
+   shutter {{Transform2.shutter}}
+   shutteroffset {{Transform2.shutteroffset}}
+   shuttercustomoffset {{Transform2.shuttercustomoffset}}
+   name Transform6
+   label Y1
+   xpos -254
+   ypos -79
+  }
+  Dot {
+   name Dot5
+   xpos -220
+   ypos -2
+  }
+  Merge2 {
+   inputs 4+1
+   operation disjoint-over
+   also_merge all
+   name Merge1
+   xpos -55
+   ypos -5
+  }
+  Crop {
+   box {0 0 {"\[python -execlocal ret\\ =\\ nuke.toNode(nuke.thisGroup().name()\\ +\\ '.Get_Read_Size').knob('Read_Size').value(0)]"} {"\[python -execlocal ret\\ =\\ nuke.toNode(nuke.thisGroup().name()\\ +\\ '.Get_Read_Size').knob('Read_Size').value(1)]"}}
+   reformat true
+   crop false
+   name Crop1
+   selected true
+   xpos -55
+   ypos 74
+  }
+  Output {
+   name Output1
+   xpos -55
+   ypos 157
+  }
+  NoOp {
+   inputs 0
+   name Get_Read_Size
+   tile_color 0x8e2929ff
+   note_font_color 0xffffffff
+   xpos -178
+   ypos -281
+   addUserKnob {20 User}
+   addUserKnob {14 Read_Size R 0 100}
+   Read_Size {{"\[python -execlocal ret\\ =\\ nuke.thisGroup().input(0).width()]"} {"\[python -execlocal ret\\ =\\ nuke.thisGroup().input(0).height()]"}}
+  }
+ end_group
+ Switch {
+  inputs 2
+  which {{"\[python -execlocal if\\ not\\ nuke.thisGroup().input(0)\\ and\\ nuke.thisGroup().input(1):\\n\\ \\ \\ \\ ret\\ =\\ 1\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ 0\\n]"}}
+  name Input_Switch_Logic
+  xpos 1235
+  ypos -408
+ }
+ Merge2 {
+  inputs 2
+  name Merge_Interior_with_Background
+  tile_color 0x8e2929ff
+  note_font_color 0xffffffff
+  xpos 1235
+  ypos -362
+  disable {{"\[python -execlocal if\\ not\\ nuke.thisGroup().input(0)\\ or\\ not\\ nuke.thisGroup().input(1):\\n\\ \\ \\ \\ ret\\ =\\ 1\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ 0\\n]"}}
+ }
+set N2e804150 [stack 0]
+ Sphere {
+  selectable false
+  cast_shadow false
+  receive_shadow false
+  name Sphere
+  tile_color 0x8e2929ff
+  note_font_color 0xffffffff
+  xpos 1235
+  ypos -162
+ }
+push $N2e5eb560
+ Scene {
+  inputs 2
+  name Scene1
+  tile_color 0x8e2929ff
+  note_font_color 0xffffffff
+  xpos 1245
+  ypos -102
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  name Constant1
+  tile_color 0x8e2929ff
+  note_font_color 0xffffffff
+  xpos 1092
+  ypos -6
+ }
+ ScanlineRender {
+  inputs 3
+  samples 8
+  shutteroffset centred
+  motion_vectors_type distance
+  name ScanlineRender1
+  note_font_color 0xffffffff
+  xpos 1235
+  ypos 18
+ }
+ Output {
+  name VIEWER_OUTPUT
+  tile_color 0x8e2929ff
+  label "View this output..."
+  note_font_size 30
+  note_font_color 0xffffffff
+  xpos 1235
+  ypos 164
+ }
+ NoOp {
+  inputs 0
+  name Offsets_Interior
+  tile_color 0x8e2929ff
+  note_font_color 0xffffffff
+  xpos 2297
+  ypos -630
+  addUserKnob {20 User}
+  addUserKnob {7 offset_x R -1 1}
+  offset_x {{"\[python -execlocal read_size\\ =\\ nuke.thisParent().node('Get_Read_Size_Vehicle').knob('Read_Size').value(0)\\ \\noffset\\ =\\ nuke.thisParent().node('Vehicle_Interior_Offset').knob('origin').value(0)\\npixel_offset_x\\ =\\ offset/read_size\\n\\nret\\ =\\ pixel_offset_x]"}}
+  addUserKnob {7 offset_y R -1 1}
+  offset_y {{"\[python -execlocal read_size\\ =\\ nuke.thisParent().node('Get_Read_Size_Vehicle').knob('Read_Size').value(1)\\ \\noffset\\ =\\ nuke.thisParent().node('Vehicle_Interior_Offset').knob('origin').value(1)\\npixel_offset_y\\ =\\ offset/read_size\\n\\nret\\ =\\ pixel_offset_y]"}}
+ }
+push $N2e804150
+ Dot {
+  name Dot3
+  xpos 498
+  ypos -359
+ }
+ Write {
+  file "N:/Jobs/Designory/DESS-14-011_2015_Legacy_CG_Assets/work/common/img/comp/PREVIZ_INT_DOME/\[python \{nuke.thisGroup().input(0).knob('file').value().split('/').__getitem__(-1).split('.').__getitem__(0)\}]_####.png"
+  file_type png
+  checkHashOnRead false
+  version 3
+  name Write1
+  xpos 464
+  ypos -132
+  disable true
+ }
+ Text {
+  message "\[value \[value input.name].file]"
+  font C:/Windows/Fonts/arial.ttf
+  size 25
+  Transform 1
+  translate {0 50}
+  name text_node5
+  label "View Output Path here..."
+  xpos 726
+  ypos -132
+  disable true
+ }
+ NoOp {
+  inputs 0
+  name Get_Read_Size_HDR
+  tile_color 0x8e2929ff
+  note_font_color 0xffffffff
+  xpos 1405
+  ypos -723
+  addUserKnob {20 User}
+  addUserKnob {14 Read_Size R 0 100}
+  Read_Size {{"\[python -execlocal if\\ \\ nuke.thisGroup().input(0):\\n\\ \\ \\ \\ ret\\ =\\ nuke.thisGroup().input(0).width()\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ nuke.root().format().width()]"} {"\[python -execlocal if\\ \\ nuke.thisGroup().input(0):\\n\\ \\ \\ \\ ret\\ =\\ nuke.thisGroup().input(0).height()\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ nuke.root().format().height()]"}}
+ }
+ NoOp {
+  inputs 0
+  name Get_Read_Size_Vehicle
+  tile_color 0x8e2929ff
+  note_font_color 0xffffffff
+  xpos 2296
+  ypos -723
+  addUserKnob {20 User}
+  addUserKnob {14 Read_Size R 0 100}
+  Read_Size {{"\[python -execlocal if\\ \\ nuke.thisGroup().input(1):\\n\\ \\ \\ \\ ret\\ =\\ nuke.thisGroup().input(1).width()\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ nuke.root().format().width()]"} {"\[python -execlocal if\\ \\ nuke.thisGroup().input(1):\\n\\ \\ \\ \\ ret\\ =\\ nuke.thisGroup().input(1).height()\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ nuke.root().format().height()]"}}
+ }
+ NoOp {
+  inputs 0
+  name Offsets_HDR
+  tile_color 0x8e2929ff
+  note_font_color 0xffffffff
+  xpos 1396
+  ypos -630
+  addUserKnob {20 User}
+  addUserKnob {7 offset_x R -1 1}
+  offset_x {{"\[python -execlocal read_size\\ =\\ nuke.thisParent().node('Get_Read_Size_HDR').knob('Read_Size').value(0)\\ \\noffset\\ =\\ nuke.thisParent().node('HDR_Input_Offset').knob('origin').value(0)\\npixel_offset_x\\ =\\ offset/read_size\\n\\nret\\ =\\ pixel_offset_x]"}}
+  addUserKnob {7 offset_y R -1 1}
+  offset_y {{"\[python -execlocal read_size\\ =\\ nuke.thisParent().node('Get_Read_Size_HDR').knob('Read_Size').value(1)\\ \\noffset\\ =\\ nuke.thisParent().node('HDR_Input_Offset').knob('origin').value(1)\\npixel_offset_y\\ =\\ offset/read_size\\n\\nret\\ =\\ pixel_offset_y]"}}
+ }
+end_group

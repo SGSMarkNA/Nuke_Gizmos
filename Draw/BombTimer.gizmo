@@ -1,0 +1,3666 @@
+## Bomb Timer
+## Version 1.1
+## By Jason Bidwell
+## February 11 2013
+##
+
+Gizmo {
+ inputs 0
+ tile_color 0x202020ff
+ label "LED \[value styleChoice]"
+ note_font "Bitstream Vera Sans Bold Bold"
+ note_font_color 0xff0000ff
+ addUserKnob {20 settings l Settings}
+ addUserKnob {26 title l "" +STARTLINE T "Bomb Timer by Jason Bidwell v1.1"}
+ addUserKnob {26 ""}
+ addUserKnob {4 counterSpeed l "Counter Length" M {"Sequence Length" "Each Frame" "" "" ""}}
+ addUserKnob {41 direction l Countdown -STARTLINE T Controls.direction}
+ addUserKnob {7 timeO l "Start Frame Offset" R -1000 1}
+ timeO 1
+ addUserKnob {26 ""}
+ addUserKnob {7 noDigitsSlider l "Number of Digits" R 1 10}
+ noDigitsSlider 10
+ addUserKnob {7 fontSpacing l "Font Spacing" R 1 10}
+ fontSpacing 10
+ addUserKnob {7 fontScale l "Font Scale" R 1 10}
+ fontScale 1
+ addUserKnob {41 format l "Output Format" T Reformat1.format}
+ addUserKnob {26 ""}
+ addUserKnob {4 styleChoice l "LED Style" M {Classic Modern "" ""}}
+ addUserKnob {26 ""}
+ addUserKnob {7 gain l "Ghosting Amount"}
+ gain 1
+ addUserKnob {41 color_1 l "Modern LED BG Color" T BlankModern.color}
+ addUserKnob {41 color l "Classic LED Color" T LED_Color.color}
+ addUserKnob {7 glow l "Classic LED Glow" R 0 5}
+ glow 1
+ addUserKnob {26 ""}
+ addUserKnob {41 translate l "LED Position" T Position1.translate}
+ addUserKnob {26 ""}
+ addUserKnob {6 premultiply l Premultiply +STARTLINE}
+ addUserKnob {6 NumberPremlt l "Premultiply By Number Alpha" -STARTLINE}
+}
+ Constant {
+  inputs 0
+  channels rgb
+  color {0.1333333254 0.1333333254 0.1333333254 1}
+  format "2048 2048 0 0 2048 2048 1 square_2K"
+  name BlankModern
+  tile_color 0x3fffff
+  note_font "Bitstream Vera Sans"
+  note_font_size 13
+  note_font_color 0xff
+  xpos -2839
+  ypos -491
+ }
+set N6d545c50 [stack 0]
+ Constant {
+  inputs 0
+  channels rgb
+  color {0 0 0 1}
+  format "2048 2048 0 0 2048 2048 1 square_2K"
+  name Blank
+  tile_color 0x3fffff
+  note_font "Bitstream Vera Sans"
+  note_font_size 13
+  note_font_color 0xff
+  xpos -2706
+  ypos -490
+ }
+ Switch {
+  inputs 2
+  which {{styleChoice i}}
+  name styleSwitch
+  xpos -2766
+  ypos -369
+ }
+set N42aef2b0 [stack 0]
+ RotoPaint {
+  output alpha
+  cliptype none
+  replace true
+  curves {AnimTree: "" {
+ Version: 1.2
+ Flag: 0
+ RootNode: 1
+ Node: {
+  NodeName: "Root" {
+   Flag: 512
+   NodeType: 1
+   Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 175 S 0 155.5 
+   NumOfAttributes: 11
+   "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+  }
+  NumOfChildren: 1
+  Node: {
+   NodeName: "LED_Display" {
+    Flag: 512
+    NodeType: 1
+    Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 2560 S 0 1350 
+    NumOfAttributes: 11
+    "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+   }
+   NumOfChildren: 1
+   Node: {
+    NodeName: "Nine" {
+     Flag: 512
+     NodeType: 1
+     Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 175 S 0 155.5 
+     NumOfAttributes: 11
+     "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+    }
+    NumOfChildren: 6
+    Node: {
+     NodeName: "horiz1" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 712.7 S 0 688.933 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 729.61 S 0 689.157 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 735.51 S 0 694.157 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.62 S 0 698.441 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 712.54 S 0 698.368 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 707.41 S 0 693.911 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "horiz3" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 712.81 S 0 654.457 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 728.86 S 0 654.507 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 734.61 S 0 659.457 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 729.26 S 0 663.707 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 712.71 S 0 663.757 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 707.51 S 0 659.407 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "horiz2" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 712.71 S 0 619.657 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.6 S 0 619.8 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 735.76 S 0 624.657 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 729.91 S 0 629.057 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 712.743 S 0 629.08 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 707.26 S 0 624.607 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "vert1" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 741.61 S 0 629.907 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 741.71 S 0 653.807 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.26 S 0 658.757 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.31 S 0 653.907 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.563 S 0 630.073 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.377 S 0 625.806 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "vert3" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 711.58 S 0 664.397 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 711.62 S 0 688.037 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 706.388 S 0 693.039 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 700.54 S 0 688.137 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 700.52 S 0 663.957 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 706.16 S 0 660.057 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "vert4" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 741.51 S 0 664.307 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 741.62 S 0 688.037 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.388 S 0 693.039 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.56 S 0 688.057 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.66 S 0 663.957 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.16 S 0 659.807 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+   }
+  }
+ }
+}
+}
+  toolbox {selectAll {
+  { selectAll ssx 1 ssy 1 sf 1 }
+  { createBezier ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBSpline ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle ssx 1 ssy 1 sf 1 sb 1 }
+  { brush ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_lifetime_type all
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {320 240}
+  colorOverlay 0
+  lifetime_type "all frames"
+  lifetime_start 938
+  lifetime_end 938
+  view {}
+  motionblur_on true
+  motionblur_shutter_offset_type centred
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name LED_Nine
+  xpos -978
+  ypos -230
+ }
+push $N42aef2b0
+ RotoPaint {
+  output alpha
+  cliptype none
+  replace true
+  curves {AnimTree: "" {
+ Version: 1.2
+ Flag: 0
+ RootNode: 1
+ Node: {
+  NodeName: "Root" {
+   Flag: 512
+   NodeType: 1
+   Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 175 S 0 155.5 
+   NumOfAttributes: 11
+   "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+  }
+  NumOfChildren: 1
+  Node: {
+   NodeName: "LED_Display" {
+    Flag: 512
+    NodeType: 1
+    Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 2560 S 0 1350 
+    NumOfAttributes: 11
+    "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+   }
+   NumOfChildren: 1
+   Node: {
+    NodeName: "eight" {
+     Flag: 512
+     NodeType: 1
+     Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 175 S 0 155.5 
+     NumOfAttributes: 11
+     "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+    }
+    NumOfChildren: 7
+    Node: {
+     NodeName: "horiz1" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 712.7 S 0 688.933 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 729.61 S 0 689.157 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 735.51 S 0 694.157 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.62 S 0 698.441 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 712.54 S 0 698.368 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 707.41 S 0 693.911 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "horiz3" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 712.81 S 0 654.457 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 728.86 S 0 654.507 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 734.61 S 0 659.457 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 729.26 S 0 663.707 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 712.71 S 0 663.757 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 707.51 S 0 659.407 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "horiz2" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 712.71 S 0 619.657 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.613 S 0 619.773 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 735.76 S 0 624.657 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 729.91 S 0 629.057 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 712.743 S 0 629.08 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 707.26 S 0 624.607 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "vert2" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 711.61 S 0 629.907 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 711.71 S 0 653.807 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 706.26 S 0 658.757 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 700.41 S 0 653.957 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 700.396 S 0 629.824 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 706.21 S 0 625.557 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "vert1" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 741.61 S 0 629.907 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 741.71 S 0 653.807 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.26 S 0 658.757 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.31 S 0 653.907 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.563 S 0 630.073 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.377 S 0 625.806 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "vert3" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 711.58 S 0 664.397 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 711.62 S 0 688.037 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 706.388 S 0 693.039 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 700.54 S 0 688.137 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 700.52 S 0 663.957 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 706.16 S 0 660.057 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "vert4" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 741.51 S 0 664.307 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 741.62 S 0 688.037 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.388 S 0 693.039 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.56 S 0 688.057 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.66 S 0 663.957 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.16 S 0 659.807 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+   }
+  }
+ }
+}
+}
+  toolbox {selectAll {
+  { selectAll ssx 1 ssy 1 sf 1 }
+  { createBezier ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBSpline ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle ssx 1 ssy 1 sf 1 sb 1 }
+  { brush ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_lifetime_type all
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {320 240}
+  colorOverlay 0
+  lifetime_type "all frames"
+  lifetime_start 938
+  lifetime_end 938
+  view {}
+  motionblur_on true
+  motionblur_shutter_offset_type centred
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name LED_Eight
+  xpos -1081
+  ypos -228
+ }
+set N35b280 [stack 0]
+push $N42aef2b0
+ RotoPaint {
+  output alpha
+  cliptype none
+  replace true
+  curves {AnimTree: "" {
+ Version: 1.2
+ Flag: 0
+ RootNode: 1
+ Node: {
+  NodeName: "Root" {
+   Flag: 512
+   NodeType: 1
+   Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 175 S 0 155.5 
+   NumOfAttributes: 11
+   "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+  }
+  NumOfChildren: 1
+  Node: {
+   NodeName: "LED_Display" {
+    Flag: 512
+    NodeType: 1
+    Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 2560 S 0 1350 
+    NumOfAttributes: 11
+    "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+   }
+   NumOfChildren: 1
+   Node: {
+    NodeName: "Seven" {
+     Flag: 512
+     NodeType: 1
+     Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 175 S 0 155.5 
+     NumOfAttributes: 11
+     "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+    }
+    NumOfChildren: 3
+    Node: {
+     NodeName: "horiz1" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 712.7 S 0 688.933 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 729.61 S 0 689.157 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 735.51 S 0 694.157 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.62 S 0 698.441 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 712.54 S 0 698.368 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 707.41 S 0 693.911 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "vert1" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 741.61 S 0 629.907 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 741.71 S 0 653.807 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.26 S 0 658.757 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.31 S 0 653.907 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.563 S 0 630.073 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.377 S 0 625.806 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "vert4" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 741.51 S 0 664.307 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 741.62 S 0 688.037 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.388 S 0 693.039 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.56 S 0 688.057 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.66 S 0 663.957 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.16 S 0 659.807 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+   }
+  }
+ }
+}
+}
+  toolbox {selectAll {
+  { selectAll ssx 1 ssy 1 sf 1 }
+  { createBezier ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBSpline ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle ssx 1 ssy 1 sf 1 sb 1 }
+  { brush ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_lifetime_type all
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {320 240}
+  colorOverlay 0
+  lifetime_type "all frames"
+  lifetime_start 938
+  lifetime_end 938
+  view {}
+  motionblur_on true
+  motionblur_shutter_offset_type centred
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name LED_Seven
+  xpos -1184
+  ypos -228
+ }
+push $N42aef2b0
+ RotoPaint {
+  output alpha
+  cliptype none
+  replace true
+  curves {AnimTree: "" {
+ Version: 1.2
+ Flag: 0
+ RootNode: 1
+ Node: {
+  NodeName: "Root" {
+   Flag: 512
+   NodeType: 1
+   Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 175 S 0 155.5 
+   NumOfAttributes: 11
+   "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+  }
+  NumOfChildren: 1
+  Node: {
+   NodeName: "LED_Display" {
+    Flag: 512
+    NodeType: 1
+    Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 2560 S 0 1350 
+    NumOfAttributes: 11
+    "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+   }
+   NumOfChildren: 1
+   Node: {
+    NodeName: "Six" {
+     Flag: 512
+     NodeType: 1
+     Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 175 S 0 155.5 
+     NumOfAttributes: 11
+     "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+    }
+    NumOfChildren: 6
+    Node: {
+     NodeName: "horiz1" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 712.7 S 0 688.933 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 729.61 S 0 689.157 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 735.51 S 0 694.157 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.62 S 0 698.441 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 712.54 S 0 698.368 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 707.41 S 0 693.911 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "horiz3" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 712.81 S 0 654.457 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 728.86 S 0 654.507 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 734.61 S 0 659.457 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 729.26 S 0 663.707 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 712.71 S 0 663.757 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 707.51 S 0 659.407 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "horiz2" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 712.71 S 0 619.657 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.613 S 0 619.773 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 735.76 S 0 624.657 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 729.91 S 0 629.057 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 712.743 S 0 629.08 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 707.26 S 0 624.607 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "vert2" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 711.61 S 0 629.907 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 711.71 S 0 653.807 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 706.26 S 0 658.757 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 700.41 S 0 653.957 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 700.396 S 0 629.824 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 706.21 S 0 625.557 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "vert1" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 741.61 S 0 629.907 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 741.71 S 0 653.807 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.26 S 0 658.757 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.31 S 0 653.907 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.563 S 0 630.073 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.377 S 0 625.806 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "vert3" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 711.58 S 0 664.397 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 711.62 S 0 688.037 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 706.388 S 0 693.039 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 700.54 S 0 688.137 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 700.52 S 0 663.957 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 706.16 S 0 660.057 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+   }
+  }
+ }
+}
+}
+  toolbox {selectAll {
+  { selectAll ssx 1 ssy 1 sf 1 }
+  { createBezier ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBSpline ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle ssx 1 ssy 1 sf 1 sb 1 }
+  { brush ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_lifetime_type all
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {320 240}
+  colorOverlay 0
+  lifetime_type "all frames"
+  lifetime_start 938
+  lifetime_end 938
+  view {}
+  motionblur_on true
+  motionblur_shutter_offset_type centred
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name LED_Six
+  xpos -1294
+  ypos -228
+ }
+push $N42aef2b0
+ RotoPaint {
+  output alpha
+  cliptype none
+  replace true
+  curves {AnimTree: "" {
+ Version: 1.2
+ Flag: 0
+ RootNode: 1
+ Node: {
+  NodeName: "Root" {
+   Flag: 512
+   NodeType: 1
+   Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 175 S 0 155.5 
+   NumOfAttributes: 11
+   "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+  }
+  NumOfChildren: 1
+  Node: {
+   NodeName: "LED_Display" {
+    Flag: 512
+    NodeType: 1
+    Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 2560 S 0 1350 
+    NumOfAttributes: 11
+    "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+   }
+   NumOfChildren: 1
+   Node: {
+    NodeName: "Five" {
+     Flag: 512
+     NodeType: 1
+     Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 175 S 0 155.5 
+     NumOfAttributes: 11
+     "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+    }
+    NumOfChildren: 5
+    Node: {
+     NodeName: "horiz1" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 712.7 S 0 688.933 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 729.61 S 0 689.157 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 735.51 S 0 694.157 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.62 S 0 698.441 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 712.54 S 0 698.368 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 707.41 S 0 693.911 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "horiz3" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 712.81 S 0 654.457 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 728.86 S 0 654.507 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 734.61 S 0 659.457 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 729.26 S 0 663.707 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 712.71 S 0 663.757 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 707.51 S 0 659.407 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "horiz2" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 712.71 S 0 619.657 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.613 S 0 619.773 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 735.76 S 0 624.657 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 729.91 S 0 629.057 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 712.743 S 0 629.08 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 707.26 S 0 624.607 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "vert1" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 741.61 S 0 629.907 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 741.71 S 0 653.807 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.26 S 0 658.757 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.31 S 0 653.907 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.563 S 0 630.073 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.377 S 0 625.806 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "vert3" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 711.58 S 0 664.397 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 711.62 S 0 688.037 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 706.388 S 0 693.039 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 700.54 S 0 688.137 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 700.52 S 0 663.957 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 706.16 S 0 660.057 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+   }
+  }
+ }
+}
+}
+  toolbox {selectAll {
+  { selectAll ssx 1 ssy 1 sf 1 }
+  { createBezier ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBSpline ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle ssx 1 ssy 1 sf 1 sb 1 }
+  { brush ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_lifetime_type all
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {320 240}
+  colorOverlay 0
+  lifetime_type "all frames"
+  lifetime_start 938
+  lifetime_end 938
+  view {}
+  motionblur_on true
+  motionblur_shutter_offset_type centred
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name LED_Five
+  xpos -1405
+  ypos -229
+ }
+push $N42aef2b0
+ RotoPaint {
+  output alpha
+  cliptype none
+  replace true
+  curves {AnimTree: "" {
+ Version: 1.2
+ Flag: 0
+ RootNode: 1
+ Node: {
+  NodeName: "Root" {
+   Flag: 512
+   NodeType: 1
+   Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 175 S 0 155.5 
+   NumOfAttributes: 11
+   "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+  }
+  NumOfChildren: 1
+  Node: {
+   NodeName: "LED_Display" {
+    Flag: 512
+    NodeType: 1
+    Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 2560 S 0 1350 
+    NumOfAttributes: 11
+    "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+   }
+   NumOfChildren: 1
+   Node: {
+    NodeName: "four" {
+     Flag: 512
+     NodeType: 1
+     Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 175 S 0 155.5 
+     NumOfAttributes: 11
+     "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+    }
+    NumOfChildren: 4
+    Node: {
+     NodeName: "horiz3" {
+      Flag: 576
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 712.81 S 0 654.457 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 728.86 S 0 654.507 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 734.61 S 0 659.457 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 729.26 S 0 663.707 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 712.71 S 0 663.757 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 707.51 S 0 659.407 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "vert1" {
+      Flag: 576
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 741.61 S 0 629.907 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 741.71 S 0 653.807 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.26 S 0 658.757 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.31 S 0 653.907 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.563 S 0 630.073 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.377 S 0 625.806 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "vert3" {
+      Flag: 576
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 711.58 S 0 664.397 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 711.62 S 0 688.037 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 706.388 S 0 693.039 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 700.54 S 0 688.137 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 700.52 S 0 663.957 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 706.16 S 0 660.057 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "vert4" {
+      Flag: 576
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 741.51 S 0 664.307 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 741.62 S 0 688.037 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.388 S 0 693.039 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.56 S 0 688.057 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.66 S 0 663.957 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.16 S 0 659.807 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+   }
+  }
+ }
+}
+}
+  toolbox {selectAll {
+  { selectAll ssx 1 ssy 1 sf 1 }
+  { createBezier ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBSpline ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle ssx 1 ssy 1 sf 1 sb 1 }
+  { brush ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_lifetime_type all
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {320 240}
+  colorOverlay 0
+  lifetime_type "all frames"
+  lifetime_start 938
+  lifetime_end 938
+  motionblur_shutter_offset_type centred
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name LED_Four
+  xpos -1513
+  ypos -233
+ }
+push $N42aef2b0
+ RotoPaint {
+  output alpha
+  cliptype none
+  replace true
+  curves {AnimTree: "" {
+ Version: 1.2
+ Flag: 0
+ RootNode: 1
+ Node: {
+  NodeName: "Root" {
+   Flag: 512
+   NodeType: 1
+   Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 175 S 0 155.5 
+   NumOfAttributes: 11
+   "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+  }
+  NumOfChildren: 1
+  Node: {
+   NodeName: "LED_Display" {
+    Flag: 512
+    NodeType: 1
+    Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 2560 S 0 1350 
+    NumOfAttributes: 11
+    "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+   }
+   NumOfChildren: 1
+   Node: {
+    NodeName: "three" {
+     Flag: 512
+     NodeType: 1
+     Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 175 S 0 155.5 
+     NumOfAttributes: 11
+     "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+    }
+    NumOfChildren: 5
+    Node: {
+     NodeName: "horiz1" {
+      Flag: 576
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 712.7 S 0 688.933 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 729.61 S 0 689.157 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 735.51 S 0 694.157 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.62 S 0 698.441 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 712.54 S 0 698.368 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 707.41 S 0 693.911 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "horiz3" {
+      Flag: 576
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 712.81 S 0 654.457 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 728.86 S 0 654.507 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 734.61 S 0 659.457 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 729.26 S 0 663.707 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 712.71 S 0 663.757 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 707.51 S 0 659.407 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "horiz2" {
+      Flag: 576
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 712.71 S 0 619.657 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.613 S 0 619.773 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 735.76 S 0 624.657 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 729.91 S 0 629.057 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 712.743 S 0 629.08 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 707.26 S 0 624.607 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "vert1" {
+      Flag: 576
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 741.61 S 0 629.907 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 741.71 S 0 653.807 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.26 S 0 658.757 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.31 S 0 653.907 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.563 S 0 630.073 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.377 S 0 625.806 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "vert4" {
+      Flag: 576
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 741.51 S 0 664.307 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 741.62 S 0 688.037 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.388 S 0 693.039 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.56 S 0 688.057 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.66 S 0 663.957 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.16 S 0 659.807 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+   }
+  }
+ }
+}
+}
+  toolbox {selectAll {
+  { selectAll ssx 1 ssy 1 sf 1 }
+  { createBezier ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBSpline ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle ssx 1 ssy 1 sf 1 sb 1 }
+  { brush ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_lifetime_type all
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {320 240}
+  colorOverlay 0
+  lifetime_type "all frames"
+  lifetime_start 938
+  lifetime_end 938
+  motionblur_shutter_offset_type centred
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name LED_three
+  xpos -1627
+  ypos -228
+ }
+push $N42aef2b0
+ RotoPaint {
+  output alpha
+  cliptype none
+  replace true
+  curves {AnimTree: "" {
+ Version: 1.2
+ Flag: 0
+ RootNode: 1
+ Node: {
+  NodeName: "Root" {
+   Flag: 512
+   NodeType: 1
+   Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 175 S 0 155.5 
+   NumOfAttributes: 11
+   "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+  }
+  NumOfChildren: 1
+  Node: {
+   NodeName: "LED_Display" {
+    Flag: 512
+    NodeType: 1
+    Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 2560 S 0 1350 
+    NumOfAttributes: 11
+    "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+   }
+   NumOfChildren: 1
+   Node: {
+    NodeName: "teo" {
+     Flag: 512
+     NodeType: 1
+     Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 175 S 0 155.5 
+     NumOfAttributes: 11
+     "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+    }
+    NumOfChildren: 5
+    Node: {
+     NodeName: "horiz1" {
+      Flag: 576
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 712.7 S 0 688.933 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 729.61 S 0 689.157 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 735.51 S 0 694.157 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.62 S 0 698.441 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 712.54 S 0 698.368 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 707.41 S 0 693.911 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "horiz3" {
+      Flag: 576
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 712.81 S 0 654.457 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 728.86 S 0 654.507 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 734.61 S 0 659.457 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 729.26 S 0 663.707 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 712.71 S 0 663.757 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 707.51 S 0 659.407 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "horiz2" {
+      Flag: 576
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 712.71 S 0 619.657 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.613 S 0 619.773 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 735.76 S 0 624.657 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 729.91 S 0 629.057 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 712.743 S 0 629.08 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 707.26 S 0 624.607 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "vert2" {
+      Flag: 576
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 711.61 S 0 629.907 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 711.71 S 0 653.807 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 706.26 S 0 658.757 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 700.41 S 0 653.957 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 700.396 S 0 629.824 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 706.21 S 0 625.557 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "vert4" {
+      Flag: 576
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 741.51 S 0 664.307 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 741.62 S 0 688.037 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.388 S 0 693.039 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.56 S 0 688.057 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.66 S 0 663.957 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.16 S 0 659.807 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+   }
+  }
+ }
+}
+}
+  toolbox {selectAll {
+  { selectAll ssx 1 ssy 1 sf 1 }
+  { createBezier ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBSpline ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle ssx 1 ssy 1 sf 1 sb 1 }
+  { brush ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_lifetime_type all
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {320 240}
+  colorOverlay 0
+  lifetime_type "all frames"
+  lifetime_start 938
+  lifetime_end 938
+  motionblur_shutter_offset_type centred
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name LED_Two
+  xpos -1737
+  ypos -228
+ }
+push $N42aef2b0
+ RotoPaint {
+  output alpha
+  cliptype none
+  replace true
+  curves {AnimTree: "" {
+ Version: 1.2
+ Flag: 0
+ RootNode: 1
+ Node: {
+  NodeName: "Root" {
+   Flag: 512
+   NodeType: 1
+   Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 175 S 0 155.5 
+   NumOfAttributes: 11
+   "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+  }
+  NumOfChildren: 1
+  Node: {
+   NodeName: "LED_Display" {
+    Flag: 512
+    NodeType: 1
+    Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 2560 S 0 1350 
+    NumOfAttributes: 11
+    "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+   }
+   NumOfChildren: 1
+   Node: {
+    NodeName: "one" {
+     Flag: 512
+     NodeType: 1
+     Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 175 S 0 155.5 
+     NumOfAttributes: 11
+     "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+    }
+    NumOfChildren: 2
+    Node: {
+     NodeName: "vert1" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 741.61 S 0 629.907 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 741.71 S 0 653.807 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.26 S 0 658.757 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.31 S 0 653.907 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.563 S 0 630.073 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.377 S 0 625.806 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "vert4" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 741.51 S 0 664.307 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 741.62 S 0 688.037 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.388 S 0 693.039 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.56 S 0 688.057 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.66 S 0 663.957 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.16 S 0 659.807 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+   }
+  }
+ }
+}
+}
+  toolbox {selectAll {
+  { selectAll ssx 1 ssy 1 sf 1 }
+  { createBezier ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBSpline ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle ssx 1 ssy 1 sf 1 sb 1 }
+  { brush ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_lifetime_type all
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {320 240}
+  colorOverlay 0
+  lifetime_type "all frames"
+  lifetime_start 938
+  lifetime_end 938
+  view {}
+  motionblur_on true
+  motionblur_shutter_offset_type centred
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name LED_One
+  xpos -1844
+  ypos -228
+ }
+push $N42aef2b0
+ RotoPaint {
+  output alpha
+  cliptype none
+  replace true
+  curves {AnimTree: "" {
+ Version: 1.2
+ Flag: 0
+ RootNode: 1
+ Node: {
+  NodeName: "Root" {
+   Flag: 512
+   NodeType: 1
+   Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 175 S 0 155.5 
+   NumOfAttributes: 11
+   "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+  }
+  NumOfChildren: 1
+  Node: {
+   NodeName: "LED_Display" {
+    Flag: 512
+    NodeType: 1
+    Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 2560 S 0 1350 
+    NumOfAttributes: 11
+    "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+   }
+   NumOfChildren: 1
+   Node: {
+    NodeName: "Zero" {
+     Flag: 512
+     NodeType: 1
+     Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 175 S 0 155.5 
+     NumOfAttributes: 11
+     "vis" S 0 1 "opc" S 0 1 "mbo" S 0 1 "mb" S 0 1 "mbs" S 0 0.5 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "pt" S 0 0 
+    }
+    NumOfChildren: 6
+    Node: {
+     NodeName: "horiz1" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 712.7 S 0 688.933 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 729.61 S 0 689.157 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 735.51 S 0 694.157 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.62 S 0 698.441 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 712.54 S 0 698.368 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 707.41 S 0 693.911 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "horiz2" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 712.71 S 0 619.657 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.613 S 0 619.773 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 735.76 S 0 624.657 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 729.91 S 0 629.057 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 712.743 S 0 629.08 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 707.26 S 0 624.607 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "vert2" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 711.61 S 0 629.907 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 711.71 S 0 653.807 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 706.26 S 0 658.757 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 700.41 S 0 653.957 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 700.396 S 0 629.824 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 706.21 S 0 625.557 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "vert1" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 741.61 S 0 629.907 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 741.71 S 0 653.807 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.26 S 0 658.757 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.31 S 0 653.907 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.563 S 0 630.073 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.377 S 0 625.806 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "vert3" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 711.58 S 0 664.397 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 711.62 S 0 688.037 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 706.388 S 0 693.039 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 700.54 S 0 688.137 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 700.52 S 0 663.957 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 706.16 S 0 660.057 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+    Node: {
+     NodeName: "vert4" {
+      Flag: 512
+      NodeType: 3
+      CurveGroup: "" {
+       Transform: 0 0 S 0 0 S 0 0 S 0 0 S 0 1 S 0 1 S 0 0 S 0 228.85 S 0 131.1 
+       Flag: 0
+       NumOfCubicCurves: 2
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 741.51 S 0 664.307 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 741.62 S 0 688.037 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.388 S 0 693.039 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.56 S 0 688.057 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 730.66 S 0 663.957 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 736.16 S 0 659.807 0 0 S 0 0 S 0 0 0 
+       }
+       CubicCurve: "" {
+        Type: 0 Flag: 8192 Dim: 2
+        NumOfPoints: 18
+        0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 0 S 0 0 S 0 0 0 
+       }
+       NumOfAttributes: 44
+       "vis" S 0 1 "r" S 0 1 "g" S 0 1 "b" S 0 1 "a" S 0 1 "ro" S 0 0 "go" S 0 0 "bo" S 0 0 "ao" S 0 0 "opc" S 0 1 "bm" S 0 0 "inv" S 0 0 "mbo" S 0 0 "mb" S 0 1 "mbs" S 0 0.5 "mbsot" S 0 0 "mbso" S 0 0 "fo" S 0 1 "fx" S 0 0 "fy" S 0 0 "ff" S 0 1 "ft" S 0 0 "src" S 0 0 "stx" S 0 0 "sty" S 0 0 "str" S 0 0 "sr" S 0 0 "ssx" S 0 1 "ssy" S 0 1 "ss" S 0 0 "spx" S 0 175 "spy" S 0 155.5 "stot" S 0 0 "sto" S 0 0 "sv" S 0 0 "sf" S 0 1 "sb" S 0 1 "nv" S 0 1 "view1" S 0 1 "ltn" S 0 938 "ltm" S 0 938 "ltt" S 0 0 "tt" S 0 4 "pt" S 0 0 
+      }
+     }
+     NumOfChildren: 0
+    }
+   }
+  }
+ }
+}
+}
+  toolbox {selectAll {
+  { selectAll ssx 1 ssy 1 sf 1 }
+  { createBezier ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBSpline ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle ssx 1 ssy 1 sf 1 sb 1 }
+  { brush ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_lifetime_type all
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {320 240}
+  colorOverlay 0
+  lifetime_type "all frames"
+  lifetime_start 938
+  lifetime_end 938
+  view {}
+  motionblur_on true
+  motionblur_shutter_offset_type centred
+  source_black_outside true
+  createNewTrack {{-1} "-1\t(none)\t-1" "1000\tNew Track Layer\t1000"}
+  name LED_Zero
+  xpos -1964
+  ypos -228
+ }
+ Switch {
+  inputs 10
+  which {{curve i 0 1 2 3 4 5 6 7 8 9}}
+  name Switch1
+  xpos -978
+  ypos -100
+ }
+set N2f620500 [stack 0]
+ Retime {
+  input.first 0
+  input.first_lock true
+  input.last 9
+  input.last_lock true
+  reverse {{parent.Controls.direction i}}
+  output.first_lock true
+  output.last 2000000000
+  speed {{parent.Retime8.speed/2 i}}
+  after loop
+  filter nearest
+  name Retime9
+  xpos 533
+  ypos -92
+ }
+push $N2f620500
+ Retime {
+  input.first 0
+  input.first_lock true
+  input.last 9
+  input.last_lock true
+  reverse {{parent.Controls.direction i}}
+  output.first {{parent.Controls.offset09 i}}
+  output.first_lock true
+  output.last 99
+  name Retime90
+  xpos 472
+  ypos 67
+ }
+ Switch {
+  inputs 2
+  which {{counterSpeed i}}
+  name durationType11
+  xpos 533
+  ypos 115
+ }
+ Erode {
+  size {{(styleChoice*-1)+1 i}}
+  name Erode5
+  xpos 533
+  ypos 660
+ }
+ set Cab72e460 [stack 0]
+ Constant {
+  inputs 0
+  channels rgb
+  color {0.002499999944 0.002499999944 0.002499999944 1}
+  format {{{parent.Blank.format}}}
+  name LED_Color1
+  xpos -2976
+  ypos 636
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color {1 0 0 1}
+  format {{{parent.Blank.format}}}
+  name LED_Color
+  xpos -2833
+  ypos 636
+ }
+ Switch {
+  inputs 2
+  which {{styleChoice i}}
+  name styleSwitch1
+  xpos -2874
+  ypos 733
+ }
+set Nbf6e7b00 [stack 0]
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy15
+  xpos 533
+  ypos 778
+ }
+ Premult {
+  name Premult12
+  xpos 533
+  ypos 804
+ }
+push $N35b280
+clone $Cab72e460 {
+  xpos -2518
+  ypos 645
+  selected false
+ }
+ Grade {
+  channels rgba
+  white {{gain i}}
+  white_clamp true
+  name Grade2
+  xpos -2518
+  ypos 687
+ }
+push $N6d545c50
+ Grade {
+  multiply 0.58
+  black_clamp false
+  name Grade1
+  xpos -2678
+  ypos 710
+ }
+push $Nbf6e7b00
+ Switch {
+  inputs 2
+  which {{styleChoice i}}
+  name styleSwitch2
+  xpos -2678
+  ypos 770
+ }
+ Grade {
+  white 0.03125
+  black_clamp false
+  name Grade14
+  xpos -2678
+  ypos 796
+  disable {{styleChoice i}}
+ }
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy10
+  xpos -2518
+  ypos 796
+ }
+ Premult {
+  name Premult14
+  xpos -2518
+  ypos 822
+ }
+set N427e5230 [stack 0]
+ Merge2 {
+  inputs 2
+  name Merge53
+  label ghost
+  xpos 533
+  ypos 894
+ }
+push $N42aef2b0
+ Merge2 {
+  inputs 2
+  name Merge54
+  label LED
+  xpos 545
+  ypos 1056
+ }
+set N4191ad60 [stack 0]
+ Transform {
+  translate {{(parent.move_1.translate.x)*9 i} 0}
+  center {699.4000244 619}
+  name move_9
+  xpos 545
+  ypos 1133
+ }
+push $N4191ad60
+ Transform {
+  translate {{(parent.move_10.translate.x)*9 i} 0}
+  center {699.4000244 619}
+  name move_18
+  tile_color 0x7f00ffff
+  xpos 427
+  ypos 1134
+ }
+ Switch {
+  inputs 2
+  which {{counterSpeed i}}
+  name durationType20
+  xpos 479
+  ypos 1166
+ }
+push $N4191ad60
+ Transform {
+  translate {{((parent.move_1.translate.x)*9)*-1 i} 0}
+  center {699.4000244 619}
+  name move_27
+  xpos 644
+  ypos 1131
+ }
+ Switch {
+  inputs 2
+  which {{direction}}
+  name dirSwitch8
+  xpos 544
+  ypos 1214
+ }
+set Na81b9330 [stack 0]
+push $Na81b9330
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy21
+  xpos 544
+  ypos 1240
+ }
+ Premult {
+  name Premult20
+  xpos 544
+  ypos 1266
+  disable {{styleChoice+-1}}
+ }
+push $N2f620500
+ Retime {
+  input.first 0
+  input.first_lock true
+  input.last 9
+  input.last_lock true
+  reverse {{parent.Controls.direction i}}
+  output.first_lock true
+  output.last 1000000000
+  speed 1e-08
+  after loop
+  filter nearest
+  name Retime8
+  xpos 285
+  ypos 102
+ }
+push $N2f620500
+ Retime {
+  input.first 0
+  input.first_lock true
+  input.last 9
+  input.last_lock true
+  reverse {{parent.Controls.direction i}}
+  output.first {{parent.Controls.offset08 i}}
+  output.first_lock true
+  output.last 89
+  name Retime80
+  xpos 207
+  ypos 235
+ }
+ Switch {
+  inputs 2
+  which {{counterSpeed i}}
+  name durationType10
+  xpos 285
+  ypos 278
+ }
+clone $Cab72e460 {
+  xpos 285
+  ypos 650
+  selected false
+ }
+push $Nbf6e7b00
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy14
+  xpos 285
+  ypos 768
+ }
+ Premult {
+  name Premult10
+  xpos 285
+  ypos 794
+ }
+push $N427e5230
+ Merge2 {
+  inputs 2
+  name Merge51
+  label ghost
+  xpos 285
+  ypos 894
+ }
+push $N42aef2b0
+ Merge2 {
+  inputs 2
+  name Merge52
+  label LED
+  xpos 285
+  ypos 1035
+ }
+set N79aca490 [stack 0]
+ Transform {
+  translate {{(parent.move_1.translate.x)*8 i} 0}
+  center {699.4000244 619}
+  name move_8
+  xpos 285
+  ypos 1094
+ }
+push $N79aca490
+ Transform {
+  translate {{(parent.move_10.translate.x)*8 i} 0}
+  center {699.4000244 619}
+  name move_17
+  tile_color 0x7f00ffff
+  xpos 185
+  ypos 1094
+ }
+ Switch {
+  inputs 2
+  which {{counterSpeed i}}
+  name durationType19
+  xpos 228
+  ypos 1159
+ }
+push $N79aca490
+ Transform {
+  translate {{((parent.move_1.translate.x)*8)*-1 i} 0}
+  center {699.4000244 619}
+  name move_26
+  xpos 382
+  ypos 1094
+ }
+ Switch {
+  inputs 2
+  which {{direction}}
+  name dirSwitch7
+  xpos 285
+  ypos 1202
+ }
+set N43ebe6d0 [stack 0]
+push $N43ebe6d0
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy20
+  xpos 285
+  ypos 1228
+ }
+ Premult {
+  name Premult19
+  xpos 285
+  ypos 1254
+  disable {{styleChoice+-1}}
+ }
+push $N2f620500
+ Retime {
+  input.first 0
+  input.first_lock true
+  input.last 9
+  input.last_lock true
+  reverse {{parent.Controls.direction i}}
+  output.first_lock true
+  output.last 100000000
+  speed 1e-07
+  after loop
+  filter nearest
+  name Retime7
+  xpos 8
+  ypos 327
+ }
+push $N2f620500
+ Retime {
+  input.first 0
+  input.first_lock true
+  input.last 9
+  input.last_lock true
+  reverse {{parent.Controls.direction i}}
+  output.first {{parent.Controls.offset07 i}}
+  output.first_lock true
+  output.last 79
+  name Retime70
+  xpos -48
+  ypos 462
+ }
+ Switch {
+  inputs 2
+  which {{counterSpeed i}}
+  name durationType9
+  xpos 16
+  ypos 519
+ }
+clone $Cab72e460 {
+  xpos 16
+  ypos 655
+  selected false
+ }
+push $Nbf6e7b00
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy13
+  xpos 16
+  ypos 782
+ }
+ Premult {
+  name Premult9
+  xpos 16
+  ypos 808
+ }
+push $N427e5230
+ Merge2 {
+  inputs 2
+  name Merge39
+  label ghost
+  xpos 16
+  ypos 904
+ }
+push $N42aef2b0
+ Merge2 {
+  inputs 2
+  name Merge50
+  label LED
+  xpos 16
+  ypos 1041
+ }
+set Na46f5830 [stack 0]
+ Transform {
+  translate {{(parent.move_1.translate.x)*7 i} 0}
+  center {699.4000244 619}
+  name move_7
+  xpos 16
+  ypos 1135
+ }
+push $Na46f5830
+ Transform {
+  translate {{(parent.move_10.translate.x)*7 i} 0}
+  center {699.4000244 619}
+  name move_16
+  tile_color 0x7f00ffff
+  xpos -104
+  ypos 1117
+ }
+ Switch {
+  inputs 2
+  which {{counterSpeed i}}
+  name durationType18
+  xpos -45
+  ypos 1166
+ }
+push $Na46f5830
+ Transform {
+  translate {{((parent.move_1.translate.x)*7)*-1 i} 0}
+  center {699.4000244 619}
+  name move_25
+  xpos 114
+  ypos 1142
+ }
+ Switch {
+  inputs 2
+  which {{direction}}
+  name dirSwitch6
+  xpos 16
+  ypos 1205
+ }
+set N640bd380 [stack 0]
+push $N640bd380
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy19
+  xpos 16
+  ypos 1231
+ }
+ Premult {
+  name Premult18
+  xpos 16
+  ypos 1257
+  disable {{styleChoice+-1}}
+ }
+push $N2f620500
+ Retime {
+  input.first 0
+  input.first_lock true
+  input.last 9
+  input.last_lock true
+  reverse {{parent.Controls.direction i}}
+  output.first_lock true
+  output.last 10000000
+  speed 1e-06
+  after loop
+  filter nearest
+  name Retime6
+  xpos -334
+  ypos 409
+ }
+push $N2f620500
+ Retime {
+  input.first 0
+  input.first_lock true
+  input.last 9
+  input.last_lock true
+  reverse {{parent.Controls.direction i}}
+  output.first {{parent.Controls.offset06 i}}
+  output.first_lock true
+  output.last 69
+  name Retime60
+  xpos -392
+  ypos 519
+ }
+ Switch {
+  inputs 2
+  which {{counterSpeed i}}
+  name durationType8
+  xpos -334
+  ypos 575
+ }
+clone $Cab72e460 {
+  xpos -334
+  ypos 655
+  selected false
+ }
+push $Nbf6e7b00
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy8
+  xpos -334
+  ypos 790
+ }
+ Premult {
+  name Premult8
+  xpos -334
+  ypos 816
+ }
+push $N427e5230
+ Merge2 {
+  inputs 2
+  name Merge34
+  label ghost
+  xpos -334
+  ypos 919
+ }
+push $N42aef2b0
+ Merge2 {
+  inputs 2
+  name Merge37
+  label LED
+  xpos -334
+  ypos 1051
+ }
+set N1247f4a0 [stack 0]
+ Transform {
+  translate {{(parent.move_1.translate.x)*6 i} 0}
+  center {699.4000244 619}
+  name move_6
+  xpos -334
+  ypos 1127
+ }
+push $N1247f4a0
+ Transform {
+  translate {{(parent.move_10.translate.x)*6 i} 0}
+  center {699.4000244 619}
+  name move_15
+  tile_color 0x7f00ffff
+  xpos -444
+  ypos 1130
+ }
+ Switch {
+  inputs 2
+  which {{counterSpeed i}}
+  name durationType17
+  xpos -398
+  ypos 1167
+ }
+push $N1247f4a0
+ Transform {
+  translate {{((parent.move_1.translate.x)*6)*-1 i} 0}
+  center {699.4000244 619}
+  name move_24
+  xpos -243
+  ypos 1127
+ }
+ Switch {
+  inputs 2
+  which {{direction}}
+  name dirSwitch5
+  xpos -334
+  ypos 1215
+ }
+set Nd4bc37d0 [stack 0]
+push $Nd4bc37d0
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy18
+  xpos -334
+  ypos 1241
+ }
+ Premult {
+  name Premult17
+  xpos -334
+  ypos 1267
+  disable {{styleChoice+-1}}
+ }
+push $N2f620500
+ Retime {
+  input.first 0
+  input.first_lock true
+  input.last 9
+  input.last_lock true
+  reverse {{parent.Controls.direction i}}
+  output.first_lock true
+  output.last 1000000
+  speed 1e-05
+  after loop
+  filter nearest
+  name Retime5
+  xpos -612
+  ypos 456
+ }
+push $N2f620500
+ Retime {
+  input.first 0
+  input.first_lock true
+  input.last 9
+  input.last_lock true
+  reverse {{parent.Controls.direction i}}
+  output.first {{parent.Controls.offset05 i}}
+  output.first_lock true
+  output.last 59
+  name Retime50
+  xpos -674
+  ypos 555
+ }
+ Switch {
+  inputs 2
+  which {{counterSpeed i}}
+  name durationType7
+  xpos -612
+  ypos 599
+ }
+clone $Cab72e460 {
+  xpos -612
+  ypos 645
+  selected false
+ }
+push $Nbf6e7b00
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy7
+  xpos -612
+  ypos 775
+ }
+ Premult {
+  name Premult7
+  xpos -612
+  ypos 801
+ }
+push $N427e5230
+ Merge2 {
+  inputs 2
+  name Merge31
+  label ghost
+  xpos -612
+  ypos 906
+ }
+push $N42aef2b0
+ Merge2 {
+  inputs 2
+  name Merge33
+  label LED
+  xpos -612
+  ypos 1038
+ }
+set N2e489760 [stack 0]
+ Transform {
+  translate {{(parent.move_1.translate.x)*5 i} 0}
+  center {699.4000244 619}
+  name move_5
+  xpos -612
+  ypos 1118
+ }
+push $N2e489760
+ Transform {
+  translate {{(parent.move_10.translate.x)*5 i} 0}
+  center {699.4000244 619}
+  name move_14
+  tile_color 0x7f00ffff
+  xpos -715
+  ypos 1118
+ }
+ Switch {
+  inputs 2
+  which {{counterSpeed i}}
+  name durationType16
+  xpos -672
+  ypos 1162
+ }
+push $N2e489760
+ Transform {
+  translate {{((parent.move_1.translate.x)*5)*-1 i} 0}
+  center {699.4000244 619}
+  name move_23
+  xpos -519
+  ypos 1118
+ }
+ Switch {
+  inputs 2
+  which {{direction}}
+  name dirSwitch4
+  xpos -612
+  ypos 1215
+ }
+set Nbc5d1cf0 [stack 0]
+push $Nbc5d1cf0
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy17
+  xpos -612
+  ypos 1241
+ }
+ Premult {
+  name Premult13
+  xpos -612
+  ypos 1267
+  disable {{styleChoice+-1}}
+ }
+push $N2f620500
+ Retime {
+  input.first 0
+  input.first_lock true
+  input.last 9
+  input.last_lock true
+  reverse {{parent.Controls.direction i}}
+  output.first_lock true
+  output.last 100000
+  speed 0.0001
+  after loop
+  filter nearest
+  name Retime4
+  xpos -900
+  ypos 435
+ }
+push $N2f620500
+ Retime {
+  input.first 0
+  input.first_lock true
+  input.last 9
+  input.last_lock true
+  reverse {{parent.Controls.direction i}}
+  output.first {{parent.Controls.offset04 i}}
+  output.first_lock true
+  output.last 49
+  name Retime40
+  xpos -965
+  ypos 559
+ }
+ Switch {
+  inputs 2
+  which {{counterSpeed i}}
+  name durationType6
+  xpos -900
+  ypos 613
+ }
+clone $Cab72e460 {
+  xpos -900
+  ypos 647
+  selected false
+ }
+push $Nbf6e7b00
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy6
+  xpos -900
+  ypos 777
+ }
+ Premult {
+  name Premult6
+  xpos -901
+  ypos 800
+ }
+push $N427e5230
+ Merge2 {
+  inputs 2
+  name Merge20
+  label ghost
+  xpos -901
+  ypos 904
+ }
+push $N42aef2b0
+ Merge2 {
+  inputs 2
+  name Merge21
+  label LED
+  xpos -900
+  ypos 1038
+ }
+set Nec3ed210 [stack 0]
+ Transform {
+  translate {{(parent.move_1.translate.x)*4 i} 0}
+  center {699.4000244 619}
+  name move_4
+  xpos -900
+  ypos 1118
+ }
+push $Nec3ed210
+ Transform {
+  translate {{(parent.move_10.translate.x)*4 i} 0}
+  center {699.4000244 619}
+  name move_13
+  tile_color 0x7f00ffff
+  xpos -996
+  ypos 1118
+ }
+ Switch {
+  inputs 2
+  which {{counterSpeed i}}
+  name durationType15
+  xpos -963
+  ypos 1158
+ }
+push $Nec3ed210
+ Transform {
+  translate {{((parent.move_1.translate.x)*4)*-1 i} 0}
+  center {699.4000244 619}
+  name move_22
+  xpos -807
+  ypos 1118
+ }
+ Switch {
+  inputs 2
+  which {{direction}}
+  name dirSwitch3
+  xpos -900
+  ypos 1209
+ }
+set N4976d10 [stack 0]
+push $N4976d10
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy16
+  xpos -900
+  ypos 1235
+ }
+ Premult {
+  name Premult11
+  xpos -900
+  ypos 1261
+  disable {{styleChoice+-1}}
+ }
+push $N2f620500
+ Retime {
+  input.first 0
+  input.first_lock true
+  input.last 9
+  input.last_lock true
+  reverse {{parent.Controls.direction i}}
+  output.first_lock true
+  output.last 10000
+  speed 0.001
+  after loop
+  filter nearest
+  name Retime3
+  xpos -1230
+  ypos 398
+ }
+push $N2f620500
+ Retime {
+  input.first 0
+  input.first_lock true
+  input.last 9
+  input.last_lock true
+  reverse {{parent.Controls.direction i}}
+  output.first {{parent.Controls.offset03 i}}
+  output.first_lock true
+  output.last 39
+  name Retime30
+  xpos -1135
+  ypos 567
+ }
+ Switch {
+  inputs 2
+  which {{counterSpeed i}}
+  name durationType5
+  xpos -1230
+  ypos 601
+ }
+clone $Cab72e460 {
+  xpos -1230
+  ypos 630
+  selected false
+ }
+push $Nbf6e7b00
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy4
+  xpos -1230
+  ypos 768
+ }
+ Premult {
+  name Premult5
+  xpos -1230
+  ypos 794
+ }
+push $N427e5230
+ Merge2 {
+  inputs 2
+  name Merge9
+  label ghost
+  xpos -1230
+  ypos 894
+ }
+push $N42aef2b0
+ Merge2 {
+  inputs 2
+  name Merge18
+  label LED
+  xpos -1230
+  ypos 1032
+ }
+set N999ebbe0 [stack 0]
+ Transform {
+  translate {{(parent.move_1.translate.x)*3 i} 0}
+  center {699.4000244 619}
+  name move_3
+  xpos -1225
+  ypos 1128
+ }
+push $N999ebbe0
+ Transform {
+  translate {{(parent.move_10.translate.x)*3 i} 0}
+  center {699.4000244 619}
+  name move_12
+  tile_color 0x7f00ffff
+  xpos -1337
+  ypos 1118
+ }
+ Switch {
+  inputs 2
+  which {{counterSpeed i}}
+  name durationType14
+  xpos -1291
+  ypos 1174
+ }
+push $N999ebbe0
+ Transform {
+  translate {{((parent.move_1.translate.x)*3)*-1 i} 0}
+  center {699.4000244 619}
+  name move_21
+  xpos -1122
+  ypos 1125
+ }
+ Switch {
+  inputs 2
+  which {{direction i}}
+  name dirSwitch2
+  xpos -1225
+  ypos 1222
+ }
+set N67f236b0 [stack 0]
+push $N67f236b0
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy5
+  xpos -1225
+  ypos 1248
+ }
+ Premult {
+  name Premult3
+  xpos -1225
+  ypos 1274
+  disable {{styleChoice+-1}}
+ }
+push $N2f620500
+ Retime {
+  input.first 0
+  input.first_lock true
+  input.last 9
+  input.last_lock true
+  reverse {{parent.Controls.direction i}}
+  output.first_lock true
+  output.last 1000
+  speed 0.01
+  after loop
+  filter nearest
+  name Retime12
+  xpos -1595
+  ypos 422
+ }
+push $N2f620500
+ Retime {
+  input.first 0
+  input.first_lock true
+  input.last 9
+  input.last_lock true
+  reverse {{parent.Controls.direction i}}
+  output.first {{parent.Controls.offset02 i}}
+  output.first_lock true
+  output.last 29
+  name Retime20
+  xpos -1503
+  ypos 554
+ }
+ Switch {
+  inputs 2
+  which {{counterSpeed i}}
+  name durationType4
+  xpos -1595
+  ypos 608
+ }
+clone $Cab72e460 {
+  xpos -1595
+  ypos 654
+  selected false
+ }
+push $Nbf6e7b00
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy12
+  xpos -1595
+  ypos 771
+ }
+ Premult {
+  name Premult16
+  xpos -1595
+  ypos 797
+ }
+push $N427e5230
+ Merge2 {
+  inputs 2
+  name Merge48
+  label ghost
+  xpos -1595
+  ypos 894
+ }
+push $N42aef2b0
+ Merge2 {
+  inputs 2
+  name Merge49
+  label LED
+  xpos -1595
+  ypos 1037
+ }
+set N13c7ab70 [stack 0]
+ Transform {
+  translate {{(parent.move_10.translate.x)*2 i} 0}
+  center {699.4000244 619}
+  name move_11
+  tile_color 0x7f00ffff
+  xpos -1699
+  ypos 1141
+ }
+set N1af3700 [stack 0]
+push $N13c7ab70
+ Transform {
+  translate {{(parent.move_1.translate.x)*2 i} 0}
+  center {699.4000244 619}
+  name move_2
+  xpos -1595
+  ypos 1141
+ }
+push $N1af3700
+ Switch {
+  inputs 3
+  which {{counterSpeed i}}
+  name durationType13
+  xpos -1654
+  ypos 1185
+ }
+push $N13c7ab70
+ Transform {
+  translate {{((parent.move_1.translate.x)*2)*-1 i} 0}
+  center {699.4000244 619}
+  name move_20
+  xpos -1501
+  ypos 1142
+ }
+ Switch {
+  inputs 2
+  which {{direction}}
+  name dirSwitch1
+  xpos -1595
+  ypos 1226
+ }
+set Nd4f0d650 [stack 0]
+push $Nd4f0d650
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy3
+  xpos -1595
+  ypos 1252
+ }
+ Premult {
+  name Premult21
+  xpos -1595
+  ypos 1285
+  disable {{styleChoice+-1}}
+ }
+push $N2f620500
+ Retime {
+  input.first 0
+  input.first_lock true
+  input.last 9
+  input.last_lock true
+  reverse {{parent.Controls.direction i}}
+  output.first_lock true
+  speed 0.1
+  after loop
+  filter nearest
+  name Retime01
+  xpos -1942
+  ypos 428
+ }
+push $N2f620500
+ Retime {
+  input.first 0
+  input.first_lock true
+  input.last 9
+  input.last_lock true
+  reverse {{parent.Controls.direction i}}
+  output.first {{parent.Controls.offset01 i}}
+  output.first_lock true
+  output.last 19
+  name Retime10
+  xpos -1855
+  ypos 555
+ }
+ Switch {
+  inputs 2
+  which {{counterSpeed i}}
+  name durationType3
+  xpos -1942
+  ypos 590
+ }
+clone $Cab72e460 {
+  xpos -1942
+  ypos 655
+  selected false
+ }
+push $Nbf6e7b00
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy11
+  xpos -1942
+  ypos 769
+ }
+ Premult {
+  name Premult15
+  xpos -1942
+  ypos 795
+ }
+push $N427e5230
+ Merge2 {
+  inputs 2
+  name Merge46
+  label ghost
+  xpos -1942
+  ypos 882
+ }
+push $N42aef2b0
+ Merge2 {
+  inputs 2
+  name Merge47
+  label LED
+  xpos -1942
+  ypos 1028
+ }
+set N2cd676f0 [stack 0]
+ Transform {
+  translate {{(parent.Controls.spacing)+40 i} 0}
+  center {699.4000244 619}
+  name move_1
+  xpos -1942
+  ypos 1094
+ }
+push $N2cd676f0
+ Transform {
+  translate {{((parent.Controls.spacing)+40) i} 0}
+  center {699.4000244 619}
+  name move_10
+  tile_color 0x7f00ffff
+  xpos -2043
+  ypos 1094
+ }
+ Switch {
+  inputs 2
+  which {{counterSpeed i}}
+  name durationType12
+  xpos -1995
+  ypos 1150
+ }
+push $N2cd676f0
+ Transform {
+  translate {{((parent.Controls.spacing)+40)*-1 i} 0}
+  center {699.4000244 619}
+  name move_19
+  xpos -1847
+  ypos 1094
+ }
+ Switch {
+  inputs 2
+  which {{direction i}}
+  name dirSwitch
+  xpos -1942
+  ypos 1200
+ }
+set N2ddcd1b0 [stack 0]
+push $N2ddcd1b0
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy1
+  xpos -1942
+  ypos 1226
+ }
+ Premult {
+  name Premult1
+  xpos -1942
+  ypos 1252
+  disable {{styleChoice+-1}}
+ }
+push $N2f620500
+ Retime {
+  input.first 0
+  input.first_lock true
+  input.last 9
+  input.last_lock true
+  reverse {{parent.Controls.direction i}}
+  output.first {{parent.Controls.startframe i}}
+  output.first_lock true
+  output.last 10
+  after loop
+  name Retime0
+  xpos -2262
+  ypos 355
+ }
+push $N2f620500
+ Retime {
+  input.first 0
+  input.first_lock true
+  input.last 9
+  input.last_lock true
+  reverse {{parent.Controls.direction i}}
+  output.first {{parent.Controls.startframe i}}
+  output.first_lock true
+  output.last 10
+  name Retime00
+  xpos -2185
+  ypos 530
+ }
+ Switch {
+  inputs 2
+  which {{counterSpeed i}}
+  name durationType2
+  xpos -2262
+  ypos 588
+ }
+clone $Cab72e460 {
+  xpos -2262
+  ypos 655
+  selected false
+ }
+push $Nbf6e7b00
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy9
+  xpos -2262
+  ypos 773
+ }
+ Premult {
+  name Premult4
+  xpos -2262
+  ypos 799
+ }
+push $N427e5230
+ Merge2 {
+  inputs 2
+  name Merge4
+  label ghost
+  xpos -2262
+  ypos 942
+ }
+set N79881c10 [stack 0]
+push $N79881c10
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy2
+  xpos -2262
+  ypos 1213
+ }
+ Premult {
+  name Premult2
+  xpos -2262
+  ypos 1238
+  disable {{styleChoice+-1 i}}
+ }
+push $N42aef2b0
+ Merge2 {
+  inputs 2
+  name Merge22
+  label LED
+  xpos -2262
+  ypos 1302
+ }
+set N64c2d9e0 [stack 0]
+ Merge2 {
+  inputs 2
+  name Merge24
+  xpos -1942
+  ypos 1310
+ }
+set N34269f70 [stack 0]
+ Merge2 {
+  inputs 2
+  name Merge28
+  xpos -1595
+  ypos 1311
+ }
+set Ne06f86f0 [stack 0]
+ Merge2 {
+  inputs 2
+  name Merge36
+  xpos -1225
+  ypos 1311
+ }
+set N434846a0 [stack 0]
+ Merge2 {
+  inputs 2
+  name Merge40
+  xpos -900
+  ypos 1304
+ }
+set N7850b300 [stack 0]
+ Merge2 {
+  inputs 2
+  name Merge41
+  xpos -612
+  ypos 1304
+ }
+set N66105650 [stack 0]
+ Merge2 {
+  inputs 2
+  name Merge42
+  xpos -334
+  ypos 1304
+ }
+set N127d5050 [stack 0]
+ Merge2 {
+  inputs 2
+  name Merge43
+  xpos 16
+  ypos 1304
+ }
+set N41b4d220 [stack 0]
+ Merge2 {
+  inputs 2
+  name Merge44
+  xpos 285
+  ypos 1310
+ }
+set Naa23f2e0 [stack 0]
+ Merge2 {
+  inputs 2
+  name Merge45
+  xpos 544
+  ypos 1310
+ }
+push $Naa23f2e0
+push $Naa23f2e0
+push $N41b4d220
+push $N127d5050
+push $N66105650
+push $N7850b300
+push $N434846a0
+push $Ne06f86f0
+push $N34269f70
+push $N64c2d9e0
+push $N42aef2b0
+ NoOp {
+  name Controls
+  tile_color 0x7fff00ff
+  xpos -1240
+  ypos 1500
+  addUserKnob {20 User}
+  addUserKnob {7 startframe l "Start Frame" R 1 2000}
+  startframe {{parent.parent.knob.first_frame i}}
+  addUserKnob {7 usrEndFrame l "End Frame (Speed)" R -10 10}
+  usrEndFrame -10
+  addUserKnob {7 digits R 1 10}
+  digits {{parent.digits.noDigits i}}
+  addUserKnob {7 spacing l Spacing R 0 100}
+  spacing {{parent.fontSpacing i}}
+  addUserKnob {6 direction l Countdown +STARTLINE}
+  direction true
+  addUserKnob {3 fontScaler}
+  fontScaler {{((parent.fontScale*10)*2)*(parent.fontSpacing) i}}
+  addUserKnob {3 offset01}
+  offset01 {{(startframe+10)-1 i}}
+  addUserKnob {3 offset02}
+  offset02 {{startframe+19 i}}
+  addUserKnob {3 offset03}
+  offset03 {{startframe+29 i}}
+  addUserKnob {3 offset04}
+  offset04 {{startframe+39 i}}
+  addUserKnob {3 offset05}
+  offset05 {{startframe+49 i}}
+  addUserKnob {3 offset06}
+  offset06 {{startframe+59 i}}
+  addUserKnob {3 offset07}
+  offset07 {{startframe+69 i}}
+  addUserKnob {3 offset08}
+  offset08 {{startframe+79 i}}
+  addUserKnob {3 offset09}
+  offset09 {{startframe+89 i}}
+  addUserKnob {3 endFrame l endframe}
+  endFrame {{startframe+100 i}}
+  addUserKnob {3 userFrameEnd l "user end frame"}
+  userFrameEnd {{parent.parent.knob.last_frame+(usrEndFrame*-1) i}}
+  addUserKnob {3 startFrame}
+  startFrame {{parent.parent.knob.first_frame i}}
+  addUserKnob {3 inputFrameOffset}
+  inputFrameOffset {{startFrame+spacing*(noDigitsSlider) i}}
+  addUserKnob {3 sequenceLenth}
+  sequenceLenth {{parent.parent.knob.last_frame i}}
+  addUserKnob {3 endFrameOffset}
+  endFrameOffset {{startFrame+(10*digits) i}}
+ }
+set N43e5dd80 [stack 0]
+ Switch {
+  inputs 12
+  which {{parent.Controls.digits i}}
+  name Switch2
+  xpos -831
+  ypos 1478
+ }
+ Transform {
+  scale {{parent.fontScale i}}
+  center {700 620}
+  name fontScaleMaster
+  xpos -831
+  ypos 1518
+ }
+set N43e5d550 [stack 0]
+ Transform {
+  center {700 619}
+  name LocatorDown
+  xpos -882
+  ypos 1556
+ }
+ Premult {
+  name Premult23
+  xpos -882
+  ypos 1582
+ }
+set N2f70b480 [stack 0]
+push $N2f70b480
+ Rectangle {
+  inputs 0
+  cliptype none
+  area {643 151 1083 243}
+  color {{parent.BlankModern.color i} {parent.BlankModern.color i} {parent.BlankModern.color i} {parent.BlankModern.color i}}
+  name Modern_BG1
+  xpos -1102
+  ypos 1550
+ }
+ Rectangle {
+  inputs 0
+  cliptype none
+  area {643 151 1083 243}
+  color {0 0 0 1}
+  name Classic_BG1
+  xpos -1004
+  ypos 1550
+ }
+ Switch {
+  inputs 2
+  which {{styleChoice}}
+  name styleSwitch3
+  xpos -1040
+  ypos 1574
+ }
+ Reformat {
+  format "2048 2048 0 0 2048 2048 1 square_2K"
+  name Reformat5
+  xpos -1022
+  ypos 1601
+ }
+ Merge2 {
+  inputs 2
+  name Merge3
+  xpos -882
+  ypos 1608
+ }
+ Reformat {
+  format "2048 2048 0 0 2048 2048 1 square_2K"
+  black_outside true
+  name Reformat4
+  xpos -882
+  ypos 1638
+ }
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy22
+  xpos -882
+  ypos 1680
+  disable {{NumberPremlt==0 i}}
+ }
+push $N43e5d550
+ Transform {
+  translate {-40 0}
+  center {700 619}
+  name LocatorUp
+  xpos -780
+  ypos 1563
+ }
+ Premult {
+  name Premult24
+  xpos -780
+  ypos 1588
+ }
+set N135f7060 [stack 0]
+push $N135f7060
+ Rectangle {
+  inputs 0
+  cliptype none
+  area {232 150 672 242}
+  color {{parent.BlankModern.color i} {parent.BlankModern.color i} {parent.BlankModern.color i} {parent.BlankModern.color i}}
+  name Mod_BG2
+  xpos -571
+  ypos 1550
+ }
+ Rectangle {
+  inputs 0
+  cliptype none
+  area {232 150 672 242}
+  color {0 0 0 1}
+  name Classic_BG3
+  xpos -662
+  ypos 1526
+ }
+ Switch {
+  inputs 2
+  which {{styleChoice}}
+  name styleSwitch4
+  xpos -662
+  ypos 1580
+ }
+ Reformat {
+  format "2048 2048 0 0 2048 2048 1 square_2K"
+  name Reformat2
+  xpos -662
+  ypos 1606
+ }
+ Merge2 {
+  inputs 2
+  name Merge2
+  xpos -780
+  ypos 1614
+ }
+ Reformat {
+  format "2048 2048 0 0 2048 2048 1 square_2K"
+  black_outside true
+  name Reformat3
+  xpos -780
+  ypos 1638
+ }
+ ShuffleCopy {
+  inputs 2
+  name ShuffleCopy23
+  xpos -780
+  ypos 1680
+  disable {{NumberPremlt==0}}
+ }
+ Switch {
+  inputs 2
+  which {{direction i}}
+  name dirSwitch9
+  xpos -834
+  ypos 1718
+ }
+ Transform {
+  translate {324 404}
+  center {702 617}
+  name LocatorToBottomCenter
+  xpos -834
+  ypos 1757
+ }
+ Transform {
+  center {1024 1024}
+  name Position1
+  xpos -834
+  ypos 1790
+ }
+set N42d891c0 [stack 0]
+ TimeOffset {
+  time_offset {{parent.digits.timeOffset-1}}
+  name TimeOffset1
+  xpos -780
+  ypos 1838
+ }
+set N35d15720 [stack 0]
+push $N42d891c0
+ Retime {
+  input.first {{parent.Controls.startFrame i}}
+  input.first_lock true
+  input.last {{parent.Controls.offset09 i}}
+  input.last_lock true
+  output.first {{parent.Controls.startFrame i}}
+  output.first_lock true
+  output.last {{parent.Controls.sequenceLenth i}}
+  output.last_lock true
+  speed 0.09
+  filter nearest
+  name Retime1
+  xpos -882
+  ypos 1838
+ }
+ Switch {
+  inputs 2
+  which {{counterSpeed i}}
+  name durationType1
+  xpos -831
+  ypos 1892
+ }
+set N674d95e0 [stack 0]
+ Reformat {
+  format "1920 1080 0 0 1920 1080 1 HD"
+  black_outside true
+  name Reformat1
+  xpos -826
+  ypos 1929
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color {{parent.BlankModern.color i} {parent.BlankModern.color i} {parent.BlankModern.color i} {parent.BlankModern.color i}}
+  format {{{parent.Reformat1.format}}}
+  name Constant2
+  xpos -595
+  ypos 1908
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  format {{{parent.Reformat1.format}}}
+  name Constant1
+  xpos -705
+  ypos 1947
+ }
+ Switch {
+  inputs 2
+  which {{styleChoice}}
+  name styleSwitch5
+  xpos -654
+  ypos 2054
+ }
+ Merge2 {
+  inputs 2
+  name Merge1
+  xpos -826
+  ypos 2054
+ }
+ Shuffle {
+  alpha white
+  name Shuffle1
+  xpos -826
+  ypos 2078
+  disable {{premultiply i}}
+ }
+ Premult {
+  name Premult22
+  xpos -826
+  ypos 2148
+  disable {{premultiply==0 i}}
+ }
+ Glow {
+  size {{parent.glow i}}
+  name Glow1
+  xpos -826
+  ypos 2174
+  disable {{styleChoice i}}
+ }
+ Output {
+  name Output1
+  xpos -826
+  ypos 2213
+ }
+push $N43e5dd80
+ NoOp {
+  name digits
+  tile_color 0xdcff00ff
+  xpos -1240
+  ypos 1526
+  addUserKnob {20 User}
+  addUserKnob {3 timeOffset}
+  timeOffset {{(parent.timeO)-1 i}}
+  addUserKnob {3 noDigits}
+  noDigits {{parent.noDigitsSlider i}}
+ }
+push $N35d15720
+push $N674d95e0
+ Viewer {
+  inputs 2
+  input_process false
+  name Viewer1
+  xpos -1187
+  ypos 1934
+ }
+end_group

@@ -1,0 +1,65 @@
+#! C:/Program Files/Nuke6.0v1/Nuke6.0.exe -nx
+version 6.0 v1
+Gizmo {
+ help "Controls a pseudo buffer. It writes out a buffer file with a proxy. You can use this for prerenders."
+ lock_connections true
+ addUserKnob {20 "" l User}
+ addUserKnob {26 "" l "Write Buffer"}
+ addUserKnob {41 render_order l "Render Order" T Write1.render_order}
+ addUserKnob {6 bypass l "Bypass Buffer" t "Click to bypass buffer render" -STARTLINE}
+ addUserKnob {41 which l INVISIBLE +INVISIBLE T Switch1.which}
+ addUserKnob {41 channels T Write1.channels}
+ addUserKnob {41 file T Write1.file}
+ addUserKnob {41 proxy T Write1.proxy}
+ addUserKnob {26 "" l "Read Buffer"}
+ addUserKnob {41 first l "frame range" T Read1.first}
+ addUserKnob {41 before l "" -STARTLINE T Read1.before}
+ addUserKnob {41 last l "" -STARTLINE T Read1.last}
+ addUserKnob {41 after l "" -STARTLINE T Read1.after}
+ addUserKnob {41 frame T Read1.frame}
+ addUserKnob {41 on_error l "missing frames" T Read1.on_error}
+}
+ Read {
+  inputs 0
+  file "\[value Write1.file]"
+  format "2048 1556 0 0 2048 1556 1 fh  (FullAp - High)"
+  proxy_format "1024 778 0 0 1024 778 1 fl  (FullAp - Half)"
+  name Read1
+  label "\[show_iread_version]"
+  xpos -280
+  ypos -195
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos -160
+  ypos -262
+ }
+set N7803b60 [stack 0]
+ Switch {
+  inputs 2
+  which {{bypass==0?1:0 i}}
+  name Switch1
+  xpos -160
+  ypos -46
+ }
+ NoOp {
+  name NoOp1
+  xpos -160
+  ypos 26
+ }
+ Output {
+  name Output1
+  xpos -160
+  ypos 62
+ }
+push $N7803b60
+ Write {
+  channels rgba
+  file /tmp/buffer/buffer1.%04d.exr
+  file_type exr
+  name Write1
+  xpos -280
+  ypos -246
+ }
+end_group

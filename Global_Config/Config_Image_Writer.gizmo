@@ -1,0 +1,69 @@
+#! C:/Program Files/Nuke7.0v4/Nuke7.0.exe -nx
+version 7.0 v4
+Gizmo {
+ addUserKnob {20 User}
+ addUserKnob {41 channels T Write1.channels}
+ addUserKnob {41 file T Write1.file}
+ addUserKnob {41 proxy T Write1.proxy}
+ addUserKnob {41 frame_mode l frame T Write1.frame_mode}
+ addUserKnob {41 frame l "" -STARTLINE T Write1.frame}
+ addUserKnob {41 colorspace T Write1.colorspace}
+ addUserKnob {41 premultiplied T Write1.premultiplied}
+ addUserKnob {41 raw l "raw data" T Write1.raw}
+ addUserKnob {41 views T Write1.views}
+ addUserKnob {41 file_type l "file type" T Write1.file_type}
+ addUserKnob {26 "" l "png Options"}
+ addUserKnob {41 datatype l "data type" T Write1.datatype}
+ addUserKnob {41 render_order l "render order" T Write1.render_order}
+ addUserKnob {41 Render T Write1.Render}
+ addUserKnob {41 first l "frame range" T Write1.first}
+ addUserKnob {41 last l "" -STARTLINE T Write1.last}
+ addUserKnob {41 use_limit l "limit to range" T Write1.use_limit}
+ addUserKnob {26 "" l " "}
+ addUserKnob {41 reading l "read file" T Write1.reading}
+ addUserKnob {41 checkHashOnRead l "check file matches input" T Write1.checkHashOnRead}
+ addUserKnob {41 on_error l "missing frames" T Write1.on_error}
+ addUserKnob {41 reload l Reload T Write1.reload}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 836
+  ypos 467
+ }
+ Write {
+  channels rgba
+  file "Comp/Config_Parts/V001/\[python Nuke_Scripts.Gizmo_Fns.Config_Image_Writer_Gizmo.thisView_output()]_###.png"
+  views {_Common__EAJ _Common__FAJ _Common__K23 _Common__K50 _Common__KH3 _Common__NAB _Common__QAA}
+  file_type png
+  checkHashOnRead false
+  version 4
+  name Write1
+  selected true
+  xpos 836
+  ypos 532
+ }
+set N192739a0 [stack 0]
+ Output {
+  name Output1
+  xpos 836
+  ypos 607
+ }
+push $N192739a0
+push 0
+push 0
+push 0
+push 0
+push 0
+push 0
+push 0
+push 0
+ Viewer {
+  inputs 9
+  input_number 8
+  input_process false
+  name Viewer1
+  xpos 946
+  ypos 538
+ }
+end_group

@@ -1,0 +1,136 @@
+#! C:/Program Files/Nuke7.0v4/Nuke7.0.exe -nx
+version 7.0 v4
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="0" w="1936" h="1160" screen="0">
+        <splitter orientation="1">
+            <split size="887"/>
+            <splitter orientation="1">
+                <split size="40"/>
+                <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                    <page id="Toolbar.1"/>
+                </dock>
+                <split size="843"/>
+                <splitter orientation="2">
+                    <split size="548"/>
+                    <dock id="" activePageId="Viewer.1">
+                        <page id="Viewer.1"/>
+                    </dock>
+                    <split size="547"/>
+                    <dock id="" activePageId="DAG.1">
+                        <page id="DAG.1"/>
+                        <page id="Curve Editor.1"/>
+                        <page id="DopeSheet.1"/>
+                    </dock>
+                </splitter>
+            </splitter>
+            <split size="1029"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+                <page id="Script Editor.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name C:/SYSENV/Nuke/Gizmos/Global_Config/Dev/Global_Config_Data/Global_Config_Data_v01.nk
+ format "2048 1556 0 0 2048 1556 1 2K_Super_35(full-ap)"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+}
+Viewer {
+ inputs 0
+ input_process false
+ name Viewer1
+ xpos -50
+ ypos -25
+}
+Group {
+ inputs 0
+ name Global_Config_Node
+ note_font Verdana
+ xpos -50
+ ypos -225
+ addUserKnob {20 AW}
+ addUserKnob {2 config_file l "Config DataBase File"}
+ config_file Other/Config_files/Config_Data.awconfig
+ addUserKnob {1 config_vic_name l "Vic Name"}
+ addUserKnob {3 frame_count l "Frame Count" -STARTLINE}
+ frame_count 8
+ addUserKnob {4 config_prj_type l "Project Type" -STARTLINE M {Ext Int}}
+ addUserKnob {20 asset_lists l "Asset Lists" n 1}
+ asset_lists 0
+ addUserKnob {4 exterior_colors l "Exterior Colors" M {}}
+ addUserKnob {4 interior_colors l "Interior Colors" M {""}}
+ addUserKnob {4 finishes l Finishes M {""}}
+ addUserKnob {4 config_images l "Config Images" M {""}}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 model_definition l "Model Definition" n 1}
+ model_definition 0
+ addUserKnob {4 Body M {""}}
+ addUserKnob {4 Engine M {}}
+ addUserKnob {4 Axle M {}}
+ addUserKnob {4 Drive M {}}
+ addUserKnob {4 Grade M {}}
+ addUserKnob {4 Transmission M {}}
+ addUserKnob {4 Model M {}}
+ addUserKnob {4 Intake M {}}
+ addUserKnob {4 Zone M {}}
+ addUserKnob {4 Equipment M {}}
+ addUserKnob {4 Option1 M {}}
+ addUserKnob {4 Option2 M {}}
+ addUserKnob {4 Option3 M {}}
+ addUserKnob {4 Option4 M {}}
+ addUserKnob {4 Option5 M {}}
+ addUserKnob {3 gizmo_version}
+ addUserKnob {3 gizmo_sub_version -STARTLINE}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {20 About}
+ addUserKnob {26 about l "" +STARTLINE T "The Global Config Data Node was created for the Nissan Infiniti Global\n360 Configurator project. It is responsible for all asset modifications,\nsuch as adding and removing Config Images, as well as maintaining\nNuke view-to-image file integrity. To do this, its secondary job is to\naccess and store Database Data.\n\nOnly one \"Global_Config_Data\" node may exist in a Nuke comp at any\ngiven time. This is because, upon creation, whether for the first time\nor when a file is loaded, it initializes itself by loading the database file\nassociated with the current project. It also maintains the current state\nof information for the last time the file was saved and closed.\n\nA new global variable, \"AW_G_Global_Config_Node\", is used to access\nthe wrapper class. If more than one of these were to exist, the global\nvariable would be reset and applied to the newly created node,\nresetting itself, as if the file was just opened. This would lose the old\nnode entirely.\n\nIn order to prevent this, the \"nuke.createNode\" function has been\n*overridden* with a new custom function to guarantee that this\ncannot happen. If, for some reason, a new Global_Config_Data Node\nis initialized, it will be caught as an error and the original node will be\nreturned, instead."}
+}
+ ModifyMetaData {
+  inputs 0
+  metadata {
+   {set config_data/assets/interior_colors "\[python \{nuke.thisParent().knob(\"interior_colors\").values()\}]"}
+   {set config_data/assets/exterior_colors "\[python \{nuke.thisParent().knob(\"exterior_colors\").values()\}]"}
+   {set config_data/assets/finishes "\[value parent.finishes]"}
+   {set config_data/assets/config_images "\[python \{nuke.thisParent().knob(\"config_images\").values()\}]"}
+   {set config_data/definition/body "\[python \{nuke.thisParent().knob(\"Body\").values()\}]"}
+   {set config_data/definition/engine "\[python \{nuke.thisParent().knob(\"Engine\").values()\}]"}
+   {set config_data/definition/axle "\[python \{nuke.thisParent().knob(\"Axle\").values()\}]"}
+   {set config_data/definition/drive "\[python \{nuke.thisParent().knob(\"Drive\").values()\}]"}
+   {set config_data/definition/grade "\[python \{nuke.thisParent().knob(\"Grade\").values()\}]"}
+   {set config_data/definition/transmission "\[python \{nuke.thisParent().knob(\"Transmission\").values()\}]"}
+   {set config_data/definition/model "\[python \{nuke.thisParent().knob(\"Model\").values()\}]"}
+   {set config_data/definition/intake "\[python \{nuke.thisParent().knob(\"Intake\").values()\}]"}
+   {set config_data/definition/zone "\[python \{nuke.thisParent().knob(\"Zone\").values()\}]"}
+   {set config_data/definition/equipment "\[python \{nuke.thisParent().knob(\"Equipment\").values()\}]"}
+   {set config_data/definition/option1 "\[python \{nuke.thisParent().knob(\"Option1\").values()\}]"}
+   {set config_data/definition/option2 "\[python \{nuke.thisParent().knob(\"Option2\").values()\}]"}
+   {set config_data/definition/option3 "\[python \{nuke.thisParent().knob(\"Option3\").values()\}]"}
+   {set config_data/definition/option4 "\[python \{nuke.thisParent().knob(\"Option4\").values()\}]"}
+   {set config_data/definition/option5 "\[python \{nuke.thisParent().knob(\"Option5\").values()\}]"}
+   {set config_data/specs/frame_count "\[value parent.frame_count]"}
+   {set config_data/specs/vic_name "\[value parent.config_vic_name]"}
+   {set config_data/specs/prj_type "\[value parent.config_prj_type]"}
+  }
+  name ModifyMetaData1
+  note_font Verdana
+  xpos -50
+  ypos -325
+ }
+ ViewMetaData {
+  name ViewMetaData1
+  note_font Verdana
+  xpos -50
+  ypos -125
+ }
+ Output {
+  name Output1
+  note_font Verdana
+  xpos -50
+  ypos 75
+ }
+end_group

@@ -1,0 +1,764 @@
+#! C:/Program Files/Nuke9.0v4/nuke-9.0.4.dll -nx
+#write_info Write_EXR file:"" format:"2048 1556 1" chans:":rgba.red:rgba.green:rgba.blue:rgba.alpha:Background_Color.red:Background_Color.green:Background_Color.blue:Background_Color.alpha:Diffuse_Color.red:Diffuse_Color.green:Diffuse_Color.blue:Diffuse_Color.alpha:Diffuse_IBL.red:Diffuse_IBL.green:Diffuse_IBL.blue:Diffuse_IBL.alpha:Diffuse_IBL_Illumination.red:Diffuse_IBL_Illumination.green:Diffuse_IBL_Illumination.blue:Diffuse_IBL_Illumination.alpha:Diffuse_Indirect.red:Diffuse_Indirect.green:Diffuse_Indirect.blue:Diffuse_Indirect.alpha:Diffuse_Indirect_Illumination.red:Diffuse_Indirect_Illumination.green:Diffuse_Indirect_Illumination.blue:Diffuse_Indirect_Illumination.alpha:Diffuse_Light.red:Diffuse_Light.green:Diffuse_Light.blue:Diffuse_Light.alpha:Diffuse_Light_Illumination.red:Diffuse_Light_Illumination.green:Diffuse_Light_Illumination.blue:Diffuse_Light_Illumination.alpha:Glossy_Color.red:Glossy_Color.green:Glossy_Color.blue:Glossy_Color.alpha:Glossy_IBL.red:Glossy_IBL.green:Glossy_IBL.blue:Glossy_IBL.alpha:Glossy_IBL_Illumination.red:Glossy_IBL_Illumination.green:Glossy_IBL_Illumination.blue:Glossy_IBL_Illumination.alpha:Glossy_Indirect.red:Glossy_Indirect.green:Glossy_Indirect.blue:Glossy_Indirect.alpha:Glossy_Indirect_Illumination.red:Glossy_Indirect_Illumination.green:Glossy_Indirect_Illumination.blue:Glossy_Indirect_Illumination.alpha:Glossy_Light.red:Glossy_Light.green:Glossy_Light.blue:Glossy_Light.alpha:Glossy_Light_Illumination.red:Glossy_Light_Illumination.green:Glossy_Light_Illumination.blue:Glossy_Light_Illumination.alpha:Incandescence.red:Incandescence.green:Incandescence.blue:Incandescence.alpha:Mask.red:Mask.green:Mask.blue:Mask.alpha:MaterialID.red:MaterialID.green:MaterialID.blue:MaterialID.alpha:Normal.red:Normal.green:Normal.blue:Normal.alpha:Occlusion.red:Occlusion.green:Occlusion.blue:Occlusion.alpha:Position.red:Position.green:Position.blue:Position.alpha:Specular_Color.red:Specular_Color.green:Specular_Color.blue:Specular_Color.alpha:Specular_Indirect_Illumination.red:Specular_Indirect_Illumination.green:Specular_Indirect_Illumination.blue:Specular_Indirect_Illumination.alpha:Specular_Reflection.red:Specular_Reflection.green:Specular_Reflection.blue:Specular_Reflection.alpha:Translucency.red:Translucency.green:Translucency.blue:Translucency.alpha:Translucency_Color.red:Translucency_Color.green:Translucency_Color.blue:Translucency_Color.alpha:Translucency_IBL_Illumination.red:Translucency_IBL_Illumination.green:Translucency_IBL_Illumination.blue:Translucency_IBL_Illumination.alpha:Translucency_Indirect_Illumination.red:Translucency_Indirect_Illumination.green:Translucency_Indirect_Illumination.blue:Translucency_Indirect_Illumination.alpha:Translucency_Light_Illumination.red:Translucency_Light_Illumination.green:Translucency_Light_Illumination.blue:Translucency_Light_Illumination.alpha:Transparency_Color.red:Transparency_Color.green:Transparency_Color.blue:Transparency_Color.alpha:View.red:View.green:View.blue:View.alpha:" framerange:"0 76" fps:"0" colorspace:"default (linear)" datatype:"16 bit half" transfer:"unknown" views:"main"
+version 9.0 v4
+Gizmo {
+ inputs 0
+ lock_connections true
+ addUserKnob {20 select_dir_tab l VRED}
+ addUserKnob {2 searchdir l "Render Pass Dir.: " t "Select the directory containing the render passes you wish to combine into an EXR."}
+ addUserKnob {26 ""}
+ addUserKnob {22 clear_checkboxes l "Clear Checkboxes" T "this_node = nuke.thisNode()\nthis_node\['status'].setValue(\"PASSES FOUND:    Not Checked.\\n\")\nlayer_dict = dict(Background_Color='*-background_color-*',\n                  Beauty='*-beauty-*',\n                  Diffuse_Color='*-diffuse_color-*',\n                  Diffuse_IBL='*-diffuse_ibl-*',\n                  Diffuse_IBL_Illumination='*-diffuse_ibl_illumination-*',\n                  Diffuse_Indirect='*-diffuse_indirect-*',\n                  Diffuse_Indirect_Illumination='*-diffuse_indirect_illumination-*',\n                  Diffuse_Light='*-diffuse_light-*',\n                  Diffuse_Light_Illumination='*-diffuse_light_illumination-*',\n                  Glossy_Color='*-glossy_color-*',\n                  Glossy_IBL='*-glossy_ibl-*',\n                  Glossy_IBL_Illumination='*-glossy_ibl_illumination-*',\n                  Glossy_Indirect='*-glossy_indirect-*',\n                  Glossy_Indirect_Illumination='*-glossy_indirect_illumination-*',\n                  Glossy_Light='*-glossy_light-*',\n                  Glossy_Light_Illumination='*-glossy_light_illumination-*',\n                  Incandescence='*-incandescence-*',\n                  Mask='*-mask-*',\n                  MaterialID='*-materialID-*',\n                  Normal='*-normal-*',\n                  Occlusion='*-occlusion-*',\n                  Position='*-position-*',\n                  Specular_Color='*-specular_color-*',\n                  Specular_Indirect_Illumination='*-specular_indirect_illumination-*',\n                  Specular_Reflection='*-specular_reflection-*',\n                  Translucency='*-translucency-*',\n                  Translucency_Color='*-translucency_color-*',\n                  Translucency_IBL_Illumination='*-translucency_ibl_illumination-*',\n                  Translucency_Indirect_Illumination='*-translucency_indirect_illumination-*',\n                  Translucency_Light_Illumination='*-translucency_light_illumination-*',\n                  Transparency_Color='*-transparency_color-*',\n                  View='*-view-*'\n                  )\nfor name, string in layer_dict.items():\n    check = name + \"_check\"\n    knob = this_node.knob(check)\n    knob.setValue(False)" +STARTLINE}
+ addUserKnob {26 arrow l "" -STARTLINE T " ------>>  "}
+ addUserKnob {22 detect_passes_button l "Check for Passes" -STARTLINE T "import glob, os, re\nthis_node = nuke.thisNode()\npath = this_node\['searchdir'].value()\nfiles_dict = \{\}\nfound = \[]\nnot_found = \[]\n\ndef getSeqInfo(filepath):\n    first = \"\"\n    last = \"\"\n    parent_dir = os.path.dirname(filepath)\n    filepath = os.path.basename(filepath)\n    if '#' in filepath:\n        seqNum = filepath.count('#')\n        numPad = seqNum\n        padding = \"#\"*numPad\n        baseName = filepath.split(padding)\[0]\n    elif '%0' in filepath:\n        seq1 = filepath.split('%0', 1)\[1]\n        seqNum = seq1\[0]\n        numPad = int(seqNum)\n        padding = '%0' + str(numPad) + 'd'\n        baseName = filepath.split(padding)\[0]\n    else:\n        try:\n            frameNum = re.findall(r'\\d+', filepath)\[-1]\n        except:\n            # No number padding found.\n            first = \"1\"\n            last = first\n            return \[first, last]\n        # Must be a single numbered frame specified.\n        oldstring = frameNum\n        newstring = re.sub(\"^0+\",\"\", oldstring)\n        if newstring == \"\":\n            newstring = '0'\n        first = newstring\n        last = first\n        return \[first, last]\n    fileType = filepath.split('.')\[-1]\n    globString = baseName\n    for i in range(0, numPad):\n        globString += '?'\n    theGlob = sorted(glob.glob(parent_dir + '/' + globString + filepath.split(padding)\[1]))\n    numFrames = len(theGlob)\n    firstFrame = theGlob\[0]\n    lastFrame = theGlob\[-1]\n    parent_dir = os.path.dirname(firstFrame)\n    filepath = os.path.basename(firstFrame)\n    first = re.findall(r'\\d+', filepath)\[-1]\n    oldstring = first\n    newstring = re.sub(\"^0+\",\"\", oldstring)\n    if newstring == \"\":\n        newstring = '0'\n    first = newstring\n    parent_dir = os.path.dirname(lastFrame)\n    filepath = os.path.basename(lastFrame)    \n    last = re.findall(r'\\d+', filepath)\[-1]\n    oldstring = last\n    newstring = re.sub(\"^0+\",\"\", oldstring)\n    if newstring == \"\":\n        newstring = '0'\n    last = newstring\n    #return \[baseName, numPad, fileType, numFrames, firstFrame, lastFrame, first, last]\n    return \[first, last]\n\n####\n\nlayer_dict = dict(Background_Color='*-background_color-*',\n                  Beauty='*-beauty-*',\n                  Diffuse_Color='*-diffuse_color-*',\n                  Diffuse_IBL='*-diffuse_ibl-*',\n                  Diffuse_IBL_Illumination='*-diffuse_ibl_illumination-*',\n                  Diffuse_Indirect='*-diffuse_indirect-*',\n                  Diffuse_Indirect_Illumination='*-diffuse_indirect_illumination-*',\n                  Diffuse_Light='*-diffuse_light-*',\n                  Diffuse_Light_Illumination='*-diffuse_light_illumination-*',\n                  Glossy_Color='*-glossy_color-*',\n                  Glossy_IBL='*-glossy_ibl-*',\n                  Glossy_IBL_Illumination='*-glossy_ibl_illumination-*',\n                  Glossy_Indirect='*-glossy_indirect-*',\n                  Glossy_Indirect_Illumination='*-glossy_indirect_illumination-*',\n                  Glossy_Light='*-glossy_light-*',\n                  Glossy_Light_Illumination='*-glossy_light_illumination-*',\n                  Incandescence='*-incandescence-*',\n                  Mask='*-mask-*',\n                  MaterialID='*-materialID-*',\n                  Normal='*-normal-*',\n                  Occlusion='*-occlusion-*',\n                  Position='*-position-*',\n                  Specular_Color='*-specular_color-*',\n                  Specular_Indirect_Illumination='*-specular_indirect_illumination-*',\n                  Specular_Reflection='*-specular_reflection-*',\n                  Translucency='*-translucency-*',\n                  Translucency_Color='*-translucency_color-*',\n                  Translucency_IBL_Illumination='*-translucency_ibl_illumination-*',\n                  Translucency_Indirect_Illumination='*-translucency_indirect_illumination-*',\n                  Translucency_Light_Illumination='*-translucency_light_illumination-*',\n                  Transparency_Color='*-transparency_color-*',\n                  View='*-view-*'\n                  )\nif path != \"\":\n    try:\n        os.chdir(path)\n    except:\n        print path + 'not found!'\n        nuke.message(\"File path not found!\\n\\nCheck the VRED directory path and try again...\")\n    for name, string in layer_dict.items():\n        # Check for files...\n        check = name + \"_check\"\n        knob = this_node.knob(check)\n        # List to hold all of the filenames..\n        files = \[]\n        # Make a list of all the files for the current layer...\n        for filename in glob.glob(string):\n            if filename:\n                files.append(filename)\n        if files:\n            # We found at least one file, so check the box...\n            knob.setValue(True)\n            # Add to the list of layer names we have found...\n            found.append(name)\n        else:\n            # No filename matches, clear the variable...\n            filename = \"\"\n            # No files for the current layer, so clear the list...\n            files = \[]\n            # We couldn't find any files for the current layer, so uncheck the box...\n            knob.setValue(False)            \n            # Add to the list of layer names we couldn't find...\n            not_found.append(name)\n        # Set the files_dict to the layer name and its list of files...\n        files_dict\[name] = files\n        # Generate the padded file path to put in the file knob of each Read node...\n        if filename != \"\":\n            split_1 = filename.split('-')\n            print 'split_1 ---->', split_1\n            split_2 = split_1\[-1].split('.')\n            print 'split_2 ---->', split_2\n            num = split_2\[0]\n            print 'num ---->', num\n            length = len(num)\n            print 'length ---->', length\n            padding = '#'*length\n            print 'padding ---->', padding\n            padded_filename = path + split_1\[0] + '-' + split_1\[1] + '-' + padding + '.' + split_2\[-1]\n            print 'padded_filename ---->', padded_filename\n        else:\n            padded_filename = ''\n        # Build name for each Read node, set the file knob and hit the Reload button to refresh it...\n        readnode = this_node.name() + '.' + name\n        print 'readnode ---->', readnode\n        nuke.toNode(readnode).knob('file').setValue(padded_filename)\n\n        ## Run the getSeqInfo() function to get the first and last frame values from the first layer sequence we found to use for each Read node...\n        filepath = padded_filename\n        FirstLast = getSeqInfo(filepath)        \n        first=int(FirstLast\[0])\n        print 'first ---->', first\n        last=int(FirstLast\[1])\n        print 'last ---->', last\n        nuke.toNode(readnode).knob('first').setValue(first)\n        nuke.toNode(readnode).knob('last').setValue(last)\n\n        # Refresh the Reads...\n        nuke.toNode(readnode).knob('reload').execute()\n    # Update the status...\n    this_node\['status'].setValue(\"PASSES FOUND:    Done.\\n\")\nelse:\n    print \"Error:  Render Pass Dir. not found!\"\n    nuke.message(\"Error:\\n\\nRender Pass Dir. not found!\")\n    for name, string in layer_dict.items():\n        # We couldn't find any files so uncheck the boxes...\n        check = name + \"_check\"\n        knob = this_node.knob(check)            \n        knob.setValue(False)        \n        # Build name for each Read node, set the file knob and hit the Reload button to refresh it...\n        readnode = this_node.name() + '.' + name\n        nuke.toNode(readnode).knob('file').setValue(\"\")\n        # Refresh the Reads...\n        nuke.toNode(readnode).knob('reload').execute()\n    # Update the status...\n    this_node\['status'].setValue(\"ERROR:    Directory Path Not Found!\\n\")"}
+ addUserKnob {26 spacer l "" -STARTLINE T "            "}
+ addUserKnob {26 ""}
+ addUserKnob {26 status l "" +STARTLINE T "ERROR:    Directory Path Not Found!\n"}
+ addUserKnob {6 Background_Color_check l Background_Color +STARTLINE}
+ addUserKnob {6 Beauty_check l Beauty +STARTLINE}
+ addUserKnob {6 Diffuse_Color_check l Diffuse_Color +STARTLINE}
+ addUserKnob {6 Diffuse_IBL_check l Diffuse_IBL +STARTLINE}
+ addUserKnob {6 Diffuse_IBL_Illumination_check l Diffuse_IBL_Illumination +STARTLINE}
+ addUserKnob {6 Diffuse_Indirect_check l Diffuse_Indirect +STARTLINE}
+ addUserKnob {6 Diffuse_Indirect_Illumination_check l Diffuse_Indirect_Illumination +STARTLINE}
+ addUserKnob {6 Diffuse_Light_check l Diffuse_Light +STARTLINE}
+ addUserKnob {6 Diffuse_Light_Illumination_check l Diffuse_Light_Illumination +STARTLINE}
+ addUserKnob {6 Glossy_Color_check l Glossy_Color +STARTLINE}
+ addUserKnob {6 Glossy_IBL_check l Glossy_IBL +STARTLINE}
+ addUserKnob {6 Glossy_IBL_Illumination_check l Glossy_IBL_Illumination +STARTLINE}
+ addUserKnob {6 Glossy_Indirect_check l Glossy_Indirect +STARTLINE}
+ addUserKnob {6 Glossy_Indirect_Illumination_check l Glossy_Indirect_Illumination +STARTLINE}
+ addUserKnob {6 Glossy_Light_check l Glossy_Light +STARTLINE}
+ addUserKnob {6 Glossy_Light_Illumination_check l Glossy_Light_Illumination +STARTLINE}
+ addUserKnob {6 Incandescence_check l Incandescence +STARTLINE}
+ addUserKnob {6 Mask_check l Mask +STARTLINE}
+ addUserKnob {6 MaterialID_check l MaterialID +STARTLINE}
+ addUserKnob {6 Normal_check l Normal +STARTLINE}
+ addUserKnob {6 Occlusion_check l Occlusion +STARTLINE}
+ addUserKnob {6 Position_check l Position +STARTLINE}
+ addUserKnob {6 Specular_Color_check l Specular_Color +STARTLINE}
+ addUserKnob {6 Specular_Indirect_Illumination_check l Specular_Indirect_Illumination +STARTLINE}
+ addUserKnob {6 Specular_Reflection_check l Specular_Reflection +STARTLINE}
+ addUserKnob {6 Translucency_check l Translucency +STARTLINE}
+ addUserKnob {6 Translucency_Color_check l Translucency_Color +STARTLINE}
+ addUserKnob {6 Translucency_IBL_Illumination_check l Translucency_IBL_Illumination +STARTLINE}
+ addUserKnob {6 Translucency_Indirect_Illumination_check l Translucency_Indirect_Illumination +STARTLINE}
+ addUserKnob {6 Translucency_Light_Illumination_check l Translucency_Light_Illumination +STARTLINE}
+ addUserKnob {6 Transparency_Color_check l Transparency_Color +STARTLINE}
+ addUserKnob {6 View_check l View +STARTLINE}
+ addUserKnob {26 line_space l "" +STARTLINE T " "}
+ addUserKnob {22 press_reload_on_reads l "Refresh Reads" T "this_node = nuke.thisNode()\nlayer_dict = dict(Background_Color='*-background_color-*',\n                  Beauty='*-beauty-*',\n                  Diffuse_Color='*-diffuse_color-*',\n                  Diffuse_IBL='*-diffuse_ibl-*',\n                  Diffuse_IBL_Illumination='*-diffuse_ibl_illumination-*',\n                  Diffuse_Indirect='*-diffuse_indirect-*',\n                  Diffuse_Indirect_Illumination='*-diffuse_indirect_illumination-*',\n                  Diffuse_Light='*-diffuse_light-*',\n                  Diffuse_Light_Illumination='*-diffuse_light_illumination-*',\n                  Glossy_Color='*-glossy_color-*',\n                  Glossy_IBL='*-glossy_ibl-*',\n                  Glossy_IBL_Illumination='*-glossy_ibl_illumination-*',\n                  Glossy_Indirect='*-glossy_indirect-*',\n                  Glossy_Indirect_Illumination='*-glossy_indirect_illumination-*',\n                  Glossy_Light='*-glossy_light-*',\n                  Glossy_Light_Illumination='*-glossy_light_illumination-*',\n                  Incandescence='*-incandescence-*',\n                  Mask='*-mask-*',\n                  MaterialID='*-materialID-*',\n                  Normal='*-normal-*',\n                  Occlusion='*-occlusion-*',\n                  Position='*-position-*',\n                  Specular_Color='*-specular_color-*',\n                  Specular_Indirect_Illumination='*-specular_indirect_illumination-*',\n                  Specular_Reflection='*-specular_reflection-*',\n                  Translucency='*-translucency-*',\n                  Translucency_Color='*-translucency_color-*',\n                  Translucency_IBL_Illumination='*-translucency_ibl_illumination-*',\n                  Translucency_Indirect_Illumination='*-translucency_indirect_illumination-*',\n                  Translucency_Light_Illumination='*-translucency_light_illumination-*',\n                  Transparency_Color='*-transparency_color-*',\n                  View='*-view-*'\n                  )\n# Hit the Reload button on each Read node to refresh them...\nfor name, string in layer_dict.items():\n    readnode = this_node.name() + '.' + name\n    nuke.toNode(readnode).knob('reload').execute()" +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {26 ""}
+ addUserKnob {41 file l "EXR Output Path: " T Write_EXR.file}
+ addUserKnob {26 line_spacer l "" +STARTLINE T " "}
+ addUserKnob {41 Render T Write_EXR.Render}
+ addUserKnob {26 arrow2 l "" -STARTLINE T " ------>>  "}
+ addUserKnob {22 add_read_to_DAG l "Add EXR to Node Graph" -STARTLINE T "import os, re, glob\n\nthis_node = nuke.thisNode()\nfilepath = this_node.knob('file').value()\n\ndef getSeqInfo(filepath):\n    first = \"\"\n    last = \"\"    \n    parent_dir = os.path.dirname(filepath)\n    filepath = os.path.basename(filepath)\n    if '#' in filepath:\n        seqNum = filepath.count('#')\n        numPad = seqNum\n        padding = \"#\"*numPad\n        baseName = filepath.split(padding)\[0]\n    elif '%0' in filepath:\n        seq1 = filepath.split('%0', 1)\[1]\n        seqNum = seq1\[0]\n        numPad = int(seqNum)\n        padding = '%0' + str(numPad) + 'd'\n        baseName = filepath.split(padding)\[0]\n    else:\n        try:\n            frameNum = re.findall(r'\\d+', filepath)\[-1]\n        except:\n            # No number padding found.\n            first = \"1\"\n            last = first\n            return \[first, last]\n        # Must be a single numbered frame specified.\n        oldstring = frameNum\n        newstring = re.sub(\"^0+\",\"\", oldstring)\n        if newstring == \"\":\n            newstring = '0'\n        first = newstring\n        last = first\n        return \[first, last]\n    fileType = filepath.split('.')\[-1]\n    globString = baseName\n    for i in range(0, numPad):\n        globString += '?'\n    theGlob = sorted(glob.glob(parent_dir + '/' + globString + filepath.split(padding)\[1]))\n    numFrames = len(theGlob)\n    firstFrame = theGlob\[0]\n    lastFrame = theGlob\[-1]\n    parent_dir = os.path.dirname(firstFrame)\n    filepath = os.path.basename(firstFrame)\n    first = re.findall(r'\\d+', filepath)\[-1]\n    oldstring = first\n    newstring = re.sub(\"^0+\",\"\", oldstring)\n    if newstring == \"\":\n        newstring = '0'\n    first = newstring\n    parent_dir = os.path.dirname(lastFrame)\n    filepath = os.path.basename(lastFrame)    \n    last = re.findall(r'\\d+', filepath)\[-1]\n    oldstring = last\n    newstring = re.sub(\"^0+\",\"\", oldstring)\n    if newstring == \"\":\n        newstring = '0'\n    last = newstring\n    #return \[baseName, numPad, fileType, numFrames, firstFrame, lastFrame, first, last]\n    return \[first, last]\n\n# Run the getSeqInfo() function to get the first and last frame values to use for the Read node...\nFirstLast = getSeqInfo(filepath)\n\n# Add the EXR Read node to the main root graph...\nwith nuke.root():\n    exr_read = nuke.nodes.Read(file=filepath, first=int(FirstLast\[0]), last=int(FirstLast\[1]))\n    exr_read.setXYpos(this_node.xpos() + 150, this_node.ypos() - 50)"}
+ addUserKnob {26 ""}
+}
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name View
+  xpos 2255
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Transparency_Color
+  xpos 2055
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Translucency_Light_Illumination
+  xpos 1855
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Translucency_Indirect_Illumination
+  xpos 1655
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Translucency_IBL_Illumination
+  xpos 1455
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Translucency_Color
+  xpos 1255
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Translucency
+  xpos 1055
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Specular_Reflection
+  xpos 855
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Specular_Indirect_Illumination
+  xpos 655
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Specular_Color
+  xpos 455
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Position
+  xpos 255
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Occlusion
+  xpos 55
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Normal
+  xpos -145
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name MaterialID
+  xpos -345
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Mask
+  xpos -545
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Incandescence
+  xpos -745
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Glossy_Light_Illumination
+  xpos -945
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Glossy_Light
+  xpos -1145
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Glossy_Indirect_Illumination
+  xpos -1345
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Glossy_Indirect
+  xpos -1545
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Glossy_IBL_Illumination
+  xpos -1745
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Glossy_IBL
+  xpos -1945
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Glossy_Color
+  xpos -2145
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Diffuse_Light_Illumination
+  xpos -2345
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Diffuse_Light
+  xpos -2545
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Diffuse_Indirect_Illumination
+  xpos -2745
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Diffuse_Indirect
+  xpos -2945
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Diffuse_IBL_Illumination
+  xpos -3145
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Diffuse_IBL
+  xpos -3345
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Diffuse_Color
+  xpos -3545
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Background_Color
+  xpos -3945
+  ypos -769
+ }
+ Read {
+  inputs 0
+  first 0
+  last 78
+  on_error black
+  version 4
+  name Beauty
+  xpos -3745
+  ypos -769
+ }
+add_layer {Background_Color Background_Color.red Background_Color.green Background_Color.blue Background_Color.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Background_Color
+  name ShuffleCopy_Background_Color
+  label "\[value out]"
+  xpos -3745
+  ypos -619
+ }
+add_layer {Diffuse_Color Diffuse_Color.red Diffuse_Color.green Diffuse_Color.blue Diffuse_Color.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Diffuse_Color
+  name ShuffleCopy_Beauty
+  label "\[value out]"
+  xpos -3545
+  ypos -619
+ }
+add_layer {Diffuse_IBL Diffuse_IBL.red Diffuse_IBL.green Diffuse_IBL.blue Diffuse_IBL.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Diffuse_IBL
+  name ShuffleCopy_Diffuse_Color
+  label "\[value out]"
+  xpos -3345
+  ypos -619
+ }
+add_layer {Diffuse_IBL_Illumination Diffuse_IBL_Illumination.red Diffuse_IBL_Illumination.green Diffuse_IBL_Illumination.blue Diffuse_IBL_Illumination.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Diffuse_IBL_Illumination
+  name ShuffleCopy_Diffuse_IBL
+  label "\[value out]"
+  xpos -3145
+  ypos -619
+ }
+add_layer {Diffuse_Indirect Diffuse_Indirect.red Diffuse_Indirect.green Diffuse_Indirect.blue Diffuse_Indirect.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Diffuse_Indirect
+  name ShuffleCopy_Diffuse_IBL_Illumination
+  label "\[value out]"
+  xpos -2945
+  ypos -619
+ }
+add_layer {Diffuse_Indirect_Illumination Diffuse_Indirect_Illumination.red Diffuse_Indirect_Illumination.green Diffuse_Indirect_Illumination.blue Diffuse_Indirect_Illumination.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Diffuse_Indirect_Illumination
+  name ShuffleCopy_Diffuse_Indirect
+  label "\[value out]"
+  xpos -2745
+  ypos -619
+ }
+add_layer {Diffuse_Light Diffuse_Light.red Diffuse_Light.green Diffuse_Light.blue Diffuse_Light.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Diffuse_Light
+  name ShuffleCopy_Diffuse_Indirect_Illumination
+  label "\[value out]"
+  xpos -2545
+  ypos -619
+ }
+add_layer {Diffuse_Light_Illumination Diffuse_Light_Illumination.red Diffuse_Light_Illumination.green Diffuse_Light_Illumination.blue Diffuse_Light_Illumination.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Diffuse_Light_Illumination
+  name ShuffleCopy_Diffuse_Light
+  label "\[value out]"
+  xpos -2345
+  ypos -619
+ }
+add_layer {Glossy_Color Glossy_Color.red Glossy_Color.green Glossy_Color.blue Glossy_Color.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Glossy_Color
+  name ShuffleCopy_Diffuse_Light_Illumination
+  label "\[value out]"
+  xpos -2145
+  ypos -619
+ }
+add_layer {Glossy_IBL Glossy_IBL.red Glossy_IBL.green Glossy_IBL.blue Glossy_IBL.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Glossy_IBL
+  name ShuffleCopy_Glossy_Color
+  label "\[value out]"
+  xpos -1945
+  ypos -619
+ }
+add_layer {Glossy_IBL_Illumination Glossy_IBL_Illumination.red Glossy_IBL_Illumination.green Glossy_IBL_Illumination.blue Glossy_IBL_Illumination.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Glossy_IBL_Illumination
+  name ShuffleCopy_Glossy_IBL
+  label "\[value out]"
+  xpos -1745
+  ypos -619
+ }
+add_layer {Glossy_Indirect Glossy_Indirect.red Glossy_Indirect.green Glossy_Indirect.blue Glossy_Indirect.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Glossy_Indirect
+  name ShuffleCopy_Glossy_IBL_Illumination
+  label "\[value out]"
+  xpos -1545
+  ypos -619
+ }
+add_layer {Glossy_Indirect_Illumination Glossy_Indirect_Illumination.red Glossy_Indirect_Illumination.green Glossy_Indirect_Illumination.blue Glossy_Indirect_Illumination.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Glossy_Indirect_Illumination
+  name ShuffleCopy_Glossy_Indirect
+  label "\[value out]"
+  xpos -1345
+  ypos -619
+ }
+add_layer {Glossy_Light Glossy_Light.red Glossy_Light.green Glossy_Light.blue Glossy_Light.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Glossy_Light
+  name ShuffleCopy_Glossy_Indirect_Illumination
+  label "\[value out]"
+  xpos -1145
+  ypos -619
+ }
+add_layer {Glossy_Light_Illumination Glossy_Light_Illumination.red Glossy_Light_Illumination.green Glossy_Light_Illumination.blue Glossy_Light_Illumination.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Glossy_Light_Illumination
+  name ShuffleCopy_Glossy_Light
+  label "\[value out]"
+  xpos -945
+  ypos -619
+ }
+add_layer {Incandescence Incandescence.red Incandescence.green Incandescence.blue Incandescence.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Incandescence
+  name ShuffleCopy_Glossy_Light_Illumination
+  label "\[value out]"
+  xpos -745
+  ypos -619
+ }
+add_layer {Mask Mask.red Mask.green Mask.blue Mask.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Mask
+  name ShuffleCopy_Incandescence
+  label "\[value out]"
+  xpos -545
+  ypos -619
+ }
+add_layer {MaterialID MaterialID.red MaterialID.green MaterialID.blue MaterialID.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out MaterialID
+  name ShuffleCopy_Mask
+  label "\[value out]"
+  xpos -345
+  ypos -619
+ }
+add_layer {Normal Normal.red Normal.green Normal.blue Normal.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Normal
+  name ShuffleCopy_MaterialID
+  label "\[value out]"
+  xpos -145
+  ypos -619
+ }
+add_layer {Occlusion Occlusion.red Occlusion.green Occlusion.blue Occlusion.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Occlusion
+  name ShuffleCopy_Normal
+  label "\[value out]"
+  xpos 55
+  ypos -619
+ }
+add_layer {Position Position.red Position.green Position.blue Position.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Position
+  name ShuffleCopy_Occlusion
+  label "\[value out]"
+  xpos 255
+  ypos -619
+ }
+add_layer {Specular_Color Specular_Color.red Specular_Color.green Specular_Color.blue Specular_Color.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Specular_Color
+  name ShuffleCopy_Position
+  label "\[value out]"
+  xpos 455
+  ypos -619
+ }
+add_layer {Specular_Indirect_Illumination Specular_Indirect_Illumination.red Specular_Indirect_Illumination.green Specular_Indirect_Illumination.blue Specular_Indirect_Illumination.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Specular_Indirect_Illumination
+  name ShuffleCopy_Specular_Color
+  label "\[value out]"
+  xpos 655
+  ypos -619
+ }
+add_layer {Specular_Reflection Specular_Reflection.red Specular_Reflection.green Specular_Reflection.blue Specular_Reflection.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Specular_Reflection
+  name ShuffleCopy_Specular_Indirect_Illumination
+  label "\[value out]"
+  xpos 855
+  ypos -619
+ }
+add_layer {Translucency Translucency.red Translucency.green Translucency.blue Translucency.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Translucency
+  name ShuffleCopy_Specular_Reflection
+  label "\[value out]"
+  xpos 1055
+  ypos -619
+ }
+add_layer {Translucency_Color Translucency_Color.red Translucency_Color.green Translucency_Color.blue Translucency_Color.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Translucency_Color
+  name ShuffleCopy_Translucency
+  label "\[value out]"
+  xpos 1255
+  ypos -619
+ }
+add_layer {Translucency_IBL_Illumination Translucency_IBL_Illumination.red Translucency_IBL_Illumination.green Translucency_IBL_Illumination.blue Translucency_IBL_Illumination.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Translucency_IBL_Illumination
+  name ShuffleCopy_Translucency_Color
+  label "\[value out]"
+  xpos 1455
+  ypos -619
+ }
+add_layer {Translucency_Indirect_Illumination Translucency_Indirect_Illumination.red Translucency_Indirect_Illumination.green Translucency_Indirect_Illumination.blue Translucency_Indirect_Illumination.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Translucency_Indirect_Illumination
+  name ShuffleCopy_Translucency_IBL_Illumination
+  label "\[value out]"
+  xpos 1655
+  ypos -619
+ }
+add_layer {Translucency_Light_Illumination Translucency_Light_Illumination.red Translucency_Light_Illumination.green Translucency_Light_Illumination.blue Translucency_Light_Illumination.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Translucency_Light_Illumination
+  name ShuffleCopy_Translucency_Indirect_Illumination
+  label "\[value out]"
+  xpos 1855
+  ypos -619
+ }
+add_layer {Transparency_Color Transparency_Color.red Transparency_Color.green Transparency_Color.blue Transparency_Color.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Transparency_Color
+  name ShuffleCopy_Translucency_Light_Illumination
+  label "\[value out]"
+  xpos 2055
+  ypos -619
+ }
+add_layer {View View.red View.green View.blue View.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out View
+  name ShuffleCopy_Transparency_Color
+  label "\[value out]"
+  xpos 2255
+  ypos -619
+ }
+ Write {
+  channels all
+  file_type exr
+  on_error black
+  name Write_EXR
+  xpos 2255
+  ypos -547
+ }
+ Output {
+  name Output_Merged_Layers1
+  xpos 2255
+  ypos -475
+ }
+end_group

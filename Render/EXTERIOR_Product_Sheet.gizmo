@@ -1,0 +1,1096 @@
+#! C:/Program Files/Nuke9.0v4/nuke-9.0.4.dll -nx
+version 9.0 v4
+Gizmo {
+ addUserKnob {20 Exterior_Product_Sheet}
+ addUserKnob {41 version_number T master_data.version_number}
+ addUserKnob {41 date_input T master_data.date_input}
+ addUserKnob {41 trim_name T master_data.trim_name}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0x4b4b4b00
+  label exr_comp
+  note_font_size 42
+  xpos -1455
+  ypos -888
+  bdwidth 2056
+  bdheight 738
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x4b4b4bff
+  label "Layout\n"
+  note_font_size 42
+  xpos 648
+  ypos -885
+  bdwidth 1101
+  bdheight 733
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0x4b4b4bff
+  label "Text and Graphics\n"
+  note_font_size 42
+  xpos 1807
+  ypos -883
+  bdwidth 1084
+  bdheight 733
+ }
+ NoOp {
+  inputs 0
+  name master_data
+  tile_color 0xff5f00ff
+  xpos 2597
+  ypos -822
+  hide_input true
+  addUserKnob {20 User}
+  addUserKnob {1 version_number}
+  addUserKnob {1 date_input}
+  addUserKnob {1 trim_name}
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos -1375
+  ypos -1059
+ }
+ Assert {
+  expression {{"\[python -execlocal if\\ nuke.thisGroup().input(0)\\ and\\ nuke.thisGroup().input(0).Class()\\ ==\\ (\\\"Read\\\"):\\n\\ \\ \\ \\ ret\\ =\\ 1\\nelif\\ not\\ nuke.thisGroup().input(0):\\n\\ \\ \\ \\ ret\\ =\\ 1\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ 0]"}}
+  message "INPUT is not connected to a Read node."
+  name Assert1
+  xpos -1375
+  ypos -968
+ }
+ Dot {
+  name Dot1
+  xpos -1341
+  ypos -805
+ }
+ Dot {
+  name Dot2
+  xpos -1341
+  ypos -732
+ }
+set N51343000 [stack 0]
+ Dot {
+  name Dot4
+  xpos -1141
+  ypos -732
+ }
+set N51342c00 [stack 0]
+ Dot {
+  name Dot5
+  xpos -941
+  ypos -732
+ }
+set N51342800 [stack 0]
+ Dot {
+  name Dot6
+  xpos -741
+  ypos -732
+ }
+set N51342400 [stack 0]
+ Dot {
+  name Dot7
+  xpos -540
+  ypos -732
+ }
+set N51342000 [stack 0]
+ Dot {
+  name Dot8
+  xpos -341
+  ypos -732
+ }
+set N51343c00 [stack 0]
+ Dot {
+  name Dot9
+  xpos -176
+  ypos -732
+ }
+set N51617c00 [stack 0]
+ Dot {
+  name Dot15
+  xpos 106
+  ypos -732
+ }
+set N51617800 [stack 0]
+ Dot {
+  name Dot10
+  xpos 272
+  ypos -732
+ }
+set N51617400 [stack 0]
+add_layer {clearcoat clearcoat.red clearcoat.green clearcoat.blue}
+ Shuffle {
+  in clearcoat
+  name Shuffle_clearcoat
+  label "\[value in]"
+  xpos 238
+  ypos -707
+ }
+ Grade {
+  white 1.7
+  name Grade_clearcoat
+  xpos 238
+  ypos -655
+ }
+push $N51617800
+add_layer {AMB AMB.red AMB.green AMB.blue}
+ Shuffle {
+  in AMB
+  name Shuffle_AMB1
+  label "\[value in]"
+  xpos 72
+  ypos -709
+ }
+push $N51617c00
+add_layer {base base.red base.green base.blue}
+ Shuffle {
+  in base
+  name Shuffle_base
+  label "\[value in]"
+  xpos -210
+  ypos -708
+ }
+push $N51343c00
+add_layer {metallic metallic.red metallic.green metallic.blue}
+ Shuffle {
+  in metallic
+  name Shuffle_metallic
+  label "\[value in]"
+  xpos -375
+  ypos -706
+ }
+ Dot {
+  name Dot11
+  xpos -341
+  ypos -461
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  output rgb
+  mix 0.5
+  name Merge4
+  label metallic
+  xpos -210
+  ypos -470
+ }
+ Grade {
+  white {1.039999962 -0.05199994892 -0.02812346444 1}
+  gamma 2.31
+  name Grade_Paint
+  xpos -71
+  ypos -464
+ }
+ Merge2 {
+  inputs 2
+  operation multiply
+  mix 0.3
+  name Merge8
+  xpos 72
+  ypos -464
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  output rgb
+  name Merge5
+  label clearcoat
+  xpos 238
+  ypos -470
+ }
+set N570c6c00 [stack 0]
+ Dot {
+  name Dot39
+  xpos 272
+  ypos -348
+ }
+push $N51617400
+ Dot {
+  name Dot12
+  xpos 423
+  ypos -732
+ }
+push $N570c6c00
+add_layer {Paint_Windows_Rimz Paint_Windows_Rimz.red Paint_Windows_Rimz.green Paint_Windows_Rimz.blue}
+ Copy {
+  inputs 2
+  from0 Paint_Windows_Rimz.red
+  to0 rgba.alpha
+  name Copy2
+  xpos 389
+  ypos -470
+ }
+ Switch {
+  inputs 2
+  which {{"\[python -execlocal if\\ nuke.thisGroup().input(0):\\n\\ \\ \\ \\ ret\\ =\\ 0\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ 1]"}}
+  name No_Input_Switch
+  label "Fixes ERROR message if nothing connected to Input."
+  xpos 389
+  ypos -357
+ }
+push $N51342000
+ Shuffle {
+  in alpha
+  name Shuffle_Alpha
+  label alpha
+  xpos -574
+  ypos -707
+ }
+push $N51342400
+add_layer {reflect reflect.red reflect.green reflect.blue}
+ Shuffle {
+  in reflect
+  name Shuffle_reflect
+  label "\[value in]"
+  xpos -775
+  ypos -705
+ }
+push $N51342800
+add_layer {specular specular.red specular.green specular.blue}
+ Shuffle {
+  in specular
+  name Shuffle_specular
+  label "\[value in]"
+  xpos -975
+  ypos -708
+ }
+push $N51342c00
+add_layer {refract refract.red refract.green refract.blue}
+ Shuffle {
+  in refract
+  name Shuffle_refract
+  label "\[value in]"
+  xpos -1175
+  ypos -708
+ }
+push $N51343000
+add_layer {totalLight totalLight.red totalLight.green totalLight.blue}
+ Shuffle {
+  in totalLight
+  name Shuffle_totalLight
+  label "\[value in]"
+  xpos -1375
+  ypos -707
+ }
+ Dot {
+  name Dot3
+  xpos -1341
+  ypos -255
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  output rgb
+  name Merge1
+  label refract
+  xpos -1175
+  ypos -264
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  output rgb
+  name Merge2
+  label specular
+  xpos -975
+  ypos -264
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  output rgb
+  name Merge3
+  label "reflect\n"
+  xpos -775
+  ypos -264
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos -574
+  ypos -264
+ }
+ Merge2 {
+  inputs 2
+  output rgb
+  name Merge6
+  label CarBodyPaint
+  xpos 389
+  ypos -264
+ }
+ Dot {
+  name Dot14
+  xpos 705
+  ypos -255
+ }
+set N516fcc00 [stack 0]
+ TimeOffset {
+  time_offset -5
+  time ""
+  name TimeOffset_Image_6
+  xpos 820
+  ypos -258
+ }
+ Transform {
+  translate {60 -10}
+  scale 0.85
+  center {3340 1470}
+  name Transform_Image_6
+  xpos 1007
+  ypos -258
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  format "5950 7700 0 0 5950 7700 1 5950x7700"
+  name BLACK_5950x7700
+  xpos 1284
+  ypos -801
+ }
+set N516fc400 [stack 0]
+ Dot {
+  name Dot16
+  xpos 1318
+  ypos -591
+ }
+set N516fc000 [stack 0]
+ Dot {
+  name Dot25
+  xpos 1318
+  ypos -523
+ }
+set N57085c00 [stack 0]
+ Dot {
+  name Dot24
+  xpos 1318
+  ypos -461
+ }
+set N57085800 [stack 0]
+ Dot {
+  name Dot23
+  xpos 1318
+  ypos -400
+ }
+set N57085400 [stack 0]
+ Dot {
+  name Dot26
+  xpos 1318
+  ypos -333
+ }
+set N57085000 [stack 0]
+ Dot {
+  name Dot22
+  xpos 1318
+  ypos -255
+ }
+ Merge2 {
+  inputs 2
+  metainput A
+  name Merge_Image_6
+  xpos 1187
+  ypos -258
+ }
+ Dot {
+  name Dot32
+  xpos 1221
+  ypos -217
+ }
+ Dot {
+  name Dot37
+  xpos 1393
+  ypos -217
+ }
+push $N516fcc00
+ Dot {
+  name Dot21
+  xpos 705
+  ypos -333
+ }
+set N570b1c00 [stack 0]
+ TimeOffset {
+  time_offset -4
+  time ""
+  name TimeOffset_Image_5
+  xpos 820
+  ypos -336
+ }
+ Transform {
+  translate {1810 3480}
+  scale 0.85
+  center {2960 1100}
+  name Transform_Image_5
+  xpos 1007
+  ypos -336
+ }
+push $N57085000
+ Merge2 {
+  inputs 2
+  metainput A
+  name Merge_Image_5
+  xpos 1187
+  ypos -336
+ }
+ Dot {
+  name Dot31
+  xpos 1221
+  ypos -296
+ }
+ Dot {
+  name Dot38
+  xpos 1393
+  ypos -296
+ }
+push $N570b1c00
+ Dot {
+  name Dot20
+  xpos 705
+  ypos -400
+ }
+set N570b0800 [stack 0]
+ TimeOffset {
+  time_offset -3
+  time ""
+  name TimeOffset_Image_4
+  xpos 820
+  ypos -403
+ }
+ Transform {
+  translate {210 1790}
+  scale 0.85
+  center {1024 778}
+  name Transform_Image_4
+  xpos 1007
+  ypos -403
+ }
+push $N57085400
+ Merge2 {
+  inputs 2
+  metainput A
+  name Merge_Image_4
+  xpos 1187
+  ypos -403
+ }
+ Dot {
+  name Dot30
+  xpos 1221
+  ypos -369
+ }
+ Dot {
+  name Dot36
+  xpos 1393
+  ypos -369
+ }
+push $N570b0800
+ Dot {
+  name Dot19
+  xpos 705
+  ypos -461
+ }
+set N2e613400 [stack 0]
+ TimeOffset {
+  time_offset -2
+  time ""
+  name TimeOffset_Image_3
+  xpos 820
+  ypos -464
+ }
+ Transform {
+  translate {-1615 3420}
+  scale 0.85
+  center {3900 1250}
+  name Transform_Image_3
+  xpos 1007
+  ypos -464
+ }
+push $N57085800
+ Merge2 {
+  inputs 2
+  metainput A
+  name Merge_Image_3
+  xpos 1187
+  ypos -464
+ }
+ Dot {
+  name Dot29
+  xpos 1221
+  ypos -432
+ }
+ Dot {
+  name Dot35
+  xpos 1393
+  ypos -432
+ }
+push $N2e613400
+ Dot {
+  name Dot17
+  xpos 705
+  ypos -523
+ }
+set N2e612000 [stack 0]
+ TimeOffset {
+  time_offset -1
+  time ""
+  name TimeOffset_Image_2
+  xpos 820
+  ypos -526
+ }
+ Transform {
+  translate {-1490 5150}
+  scale 0.85
+  center {4280 1030}
+  name Transform_Image_2
+  xpos 1007
+  ypos -526
+ }
+push $N57085c00
+ Merge2 {
+  inputs 2
+  metainput A
+  name Merge_Image_2
+  xpos 1187
+  ypos -526
+ }
+ Dot {
+  name Dot28
+  xpos 1221
+  ypos -493
+ }
+ Dot {
+  name Dot34
+  xpos 1393
+  ypos -493
+ }
+push 0
+push $N2e612000
+ Dot {
+  name Dot13
+  xpos 705
+  ypos -591
+ }
+ Transform {
+  translate {1830 5250}
+  scale 0.85
+  center {2950 1150}
+  name Transform_Image_1
+  xpos 1007
+  ypos -594
+ }
+push $N516fc000
+ Merge2 {
+  inputs 2
+  metainput A
+  name Merge_Image_1
+  xpos 1187
+  ypos -594
+ }
+ Dot {
+  name Dot27
+  xpos 1221
+  ypos -564
+ }
+ Dot {
+  name Dot33
+  xpos 1393
+  ypos -564
+ }
+push $N516fc400
+ Dot {
+  name Dot18
+  xpos 1661
+  ypos -774
+ }
+set N56fd5800 [stack 0]
+ Merge2 {
+  inputs 7+1
+  bbox B
+  name Merge_Images
+  xpos 1627
+  ypos -403
+ }
+push $N56fd5800
+ Dot {
+  name Dot41
+  xpos 2303
+  ypos -774
+ }
+set N56fd5000 [stack 0]
+ Dot {
+  name Dot42
+  xpos 2578
+  ypos -774
+ }
+set N56fd4c00 [stack 0]
+ Dot {
+  name Dot43
+  xpos 2742
+  ypos -774
+ }
+ Text {
+  message "\[value master_data.version_number]\n\n"
+  font C:/Windows/Fonts/arial.ttf
+  size 100
+  yjustify top
+  Transform 1
+  box {0 0 1575 460}
+  translate {1400 0}
+  center {2975 3850}
+  color {0 0 0 1}
+  name version_text
+  xpos 2708
+  ypos -712
+ }
+ Text {
+  message "(Product Approval Only)\n"
+  font C:/Windows/Fonts/arial.ttf
+  size 100
+  yjustify top
+  Transform 1
+  box {0 0 1575 330}
+  translate {1400 0}
+  center {2975 3850}
+  color {0 0 0 1}
+  name product_approval
+  xpos 2708
+  ypos -661
+ }
+ Text {
+  message "\[value master_data.date_input]\n\n"
+  font C:/Windows/Fonts/arial.ttf
+  size 100
+  yjustify top
+  Transform 1
+  box {0 0 1575 200}
+  translate {1400 0}
+  center {2975 3850}
+  color {0 0 0 1}
+  name date_text
+  xpos 2708
+  ypos -612
+ }
+ Text {
+  opacity 0.5
+  message "\[value master_data.trim_name]\n\n"
+  font C:/Windows/Fonts/arial.ttf
+  size 100
+  xjustify right
+  yjustify top
+  Transform 1
+  box {0 0 2800 330}
+  translate {2975 0}
+  center {2975 3850}
+  color {0 0 0 1}
+  name trim_text
+  xpos 2708
+  ypos -539
+ }
+ Text {
+  opacity 0.5
+  message "<v\[value master_data.version_number]>\n\n"
+  font C:/Windows/Fonts/arial.ttf
+  size 100
+  xjustify right
+  yjustify top
+  Transform 1
+  box {0 0 2800 200}
+  translate {2975 0}
+  center {2975 3850}
+  color {0 0 0 1}
+  name version_v_num
+  xpos 2708
+  ypos -507
+ }
+push $N56fd4c00
+ Text {
+  opacity 0.5
+  message "Version No.\n\n"
+  font C:/Windows/Fonts/arial.ttf
+  size 100
+  xjustify right
+  yjustify top
+  Transform 1
+  box {0 0 645 460}
+  translate {700 0}
+  center {2975 3850}
+  color {0 0 0 1}
+  name version_no
+  xpos 2544
+  ypos -711
+ }
+ Text {
+  opacity 0.5
+  message "Purpose\n\n"
+  font C:/Windows/Fonts/arial.ttf
+  size 100
+  xjustify right
+  yjustify top
+  Transform 1
+  box {0 0 645 330}
+  translate {700 0}
+  center {2975 3850}
+  color {0 0 0 1}
+  name purpose
+  xpos 2544
+  ypos -660
+ }
+ Text {
+  opacity 0.5
+  message "Date\n"
+  font C:/Windows/Fonts/arial.ttf
+  size 100
+  xjustify right
+  yjustify top
+  Transform 1
+  box {0 0 645 200}
+  translate {700 0}
+  center {2975 3850}
+  color {0 0 0 1}
+  name date
+  xpos 2544
+  ypos -609
+ }
+push $N56fd5000
+ Text {
+  message "image 1"
+  font C:/Windows/Fonts/arial.ttf
+  size 100
+  yjustify center
+  Transform 1
+  box {188 389 604 1167}
+  translate {200 6674}
+  center {201 744}
+  color {0 0 0 1}
+  name image_1_title
+  xpos 2269
+  ypos -674
+ }
+ Text {
+  message "image 2"
+  font C:/Windows/Fonts/arial.ttf
+  size 100
+  yjustify center
+  Transform 1
+  box {188 389 604 1167}
+  translate {200 4889}
+  center {201 744}
+  color {0 0 0 1}
+  name image_2_title
+  xpos 2269
+  ypos -643
+ }
+ Text {
+  message "image 3"
+  font C:/Windows/Fonts/arial.ttf
+  size 100
+  yjustify center
+  Transform 1
+  box {188 389 604 1167}
+  translate {3400 6674}
+  center {201 744}
+  color {0 0 0 1}
+  name image_3_title
+  xpos 2269
+  ypos -605
+ }
+ Text {
+  message "image 4\n"
+  font C:/Windows/Fonts/arial.ttf
+  size 100
+  yjustify center
+  Transform 1
+  box {188 389 604 1167}
+  translate {3371.5 4889}
+  center {201 744}
+  color {0 0 0 1}
+  name image_4_title
+  xpos 2269
+  ypos -572
+ }
+ Text {
+  message "image 5\n"
+  font C:/Windows/Fonts/arial.ttf
+  size 100
+  yjustify center
+  Transform 1
+  box {188 389 604 1167}
+  translate {200 2892}
+  center {201 744}
+  color {0 0 0 1}
+  name image_5_title
+  xpos 2269
+  ypos -539
+ }
+ Text {
+  message "image 6"
+  font C:/Windows/Fonts/arial.ttf
+  size 100
+  yjustify center
+  Transform 1
+  box {188 389 604 1167}
+  translate {200 1602}
+  center {201 744}
+  color {0 0 0 1}
+  name image_6_title
+  xpos 2269
+  ypos -506
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  format "1024 1024 0 0 1024 1024 1 square_1K"
+  name BLACK_1024x1024
+  xpos 2042
+  ypos -723
+ }
+ RotoPaint {
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097152}
+    {t x43ffe666 x44020000 0 xbf800000 xc0000000 0 0 0 0 x4039999a x4039999a}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup Hole 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {0 0}
+        {x43d21d4a x44025efe}
+        {0 0}
+        {0 0}
+        {x43d22947 x43f83b48}
+        {0 0}
+        {0 0}
+        {x43e13d56 x44039d10}
+        {0 0}
+        {0 0}
+        {x43eb0ec0 x4403a39a}
+        {0 0}
+        {0 0}
+        {x43eb1c94 x44074eef}
+        {0 0}
+        {0 0}
+        {x43dc1a1f x440749c5}
+        {0 0}}}     idem}
+     {tx 1 x4392a667 x43ce4889}
+     {a r 0 g 0 b 0 osw x41200000 osf 0 str 1 spx x4539f000 spy x4570a000 sb 1 tt x40a00000}}
+    {curvegroup AW 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {0 0}
+        {x43d57ff5 x440dbe14}
+        {0 0}
+        {0 0}
+        {x43c3e664 x44050ccd}
+        {0 0}
+        {0 0}
+        {x43c3dc10 x43eb06a0}
+        {0 0}
+        {0 0}
+        {x43d7368d x43eb1786}
+        {0 0}
+        {0 0}
+        {x43e62dee x43fa82f2}
+        {0 0}
+        {0 0}
+        {x43eb0b8d x43fa7db6}
+        {0 0}
+        {0 0}
+        {x43eb1444 x43eb128c}
+        {0 0}
+        {0 0}
+        {x43fef084 x43eb06ab}
+        {0 0}
+        {0 0}
+        {x44069f86 x43f7ef10}
+        {0 0}
+        {0 0}
+        {x44069b62 x43eb1601}
+        {0 0}
+        {0 0}
+        {x440fbd70 x43eb0165}
+        {0 0}
+        {0 0}
+        {x4417b332 x43fa7572}
+        {0 0}
+        {0 0}
+        {x441e5606 x43fa6493}
+        {0 0}
+        {0 0}
+        {x441e528c x440dc1af}
+        {0 0}
+        {0 0}
+        {x441792bc x440dc6d2}
+        {0 0}
+        {0 0}
+        {x44177cdf x4403931b}
+        {0 0}
+        {0 0}
+        {x44152c43 x4403984f}
+        {0 0}
+        {0 0}
+        {x440db682 x43f80533}
+        {0 0}
+        {0 0}
+        {x440dc272 x440dce58}
+        {0 0}
+        {0 0}
+        {x44069eaa x440dc37e}
+        {0 0}
+        {0 0}
+        {x44069c4e x4403a0ec}
+        {0 0}
+        {0 0}
+        {x44046f88 x44039c2e}
+        {0 0}
+        {0 0}
+        {x43f92732 x43f81652}
+        {0 0}
+        {0 0}
+        {x43f924fa x440dc938}
+        {0 0}}}     idem}
+     {tx 1 x43baf999 x43c8d334}
+     {a osw x41200000 osf 0 str 1 spx x4539f000 spy x4570a000 sb 1 tt x40a00000}}
+    {curvegroup Circle 512 bezier
+     {{cc
+       {f 8192}
+       {px 1
+        {xc2ae1484 0}
+        {x44000e4e x43b43334}
+        {x42ae1484 0}
+        {0 xc2ae1480}
+        {x442774b5 x44018000}
+        {0 x42ae1480}
+        {x42ae1484 0}
+        {x44000e4e x4428e666}
+        {xc2ae1484 0}
+        {0 x42ae1480}
+        {x43b14fce x44018000}
+        {0 xc2ae1480}}}
+      {cc
+       {f 8192}
+       {px 1
+        {xc2ae1484 0}
+        {0 0}
+        {x42ae1484 0}
+        {0 xc2ae1480}
+        {0 0}
+        {0 x42ae1480}
+        {x42ae1484 0}
+        {0 0}
+        {xc2ae1484 0}
+        {0 x42ae1480}
+        {0 0}
+        {0 xc2ae1480}}}}
+     {tx 1 x43b4b334 x43ca8000}
+     {a r 0 g 0 b 0 osw x41200000 osf 0 str 1 spx x4539f000 spy x4570a000 sb 1 tt x40e00000}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 tt 5 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 7 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {2975 3850}
+  color {0 0 0 1}
+  colorOverlay {0 0 0 0}
+  lifetime_type "all frames"
+  motionblur_shutter_offset_type centred
+  source_black_outside true
+  name AW_LOGO
+  xpos 2042
+  ypos -572
+ }
+ Transform {
+  translate {-112 -147}
+  scale 0.55
+  center {512 512}
+  name Transform_AW_LOGO
+  xpos 2042
+  ypos -512
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color 1
+  format "5950 7700 0 0 5950 7700 1 5950x7700"
+  name WHITE_5950x7700
+  xpos 1870
+  ypos -723
+ }
+ Dot {
+  name Dot40
+  xpos 1904
+  ypos -460
+ }
+ Merge2 {
+  inputs 2
+  bbox B
+  metainput A
+  name Merge_AW_Logo
+  xpos 2042
+  ypos -463
+ }
+ Merge2 {
+  inputs 2
+  bbox B
+  name Merge_Image_Titles
+  xpos 2269
+  ypos -463
+ }
+ Merge2 {
+  inputs 2
+  bbox B
+  name Merge_Data_Titles
+  xpos 2544
+  ypos -463
+ }
+ Merge2 {
+  inputs 2
+  bbox B
+  name Merge_Data_Input
+  xpos 2708
+  ypos -463
+ }
+ Merge2 {
+  inputs 2
+  name Merge_Graphics
+  xpos 2708
+  ypos -403
+ }
+ Grid {
+  number 60
+  size 2
+  translate {0 -60}
+  color {0.259999752 0 1 0}
+  name Layout_Grid
+  xpos 2708
+  ypos -213
+  disable true
+ }
+ Output {
+  name Output1
+  xpos 2708
+  ypos -61
+ }
+end_group

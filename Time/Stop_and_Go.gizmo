@@ -1,0 +1,76 @@
+#! C:/Program Files/Nuke9.0v4/nuke-9.0.4.dll -nx
+version 9.0 v4
+Gizmo {
+ help "Pauses an input sequence at a given frame, for a given duration.\n\nHINT: Use multiple Stop_and_Go gizmos, one after the other, to make a sequence pause at a given frame for a given duration and then resume playing again..."
+ addUserKnob {20 Stop_and_Go l "Stop and Go"}
+ addUserKnob {3 stopAtFrame l "Stop at frame"}
+ stopAtFrame 5
+ addUserKnob {3 stopDuration l "Stop duraction"}
+ stopDuration 50
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 290
+  ypos -10
+ }
+ Dot {
+  name Dot2
+  xpos 324
+  ypos 66
+ }
+set N38c6400 [stack 0]
+ Dot {
+  name Dot3
+  xpos 434
+  ypos 114
+ }
+ TimeOffset {
+  time_offset {{parent.stopDuration}}
+  time ""
+  name TimeOffset1
+  selected true
+  xpos 400
+  ypos 158
+ }
+ Dot {
+  name Dot5
+  xpos 434
+  ypos 210
+ }
+push $N38c6400
+ FrameHold {
+  first_frame {{parent.stopAtFrame}}
+  name FrameHold1
+  xpos 290
+  ypos 152
+ }
+push $N38c6400
+ Dot {
+  name Dot1
+  xpos 214
+  ypos 114
+ }
+ Dot {
+  name Dot4
+  xpos 214
+  ypos 210
+ }
+ Switch {
+  inputs 3
+  which {{"\[python -execlocal start\\ =\\ nuke.thisGroup().knob('stopAtFrame').value()\\nduration\\ =\\ nuke.thisGroup().knob('stopDuration').value()\\n\\nif\\ nuke.frame\\ ()\\ <\\ start:\\ ret=0\\nelif\\ nuke.frame\\ ()\\ >=\\ start\\ and\\ nuke.frame()<=(start+duration):\\ ret=1\\nelse:\\ ret=2]"}}
+  name Switch1
+  xpos 290
+  ypos 254
+ }
+ Dot {
+  name Dot6
+  xpos 324
+  ypos 330
+ }
+ Output {
+  name Output1
+  xpos 290
+  ypos 398
+ }
+end_group

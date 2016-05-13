@@ -1,0 +1,246 @@
+#! C:/Program Files/Nuke9.0v4/nuke-9.0.4.dll -nx
+version 9.0 v4
+Gizmo {
+ addUserKnob {20 noise}
+ addUserKnob {26 noise_title l noise T "(Perlin Noise)"}
+ addUserKnob {26 ""}
+ addUserKnob {41 noise_x l frequency T Curve_Generator.noise_x}
+ addUserKnob {41 noise_amplitude l amplitude T Curve_Generator.noise_amplitude}
+ addUserKnob {26 ""}
+ addUserKnob {41 noise_clamp l "Clamp Min/Max Values" T Curve_Generator.noise_clamp}
+ addUserKnob {41 noise_min l min t "TIP:\n\nTo create a square wave shape, drag the min value slide up, past the max value." T Curve_Generator.noise_min}
+ addUserKnob {41 noise_max l max T Curve_Generator.noise_max}
+ addUserKnob {26 ""}
+ addUserKnob {41 noise_offset l "Offset Curve" T Curve_Generator.noise_offset}
+ addUserKnob {41 noise_offset_value l offset T Curve_Generator.noise_offset_value}
+ addUserKnob {26 ""}
+ addUserKnob {26 ""}
+ addUserKnob {41 noise_result_knob l RESULT: t "TIP:\n\nTo use the generated curve, CNTRL-drag from the \"RESULT:\" number field to the number field of another node's parameter value field." T Curve_Generator.noise_result_knob}
+ addUserKnob {26 ""}
+ addUserKnob {26 ""}
+ addUserKnob {41 noise_web_link l "Click For More Info" T Curve_Generator.noise_web_link}
+ addUserKnob {26 Perlin_Noise_Explainer l "" +STARTLINE T "\nWhat is Perlin Noise?\n\nPerlin Noise is an extremely powerful algorithm that is used often in procedural\ncontent generation. It is especially useful for games and other visual media such\nas movies. The man who created it, Ken Perlin, won an academy award for the\noriginal implementation."}
+ addUserKnob {20 fBm}
+ addUserKnob {26 fBm_title l fBm T "(Fractional Brownian Motion)"}
+ addUserKnob {26 ""}
+ addUserKnob {41 fBm_X l X T Curve_Generator.fBm_X}
+ addUserKnob {41 fBm_Y l Y T Curve_Generator.fBm_Y}
+ addUserKnob {41 fBm_Z l Z T Curve_Generator.fBm_Z}
+ addUserKnob {41 fBm_octaves l octaves T Curve_Generator.fBm_octaves}
+ addUserKnob {41 fBm_lacunarity l lacunarity T Curve_Generator.fBm_lacunarity}
+ addUserKnob {41 fBm_gain l gain T Curve_Generator.fBm_gain}
+ addUserKnob {26 ""}
+ addUserKnob {41 fBm_mult l multiplier T Curve_Generator.fBm_mult}
+ addUserKnob {26 ""}
+ addUserKnob {41 fBm_clamp l "Clamp Min/Max Values" T Curve_Generator.fBm_clamp}
+ addUserKnob {41 fBm_min l min t "TIP:\n\nTo create a square wave shape, drag the min value slide up, past the max value." T Curve_Generator.fBm_min}
+ addUserKnob {41 fBm_max l max T Curve_Generator.fBm_max}
+ addUserKnob {26 ""}
+ addUserKnob {41 fBm_offset l "Offset  Curve" T Curve_Generator.fBm_offset}
+ addUserKnob {41 fBm_offset_value l offset T Curve_Generator.fBm_offset_value}
+ addUserKnob {26 ""}
+ addUserKnob {26 ""}
+ addUserKnob {41 fBm_result_knob l "RESULT: " t "TIP:\nTo use the generated curve, CNTRL-drag from the \"RESULT:\" number field to the number field of another node's parameter value field." T Curve_Generator.fBm_result_knob}
+ addUserKnob {26 ""}
+ addUserKnob {26 ""}
+ addUserKnob {41 fBm_web_link l "Click For More Info" T Curve_Generator.fBm_web_link}
+ addUserKnob {26 fBm_explainer l "" +STARTLINE T "\nWhat is Fractional Brownian Motion?\n\nFractional Brownian Motion is the summation of successive octaves of noise, each with\nhigher frequency and lower amplitude. It doesn't especially matter what kind of noise,\nmost will do. Fractional Brownian Motion (often abbreviated as fBm) is often confused\nwith noise algorithms like Value_Noise and Perlin_Noise, when in fact it just takes a type\nof noise and makes a more interesting picture."}
+ addUserKnob {20 random}
+ addUserKnob {26 random_title l random T "(Pseudo Random)"}
+ addUserKnob {26 ""}
+ addUserKnob {41 random_X l X T Curve_Generator.random_X}
+ addUserKnob {41 random_Y l Y T Curve_Generator.random_Y}
+ addUserKnob {41 random_Z l Z T Curve_Generator.random_Z}
+ addUserKnob {26 ""}
+ addUserKnob {41 random_mult l multiplier T Curve_Generator.random_mult}
+ addUserKnob {26 ""}
+ addUserKnob {41 random_clamp l "Clamp Min/Max Values" T Curve_Generator.random_clamp}
+ addUserKnob {41 random_min l min t "TIP:\n\nTo create a square wave shape, drag the min value slide up, past the max value." T Curve_Generator.random_min}
+ addUserKnob {41 random_max l max T Curve_Generator.random_max}
+ addUserKnob {26 ""}
+ addUserKnob {41 random_offset l "Offset Curve" T Curve_Generator.random_offset}
+ addUserKnob {41 random_offset_value l offset T Curve_Generator.random_offset_value}
+ addUserKnob {26 ""}
+ addUserKnob {26 ""}
+ addUserKnob {41 random_result_knob l RESULT: t "TIP:\nTo use the generated curve, CNTRL-drag from the \"RESULT:\" number field to the number field of another node's parameter value field." T Curve_Generator.random_result_knob}
+ addUserKnob {26 ""}
+ addUserKnob {26 ""}
+ addUserKnob {41 random_web_link l "Click For More Info" T Curve_Generator.random_web_link}
+ addUserKnob {26 pseudo_random_explainer l "" +STARTLINE T "\nWhat is a pseudo random number?\n\nThe reason it is called \"pseudo\" is that it always generates the exact same value,\ngiven the same x, y and z input values. This is especially useful for animation\npurposes in that a given frame may be rendered multiple times with repeatable results.\nA true random number never repeats."}
+ addUserKnob {20 turbulence}
+ addUserKnob {26 turbulence_title l turbulence T "(Same as fBm, except the absolute value of the noise function is used.)"}
+ addUserKnob {26 ""}
+ addUserKnob {41 turb_X l X T Curve_Generator.turb_X}
+ addUserKnob {41 turb_Y l Y T Curve_Generator.turb_Y}
+ addUserKnob {41 turb_Z l Z T Curve_Generator.turb_Z}
+ addUserKnob {41 turb_octaves l octaves T Curve_Generator.turb_octaves}
+ addUserKnob {41 turb_lacunarity l lacunarity T Curve_Generator.turb_lacunarity}
+ addUserKnob {41 turb_gain l gain T Curve_Generator.turb_gain}
+ addUserKnob {26 ""}
+ addUserKnob {41 turb_mult l multiplier T Curve_Generator.turb_mult}
+ addUserKnob {26 ""}
+ addUserKnob {41 turb_clamp l "Clamp Min/Max Values" T Curve_Generator.turb_clamp}
+ addUserKnob {41 turb_min l min t "TIP:\n\nTo create a square wave shape, drag the min value slide up, past the max value." T Curve_Generator.turb_min}
+ addUserKnob {41 turb_max l max T Curve_Generator.turb_max}
+ addUserKnob {26 ""}
+ addUserKnob {41 turb_offset l "Offset Curve" T Curve_Generator.turb_offset}
+ addUserKnob {41 turb_offset_value l offset T Curve_Generator.turb_offset_value}
+ addUserKnob {26 ""}
+ addUserKnob {26 ""}
+ addUserKnob {41 turbulence_result_knob l RESULT: t "TIP:\nTo use the generated curve, CNTRL-drag from the \"RESULT:\" number field to the number field of another node's parameter value field." T Curve_Generator.turbulence_result_knob}
+ addUserKnob {26 ""}
+ addUserKnob {26 ""}
+ addUserKnob {41 turbulence_web_link l "Click For More Info" T Curve_Generator.turbulence_web_link}
+ addUserKnob {26 turbulence_explainer l "" +STARTLINE T "\nWhat is turbulence?\n\nTurbulence is what creates natural looking features out of smoothed noise.\nThe trick is to add multiple noise textures of different zooming scales together."}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 483
+  ypos 505
+ }
+ NoOp {
+  name Curve_Generator
+  knobChanged "\nn = nuke.thisNode()\nk = nuke.thisKnob()\n\nif k.name() in \[\"noise_clamp\",\"noise_offset\"]:\n\n    ## Base values if Clamp and Offset boxes are not checked...\n    Noise = \"noise (frame*noise_x)*noise_amplitude\"\n    ## Value if only Clamp box is checked...\n    NoiseClamp = \"clamp ((noise (frame*noise_x)*noise_amplitude), noise_min, noise_max)\"\n    ## Value if only Offset box is checked...\n    NoiseOffset = \"noise (frame*noise_x)*noise_amplitude+noise_offset_value\"\n    ## Value if both boxes are checked...\n    NoiseBoth = \"clamp ((noise (frame*noise_x)*noise_amplitude), noise_min, noise_max)+noise_offset_value\"\n\n    ## Clamp and Offset boxes are not checked...\n    if n.knob(\"noise_clamp\").value()==False and n.knob(\"noise_offset\").value()==False:\n        n.knob(\"noise_result_knob\").setExpression(Noise, 0)\n    ## Only Clamp box is checked...\n    elif n.knob(\"noise_clamp\").value()==True and n.knob(\"noise_offset\").value()==False:\n        n.knob(\"noise_result_knob\").setExpression(NoiseClamp, 0)\n    ## Only Offset box is checked...\n    elif n.knob(\"noise_clamp\").value()==False and n.knob(\"noise_offset\").value()==True:\n        n.knob(\"noise_result_knob\").setExpression(NoiseOffset, 0)\n    ## Both boxes are checked...\n    elif n.knob(\"noise_clamp\").value()==True and n.knob(\"noise_offset\").value()==True:\n        n.knob(\"noise_result_knob\").setExpression(NoiseBoth, 0)\n\nelif k.name() in \[\"fBm_clamp\",\"fBm_offset\"]:\n    ## Base values if Clamp and Offset boxes are not checked...\n    fBm = \"fBm (frame*fBm_X, fBm_Y, fBm_Z, fBm_octaves, fBm_lacunarity, fBm_gain)*fBm_mult\"\n    ## Value if only Clamp box is checked...\n    fBmClamp =  \"clamp ((fBm (frame*fBm_X, fBm_Y, fBm_Z, fBm_octaves, fBm_lacunarity, fBm_gain)*fBm_mult), fBm_min, fBm_max)\"\n    ## Value if only Offset box is checked...\n    fBmOffset = \"fBm (frame*fBm_X, fBm_Y, fBm_Z, fBm_octaves, fBm_lacunarity, fBm_gain)*fBm_mult+fBm_offset_value\"\n    ## Value if both boxes are checked...\n    fBmBoth = \"clamp ((fBm (frame*fBm_X, fBm_Y, fBm_Z, fBm_octaves, fBm_lacunarity, fBm_gain)*fBm_mult), fBm_min, fBm_max)+fBm_offset_value\"\n\n    ## Clamp and Offset boxes are not checked...\n    if n.knob(\"fBm_clamp\").value()==False and n.knob(\"fBm_offset\").value()==False:\n        n.knob(\"fBm_result_knob\").setExpression(fBm, 0)\n    ## Only Clamp box is checked...\n    elif n.knob(\"fBm_clamp\").value()==True and n.knob(\"fBm_offset\").value()==False:\n        n.knob(\"fBm_result_knob\").setExpression(fBmClamp, 0)\n    ## Only Offset box is checked...\n    elif n.knob(\"fBm_clamp\").value()==False and n.knob(\"fBm_offset\").value()==True:\n        n.knob(\"fBm_result_knob\").setExpression(fBmOffset, 0)\n    ## Both boxes are checked...\n    elif n.knob(\"fBm_clamp\").value()==True and n.knob(\"fBm_offset\").value()==True:\n        n.knob(\"fBm_result_knob\").setExpression(fBmBoth, 0)\n\nelif k.name() in \[\"random_clamp\",\"random_offset\"]:\n    ## Base values if Clamp and Offset boxes are not checked...\n    Rand = \"random (frame*random_X, random_Y, random_Z)*random_mult\"\n    ## Value if only Clamp box is checked...\n    RandClamp =  \"clamp ((random (frame*random_X, random_Y, random_Z)*random_mult), random_min, random_max)\"\n    ## Value if only Offset box is checked...\n    RandOffset = \"random (frame*random_X, random_Y, random_Z)*random_mult+random_offset_value\"\n    ## Value if both boxes are checked...\n    RandBoth = \"clamp ((random (frame*random_X, random_Y, random_Z)*random_mult), random_min, random_max)+random_offset_value\"\n\n    ## Clamp and Offset boxes are not checked...\n    if n.knob(\"random_clamp\").value()==False and n.knob(\"random_offset\").value()==False:\n        n.knob(\"random_result_knob\").setExpression(Rand, 0)\n    ## Only Clamp box is checked...\n    elif n.knob(\"random_clamp\").value()==True and n.knob(\"random_offset\").value()==False:\n        n.knob(\"random_result_knob\").setExpression(RandClamp, 0)\n    ## Only Offset box is checked...\n    elif n.knob(\"random_clamp\").value()==False and n.knob(\"random_offset\").value()==True:\n        n.knob(\"random_result_knob\").setExpression(RandOffset, 0)\n    ## Both boxes are checked...\n    elif n.knob(\"random_clamp\").value()==True and n.knob(\"random_offset\").value()==True:\n        n.knob(\"random_result_knob\").setExpression(RandBoth, 0)\n\nelif k.name() in \[\"turb_clamp\",\"turb_offset\"]:\n    ## Base values if Clamp and Offset boxes are not checked...\n    Turb = \"turbulence (frame*turb_X, turb_Y, turb_Z, turb_octaves, turb_lacunarity, turb_gain)*turb_mult\"\n    ## Value if only Clamp box is checked...\n    TurbClamp =  \"clamp ((turbulence (frame*turb_X, turb_Y, turb_Z, turb_octaves, turb_lacunarity, turb_gain)*turb_mult), turb_min, turb_max)\"\n    ## Value if only Offset box is checked...\n    TurbOffset = \"turbulence (frame*turb_X, turb_Y, turb_Z, turb_octaves, turb_lacunarity, turb_gain)*turb_mult+turb_offset_value\"\n    ## Value if both boxes are checked...\n    TurbBoth = \"clamp ((turbulence (frame*turb_X, turb_Y, turb_Z, turb_octaves, turb_lacunarity, turb_gain)*turb_mult), turb_min, turb_max)+turb_offset_value\"\n\n    ## Clamp and Offset boxes are not checked...\n    if n.knob(\"turb_clamp\").value()==False and n.knob(\"turb_offset\").value()==False:\n        n.knob(\"turbulence_result_knob\").setExpression(Turb, 0)\n    ## Only Clamp box is checked...\n    elif n.knob(\"turb_clamp\").value()==True and n.knob(\"turb_offset\").value()==False:\n        n.knob(\"turbulence_result_knob\").setExpression(TurbClamp, 0)\n    ## Only Offset box is checked...\n    elif n.knob(\"turb_clamp\").value()==False and n.knob(\"turb_offset\").value()==True:\n        n.knob(\"turbulence_result_knob\").setExpression(TurbOffset, 0)\n    ## Both boxes are checked...\n    elif n.knob(\"turb_clamp\").value()==True and n.knob(\"turb_offset\").value()==True:\n        n.knob(\"turbulence_result_knob\").setExpression(TurbBoth, 0)\n"
+  selected true
+  xpos 483
+  ypos 565
+  addUserKnob {20 noise}
+  addUserKnob {26 noise_title l noise -STARTLINE T "(3D Perlin Noise)"}
+  addUserKnob {26 ""}
+  addUserKnob {7 noise_x l frequency}
+  noise_x 0.127
+  addUserKnob {7 noise_amplitude l amplitude R 0 10}
+  noise_amplitude 0.4
+  addUserKnob {26 ""}
+  addUserKnob {6 noise_clamp l "Clamp Min/Max Values" +STARTLINE}
+  addUserKnob {7 noise_min l min R -5 5}
+  noise_min -0.2
+  addUserKnob {7 noise_max l max R 0.1 10}
+  noise_max 0.14
+  addUserKnob {26 ""}
+  addUserKnob {6 noise_offset l "Offset Curve" +STARTLINE}
+  noise_offset true
+  addUserKnob {7 noise_offset_value l offset R -10 10}
+  noise_offset_value 0.55
+  addUserKnob {26 ""}
+  addUserKnob {26 ""}
+  addUserKnob {22 generate_noise l "Generate Curve" T "n = nuke.thisNode()\n\n## Base values if Clamp and Offset boxes are not checked...\nNoise = \"noise (frame*noise_x)*noise_amplitude\"\n\n## Value if only Clamp box is checked...\nNoiseClamp = \"clamp ((noise (frame*noise_x)*noise_amplitude), noise_min, noise_max)\"\n\n## Value if only Offset box is checked...\nNoiseOffset = \"noise (frame*noise_x)*noise_amplitude+noise_offset_value\"\n\n## Value if both boxes are checked...\nNoiseBoth = \"clamp ((noise (frame*noise_x)*noise_amplitude), noise_min, noise_max)+noise_offset_value\"\n\n\n## Clamp and Offset boxes are not checked...\nif n.knob(\"noise_clamp\").value()==False and n.knob(\"noise_offset\").value()==False:\n    n.knob(\"noise_result_knob\").setExpression(Noise, 0)\n## Only Clamp box is checked...\nelif n.knob(\"noise_clamp\").value()==True and n.knob(\"noise_offset\").value()==False:\n    n.knob(\"noise_result_knob\").setExpression(NoiseClamp, 0)\n## Only Offset box is checked...\nelif n.knob(\"noise_clamp\").value()==False and n.knob(\"noise_offset\").value()==True:\n    n.knob(\"noise_result_knob\").setExpression(NoiseOffset, 0)\n## Both boxes are checked...\nelif n.knob(\"noise_clamp\").value()==True and n.knob(\"noise_offset\").value()==True:\n    n.knob(\"noise_result_knob\").setExpression(NoiseBoth, 0)\n" +STARTLINE}
+  addUserKnob {16 noise_result_knob l RESULT:}
+  noise_result_knob {{"noise (frame*noise_x)*noise_amplitude+noise_offset_value"}}
+  addUserKnob {26 ""}
+  addUserKnob {26 ""}
+  addUserKnob {22 noise_web_link l "Click For More Info" T "import os\nimport sys\n\ntry:\n    import subprocess\n    def _run(cmd, shell, wait):\n        opener = subprocess.Popen(cmd, shell=shell)\n        if wait:\n            opener.wait()\n        return opener.pid\nexcept ImportError:\n    import popen2\n    def _run(cmd, shell, wait):\n        opener = popen2.Popen3(cmd)\n        if wait:\n            opener.wait()\n        return opener.pid\n\ndef _open(url, wait=0):\n    if sys.platform == \"darwin\":\n        cmd = \[\"open\", url]\n    elif hasattr(os, \"startfile\"):\n        return os.startfile(url)\n    elif os.environ.has_key(\"KDE_FULL_SESSION\") or os.environ.has_key(\"KDE_MULTIHEAD\") or \\\n         os.environ.has_key(\"GNOME_DESKTOP_SESSION_ID\") or os.environ.has_key(\"GNOME_KEYRING_SOCKET\"):\n        cmd = \[\"xdg-open\", url]\n    else:\n        raise OSError, \"Desktop not supported.\"\n\n    return _run(cmd, 0, wait)\n\n_open('http://flafla2.github.io/2014/08/09/perlinnoise.html')" +STARTLINE}
+  addUserKnob {26 Perlin_Noise_Explainer l "" +STARTLINE T "\nWhat is Perlin Noise?\n\nPerlin Noise is an extremely powerful algorithm that is used often in procedural\ncontent generation. It is especially useful for games and other visual media such\nas movies. The man who created it, Ken Perlin, won an academy award for the\noriginal implementation."}
+  addUserKnob {20 fBm}
+  addUserKnob {26 fBm_title l fBm -STARTLINE T "(Fractional Brownian Motion)"}
+  addUserKnob {26 ""}
+  addUserKnob {7 fBm_X l X}
+  fBm_X 0.018
+  addUserKnob {7 fBm_Y l Y R 0 10}
+  fBm_Y 2
+  addUserKnob {7 fBm_Z l Z R -1 1}
+  fBm_Z 3
+  addUserKnob {7 fBm_octaves l octaves R 1 10}
+  fBm_octaves 4
+  addUserKnob {7 fBm_lacunarity l lacunarity R 1 2}
+  fBm_lacunarity 2
+  addUserKnob {7 fBm_gain l gain}
+  fBm_gain 0.59
+  addUserKnob {26 ""}
+  addUserKnob {7 fBm_mult l multiplier R 1 10}
+  fBm_mult 1
+  addUserKnob {26 ""}
+  addUserKnob {6 fBm_clamp l "Clamp Min/Max Values" +STARTLINE}
+  addUserKnob {7 fBm_min l min R -5 5}
+  fBm_min -0.4
+  addUserKnob {7 fBm_max l max R 0.1 10}
+  fBm_max 0.36
+  addUserKnob {26 ""}
+  addUserKnob {6 fBm_offset l "Offset  Curve" +STARTLINE}
+  fBm_offset true
+  addUserKnob {7 fBm_offset_value l offset R -5 5}
+  fBm_offset_value 0.53
+  addUserKnob {26 ""}
+  addUserKnob {26 ""}
+  addUserKnob {22 generate_fBm_noise l "Generate Curve" T "n = nuke.thisNode()\n\n## Base values if Clamp and Offset boxes are not checked...\nfBm = \"fBm (frame*fBm_X, fBm_Y, fBm_Z, fBm_octaves, fBm_lacunarity, fBm_gain)*fBm_mult\"\n\n## Value if only Clamp box is checked...\nfBmClamp =  \"clamp ((fBm (frame*fBm_X, fBm_Y, fBm_Z, fBm_octaves, fBm_lacunarity, fBm_gain)*fBm_mult), fBm_min, fBm_max)\"\n\n## Value if only Offset box is checked...\nfBmOffset = \"fBm (frame*fBm_X, fBm_Y, fBm_Z, fBm_octaves, fBm_lacunarity, fBm_gain)*fBm_mult+fBm_offset_value\"\n\n## Value if both boxes are checked...\nfBmBoth = \"clamp ((fBm (frame*fBm_X, fBm_Y, fBm_Z, fBm_octaves, fBm_lacunarity, fBm_gain)*fBm_mult), fBm_min, fBm_max)+fBm_offset_value\"\n\n\n## Clamp and Offset boxes are not checked...\nif n.knob(\"fBm_clamp\").value()==False and n.knob(\"fBm_offset\").value()==False:\n    n.knob(\"fBm_result_knob\").setExpression(fBm, 0)\n## Only Clamp box is checked...\nelif n.knob(\"fBm_clamp\").value()==True and n.knob(\"fBm_offset\").value()==False:\n    n.knob(\"fBm_result_knob\").setExpression(fBmClamp, 0)\n## Only Offset box is checked...\nelif n.knob(\"fBm_clamp\").value()==False and n.knob(\"fBm_offset\").value()==True:\n    n.knob(\"fBm_result_knob\").setExpression(fBmOffset, 0)\n## Both boxes are checked...\nelif n.knob(\"fBm_clamp\").value()==True and n.knob(\"fBm_offset\").value()==True:\n    n.knob(\"fBm_result_knob\").setExpression(fBmBoth, 0)\n" +STARTLINE}
+  addUserKnob {16 fBm_result_knob l "RESULT: "}
+  fBm_result_knob {{"fBm (frame*fBm_X, fBm_Y, fBm_Z, fBm_octaves, fBm_lacunarity, fBm_gain)*fBm_mult+fBm_offset_value"}}
+  addUserKnob {26 ""}
+  addUserKnob {26 ""}
+  addUserKnob {22 fBm_web_link l "Click For More Info" T "import os\nimport sys\n\ntry:\n    import subprocess\n    def _run(cmd, shell, wait):\n        opener = subprocess.Popen(cmd, shell=shell)\n        if wait:\n            opener.wait()\n        return opener.pid\nexcept ImportError:\n    import popen2\n    def _run(cmd, shell, wait):\n        opener = popen2.Popen3(cmd)\n        if wait:\n            opener.wait()\n        return opener.pid\n\ndef _open(url, wait=0):\n    if sys.platform == \"darwin\":\n        cmd = \[\"open\", url]\n    elif hasattr(os, \"startfile\"):\n        return os.startfile(url)\n    elif os.environ.has_key(\"KDE_FULL_SESSION\") or os.environ.has_key(\"KDE_MULTIHEAD\") or \\\n         os.environ.has_key(\"GNOME_DESKTOP_SESSION_ID\") or os.environ.has_key(\"GNOME_KEYRING_SOCKET\"):\n        cmd = \[\"xdg-open\", url]\n    else:\n        raise OSError, \"Desktop not supported.\"\n\n    return _run(cmd, 0, wait)\n\n_open('https://code.google.com/p/fractalterraingeneration/wiki/Fractional_Brownian_Motion')" +STARTLINE}
+  addUserKnob {26 fBm_explainer l "" +STARTLINE T "\nWhat is Fractional Brownian Motion?\n\nFractional Brownian Motion is the summation of successive octaves of noise, each with\nhigher frequency and lower amplitude. It doesn't especially matter what kind of noise,\nmost will do. Fractional Brownian Motion (often abbreviated as fBm) is often confused\nwith noise algorithms like Value_Noise and Perlin_Noise, when in fact it just takes a type\nof noise and makes a more interesting picture.\n"}
+  addUserKnob {20 random}
+  addUserKnob {26 random_title l random T "(pseudo random)"}
+  addUserKnob {26 ""}
+  addUserKnob {7 random_X l X}
+  random_X 0.15
+  addUserKnob {7 random_Y l Y}
+  random_Y 0.855
+  addUserKnob {7 random_Z l Z}
+  random_Z 0.6
+  addUserKnob {26 ""}
+  addUserKnob {7 random_mult l multiplier R 1 10}
+  random_mult 1
+  addUserKnob {26 ""}
+  addUserKnob {6 random_clamp l "Clamp Min/Max Values" +STARTLINE}
+  addUserKnob {7 random_min l min R -5 5}
+  random_min 0.3
+  addUserKnob {7 random_max l max R 0.1 10}
+  random_max 0.8
+  addUserKnob {26 ""}
+  addUserKnob {6 random_offset l "Offset Curve" +STARTLINE}
+  addUserKnob {7 random_offset_value l offset R -5 5}
+  random_offset_value 0.64
+  addUserKnob {26 ""}
+  addUserKnob {26 ""}
+  addUserKnob {22 generate_random_noise l "Generate Curve" T "n = nuke.thisNode()\n\n## Base values if Clamp and Offset boxes are not checked...\nRand = \"random (frame*random_X, random_Y, random_Z)*random_mult\"\n\n## Value if only Clamp box is checked...\nRandClamp =  \"clamp ((random (frame*random_X, random_Y, random_Z)*random_mult), random_min, random_max)\"\n\n## Value if only Offset box is checked...\nRandOffset = \"random (frame*random_X, random_Y, random_Z)*random_mult+random_offset_value\"\n\n## Value if both boxes are checked...\nRandBoth = \"clamp ((random (frame*random_X, random_Y, random_Z)*random_mult), random_min, random_max)+random_offset_value\"\n\n\n## Clamp and Offset boxes are not checked...\nif n.knob(\"random_clamp\").value()==False and n.knob(\"random_offset\").value()==False:\n    n.knob(\"random_result_knob\").setExpression(Rand, 0)\n## Only Clamp box is checked...\nelif n.knob(\"random_clamp\").value()==True and n.knob(\"random_offset\").value()==False:\n    n.knob(\"random_result_knob\").setExpression(RandClamp, 0)\n## Only Offset box is checked...\nelif n.knob(\"random_clamp\").value()==False and n.knob(\"random_offset\").value()==True:\n    n.knob(\"random_result_knob\").setExpression(RandOffset, 0)\n## Both boxes are checked...\nelif n.knob(\"random_clamp\").value()==True and n.knob(\"random_offset\").value()==True:\n    n.knob(\"random_result_knob\").setExpression(RandBoth, 0)" +STARTLINE}
+  addUserKnob {7 random_result_knob l RESULT:}
+  random_result_knob {{"random (frame*random_X, random_Y, random_Z)*random_mult"}}
+  addUserKnob {26 ""}
+  addUserKnob {26 ""}
+  addUserKnob {22 random_web_link l "Click For More Info" T "import os\nimport sys\n\ntry:\n    import subprocess\n    def _run(cmd, shell, wait):\n        opener = subprocess.Popen(cmd, shell=shell)\n        if wait:\n            opener.wait()\n        return opener.pid\nexcept ImportError:\n    import popen2\n    def _run(cmd, shell, wait):\n        opener = popen2.Popen3(cmd)\n        if wait:\n            opener.wait()\n        return opener.pid\n\ndef _open(url, wait=0):\n    if sys.platform == \"darwin\":\n        cmd = \[\"open\", url]\n    elif hasattr(os, \"startfile\"):\n        return os.startfile(url)\n    elif os.environ.has_key(\"KDE_FULL_SESSION\") or os.environ.has_key(\"KDE_MULTIHEAD\") or \\\n         os.environ.has_key(\"GNOME_DESKTOP_SESSION_ID\") or os.environ.has_key(\"GNOME_KEYRING_SOCKET\"):\n        cmd = \[\"xdg-open\", url]\n    else:\n        raise OSError, \"Desktop not supported.\"\n\n    return _run(cmd, 0, wait)\n\n_open('https://www.random.org/randomness/')" +STARTLINE}
+  addUserKnob {26 pseudo_random_explainer l "" +STARTLINE T "\nWhat is a pseudo random number?\n\nThe reason it is called \"pseudo\" is that it always generates the exact same value,\ngiven the same x, y and z input values. This is especially useful for animation\npurposes in that a given frame may be rendered multiple times with repeatable results.\nA true random number never repeats."}
+  addUserKnob {20 turbulence}
+  addUserKnob {26 turbulence_title l "" +STARTLINE T "(Same as fBm except the absolute value of the noise function is used.)"}
+  addUserKnob {26 ""}
+  addUserKnob {7 turb_X l X}
+  turb_X 0.12
+  addUserKnob {7 turb_Y l Y R 0 10}
+  turb_Y 2.82
+  addUserKnob {7 turb_Z l Z R -1 1}
+  turb_Z 0.23
+  addUserKnob {7 turb_octaves l octaves R 1 10}
+  turb_octaves 8
+  addUserKnob {7 turb_lacunarity l lacunarity R 1 2}
+  turb_lacunarity 2
+  addUserKnob {7 turb_gain l gain}
+  turb_gain 0.35
+  addUserKnob {26 ""}
+  addUserKnob {7 turb_mult l multiplier R 1 10}
+  turb_mult 1.48
+  addUserKnob {26 ""}
+  addUserKnob {6 turb_clamp l "Clamp Min/Max Values" +STARTLINE}
+  addUserKnob {7 turb_min l min R -5 5}
+  turb_min 0.3
+  addUserKnob {7 turb_max l max R 0.1 10}
+  turb_max 0.55
+  addUserKnob {26 ""}
+  addUserKnob {6 turb_offset l "Offset Curve" +STARTLINE}
+  addUserKnob {7 turb_offset_value l offset R -5 5}
+  addUserKnob {26 ""}
+  addUserKnob {26 ""}
+  addUserKnob {22 generate_turbulence l "Generate Curve" T "n = nuke.thisNode()\n\n## Base values if Clamp and Offset boxes are not checked...\nTurb = \"turbulence (frame*turb_X, turb_Y, turb_Z, turb_octaves, turb_lacunarity, turb_gain)*turb_mult\"\n\n## Value if only Clamp box is checked...\nTurbClamp =  \"clamp ((turbulence (frame*turb_X, turb_Y, turb_Z, turb_octaves, turb_lacunarity, turb_gain)*turb_mult), turb_min, turb_max)\"\n\n## Value if only Offset box is checked...\nTurbOffset = \"turbulence (frame*turb_X, turb_Y, turb_Z, turb_octaves, turb_lacunarity, turb_gain)*turb_mult+turb_offset_value\"\n\n## Value if both boxes are checked...\nTurbBoth = \"clamp ((turbulence (frame*turb_X, turb_Y, turb_Z, turb_octaves, turb_lacunarity, turb_gain)*turb_mult), turb_min, turb_max)+turb_offset_value\"\n\n\n## Clamp and Offset boxes are not checked...\nif n.knob(\"turb_clamp\").value()==False and n.knob(\"turb_offset\").value()==False:\n    n.knob(\"turbulence_result_knob\").setExpression(Turb, 0)\n## Only Clamp box is checked...\nelif n.knob(\"turb_clamp\").value()==True and n.knob(\"turb_offset\").value()==False:\n    n.knob(\"turbulence_result_knob\").setExpression(TurbClamp, 0)\n## Only Offset box is checked...\nelif n.knob(\"turb_clamp\").value()==False and n.knob(\"turb_offset\").value()==True:\n    n.knob(\"turbulence_result_knob\").setExpression(TurbOffset, 0)\n## Both boxes are checked...\nelif n.knob(\"turb_clamp\").value()==True and n.knob(\"turb_offset\").value()==True:\n    n.knob(\"turbulence_result_knob\").setExpression(TurbBoth, 0)" +STARTLINE}
+  addUserKnob {7 turbulence_result_knob l RESULT:}
+  turbulence_result_knob {{"turbulence (frame*turb_X, turb_Y, turb_Z, turb_octaves, turb_lacunarity, turb_gain)*turb_mult"}}
+  addUserKnob {26 ""}
+  addUserKnob {26 ""}
+  addUserKnob {22 turbulence_web_link l "Click For More Info" T "import os\nimport sys\n\ntry:\n    import subprocess\n    def _run(cmd, shell, wait):\n        opener = subprocess.Popen(cmd, shell=shell)\n        if wait:\n            opener.wait()\n        return opener.pid\nexcept ImportError:\n    import popen2\n    def _run(cmd, shell, wait):\n        opener = popen2.Popen3(cmd)\n        if wait:\n            opener.wait()\n        return opener.pid\n\ndef _open(url, wait=0):\n    if sys.platform == \"darwin\":\n        cmd = \[\"open\", url]\n    elif hasattr(os, \"startfile\"):\n        return os.startfile(url)\n    elif os.environ.has_key(\"KDE_FULL_SESSION\") or os.environ.has_key(\"KDE_MULTIHEAD\") or \\\n         os.environ.has_key(\"GNOME_DESKTOP_SESSION_ID\") or os.environ.has_key(\"GNOME_KEYRING_SOCKET\"):\n        cmd = \[\"xdg-open\", url]\n    else:\n        raise OSError, \"Desktop not supported.\"\n\n    return _run(cmd, 0, wait)\n\n_open('http://physbam.stanford.edu/cs448x/old/Procedural_Noise%282f%29Perlin_Noise.html')" +STARTLINE}
+  addUserKnob {26 turbulence_explainer l "" +STARTLINE T "\nWhat is turbulence?\n\nTurbulence is what creates natural looking features out of smoothed noise.\nThe trick is to add multiple noise textures of different zooming scales together.\n\n"}
+ }
+ Output {
+  name Output1
+  xpos 483
+  ypos 645
+ }
+end_group

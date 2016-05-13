@@ -1,0 +1,85 @@
+#! C:/Program Files/Nuke7.0v4/Nuke7.0.exe -nx
+version 7.0 v4
+Gizmo {
+ addUserKnob {20 User}
+ addUserKnob {41 softness T Radial_w_Expressions.softness}
+ addUserKnob {41 scale T SCALING_OVERALL.scale}
+ addUserKnob {41 size l blur T Blur1.size}
+ addUserKnob {41 mix T Merge2.mix}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 402
+  ypos 16
+ }
+ Remove {
+  channels alpha
+  name Remove1
+  xpos 402
+  ypos 56
+ }
+ Dot {
+  name Dot1
+  xpos 436
+  ypos 124
+ }
+set N1fbab130 [stack 0]
+ Radial {
+  output alpha
+  cliptype none
+  area {0 0 {width} {width*pixel_aspect}}
+  softness 0.25
+  name Radial_w_Expressions
+  xpos 520
+  ypos 115
+ }
+ Transform {
+  translate {0 {(height-parent.Radial_w_Expressions.area.t)/2}}
+  center {360 288}
+  name Transform_Radial_To_Middle
+  xpos 520
+  ypos 152
+ }
+ Transform {
+  scale 1.1
+  center {{parent.Radial_w_Expressions.area.r/2} {height/2}}
+  name SCALING_OVERALL
+  selected true
+  xpos 520
+  ypos 176
+ }
+ Blur {
+  channels alpha
+  size 100
+  name Blur1
+  xpos 520
+  ypos 213
+ }
+ Invert {
+  channels alpha
+  name Invert_Alpha
+  xpos 520
+  ypos 249
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  name BLACK
+  xpos 283
+  ypos 231
+ }
+push $N1fbab130
+ Merge2 {
+  inputs 2+1
+  operation mask
+  name Merge2
+  xpos 402
+  ypos 255
+ }
+ Output {
+  name Output1
+  xpos 402
+  ypos 355
+ }
+end_group

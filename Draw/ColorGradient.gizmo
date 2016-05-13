@@ -1,0 +1,67 @@
+#! C:/Program Files/Nuke9.0v4/nuke-9.0.4.dll -nx
+version 9.0 v4
+Gizmo {
+ inputs 0
+ label "3-Way Color Gradient"
+ note_font_color 0xff0000ff
+ addUserKnob {20 User l Gradient}
+ addUserKnob {26 title l "" +STARTLINE T "3-Way Color Gradient Properties\n"}
+ addUserKnob {41 format l "Gradient Format" T middle_ramp.format}
+ addUserKnob {8 Alpha_merge_mix l Alpha}
+ Alpha_merge_mix 1
+ addUserKnob {26 separator l "" +STARTLINE}
+ addUserKnob {7 Rotate R -90 90}
+ addUserKnob {7 z l "Start Position" R 0 500}
+ addUserKnob {7 Z l "End Position" R 0 2000}
+ Z 340
+ addUserKnob {26 ""}
+ addUserKnob {19 top_ramp_color l "Color 1"}
+ top_ramp_color {1 0 0 1}
+ addUserKnob {6 top_ramp_color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {19 middle_ramp_color l "Color 2"}
+ middle_ramp_color {0 1 0 1}
+ addUserKnob {6 middle_ramp_color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {19 bottom_ramp_color l "Color 3"}
+ bottom_ramp_color {0 0 1 1}
+ addUserKnob {6 bottom_ramp_color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+}
+ Constant {
+  inputs 0
+  color {{parent.middle_ramp_color.r} {parent.middle_ramp_color.g} {parent.middle_ramp_color.b} {parent.middle_ramp_color.a}}
+  name middle_ramp
+  xpos 5
+  ypos -174
+ }
+ Ramp {
+  p0 {{((cos(radians(parent.Rotate+90)))*parent.z)+(format.width/2)} {((sin(radians(parent.Rotate+90)))*parent.z)+(format.height/2)}}
+  p1 {{((cos(radians(parent.Rotate+90)))*parent.Z)+(format.width/2)} {((sin(radians(parent.Rotate+90)))*parent.Z)+(format.height/2)}}
+  type smooth
+  color {{parent.top_ramp_color.r} {parent.top_ramp_color.g} {parent.top_ramp_color.b} {parent.top_ramp_color.a}}
+  name top_ramp
+  xpos 5
+  ypos -92
+ }
+ Ramp {
+  p0 {{((cos(radians(parent.Rotate+270)))*parent.z)+(format.width/2)} {((sin(radians(parent.Rotate+270)))*parent.z)+(format.height/2)}}
+  p1 {{((cos(radians(parent.Rotate+270)))*parent.Z)+(format.width/2)} {((sin(radians(parent.Rotate+270)))*parent.Z)+(format.height/2)}}
+  type smooth
+  color {{parent.bottom_ramp_color.r} {parent.bottom_ramp_color.g} {parent.bottom_ramp_color.b} {parent.bottom_ramp_color.a}}
+  name bottom_ramp
+  xpos 5
+  ypos -68
+ }
+push 0
+ Merge2 {
+  inputs 2
+  mix {{parent.Alpha_merge_mix}}
+  name Alpha_merge
+  selected true
+  xpos 5
+  ypos -27
+ }
+ Output {
+  name Output1
+  xpos 5
+  ypos 12
+ }
+end_group

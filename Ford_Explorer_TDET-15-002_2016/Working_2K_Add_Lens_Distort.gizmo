@@ -1,0 +1,672 @@
+#! C:/Program Files/Nuke9.0v4/nuke-9.0.4.dll -nx
+version 9.0 v4
+Gizmo {
+ addUserKnob {20 User}
+ addUserKnob {26 ""}
+ addUserKnob {68 lens_size l "Lens Size" M {20mm 24mm 28mm 32mm 40mm 50mm 65mm 85mm 100mm ""}}
+ lens_size 50mm
+ addUserKnob {26 ""}
+ addUserKnob {26 ""}
+ addUserKnob {26 note l "" +STARTLINE T "\nInput image size should be 2160x1080.\n\nOutput image will be \"HD_1080\" with lens distortion applied."}
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode1
+  tile_color 0xa9a9a9ff
+  label "Lens Grids\n"
+  note_font_size 30
+  xpos -504
+  ypos -201
+  bdwidth 2172
+  bdheight 1143
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode10
+  tile_color 0x7171c600
+  label "Small Scale to remove rough edge\n\n\nCrop to 1920x1080 - reformat"
+  note_font_size 30
+  xpos 313
+  ypos 1103
+  bdwidth 505
+  bdheight 243
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0x232323ff
+  label 20mm
+  note_font_size 42
+  xpos -344
+  ypos -149
+  bdheight 245
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode12
+  tile_color 0x232323ff
+  label 100mm
+  note_font_size 42
+  xpos 1403
+  ypos -151
+  bdheight 245
+  z_order 1
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode13
+  tile_color 0x232323ff
+  label 40mm
+  note_font_size 42
+  xpos 501
+  ypos -151
+  bdheight 245
+  z_order 1
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode14
+  tile_color 0x232323ff
+  label 50mm
+  note_font_size 42
+  xpos 722
+  ypos -151
+  bdheight 245
+  z_order 1
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode15
+  tile_color 0x388e8eff
+  label "Reformat to Undistorted size (height) for selected lens"
+  note_font_size 30
+  xpos -432
+  ypos 121
+  bdwidth 1998
+  bdheight 193
+  z_order 1
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode16
+  tile_color 0x222222ff
+  label "Reformat to 1080p (height) and Crop"
+  note_font_size 30
+  xpos -427
+  ypos 620
+  bdwidth 1992
+  bdheight 237
+  z_order 1
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode17
+  tile_color 0x354c63ff
+  label "Apply Lens Distort for selected lens"
+  note_font_size 30
+  xpos -432
+  ypos 348
+  bdwidth 1994
+  bdheight 216
+  z_order 1
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x232323ff
+  label 65mm
+  note_font_size 42
+  xpos 943
+  ypos -151
+  bdheight 245
+  z_order 1
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode3
+  tile_color 0x232323ff
+  label 85mm
+  note_font_size 42
+  xpos 1164
+  ypos -151
+  bdheight 245
+  z_order 1
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode6
+  tile_color 0x232323ff
+  label 24mm
+  note_font_size 42
+  xpos -143
+  ypos -151
+  bdheight 245
+  z_order 1
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode7
+  tile_color 0x232323ff
+  label 28mm
+  note_font_size 42
+  xpos 71
+  ypos -151
+  bdheight 245
+  z_order 1
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode8
+  tile_color 0x232323ff
+  label 32mm
+  note_font_size 42
+  xpos 280
+  ypos -151
+  bdheight 245
+  z_order 1
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos 511
+  ypos -479
+ }
+ Assert {
+  expression {{"\[python nuke.toNode(\\\"Input1\\\").width()\\ ==\\ 2160\\ and\\ nuke.toNode(\\\"Input1\\\").height()\\ ==\\ 1080]"}}
+  message "Incorrect Image Size --> Should be 2160x1080"
+  name INPUT_SIZE_CHECK
+  xpos 511
+  ypos -413
+ }
+set N590c4000 [stack 0]
+ Dot {
+  name Dot4
+  xpos 545
+  ypos -303
+ }
+set N590efc00 [stack 0]
+ Dot {
+  name Dot20
+  xpos 1447
+  ypos -62
+ }
+ Crop {
+  box {49 20 2111 1059}
+  reformat true
+  crop false
+  name Crop_100mm
+  xpos 1413
+  ypos -8
+ }
+ Reformat {
+  format "2143 1078 0 0 2143 1078 1 2143x1078"
+  resize height
+  filter Mitchell
+  name Reformat_100mm_Undistorted_Size
+  xpos 1413
+  ypos 216
+ }
+ PFBarrel {
+  file N:/Jobs/Team_Detroit/TDET-15-002_2016_Explorer_Product_Features_Animation/work/_common/img/plate/Ref_Grids_and_Charts_from_Shoot_04_13_15/Reel_A001/A001_0413VU.RDM/100_mm_A001_C009_0413QO_001.pfb
+  parameters 1
+  low_order -0.019023
+  distorted_width 2160
+  distorted_height 1080
+  distorted_pixel_aspect 1
+  undistorted_width 2143
+  undistorted_height 1078
+  overscan_width 1.007932782
+  overscan_height 1.001855254
+  name PFBarrel_100mm_OUT
+  xpos 1413
+  ypos 456
+ }
+ Reformat {
+  format "1920 1080 0 0 1920 1080 1 HD_1080"
+  resize height
+  filter Lanczos6
+  pbb true
+  name Reformat_1920x1080_Crop
+  xpos 1413
+  ypos 714
+ }
+ set C590ee400 [stack 0]
+ Dot {
+  name Dot38
+  xpos 1447
+  ypos 774
+ }
+push $N590efc00
+ Dot {
+  name Dot19
+  xpos 1208
+  ypos -62
+ }
+ Crop {
+  box {33 16 2127 1064}
+  reformat true
+  crop false
+  name Crop_85mm
+  xpos 1174
+  ypos -8
+ }
+ Reformat {
+  format "2176 1088 0 0 2176 1088 1 2176x1088"
+  resize height
+  filter Mitchell
+  name Reformat_85mm_Undistorted_Size
+  xpos 1174
+  ypos 218
+ }
+ PFBarrel {
+  file N:/Jobs/Team_Detroit/TDET-15-002_2016_Explorer_Product_Features_Animation/work/_common/img/plate/Ref_Grids_and_Charts_from_Shoot_04_13_15/Reel_A001/A001_0413VU.RDM/85_mm_A001_C008_0413R8_001.pfb
+  parameters 1
+  low_order 0.014667
+  distorted_width 2160
+  distorted_height 1080
+  distorted_pixel_aspect 1
+  undistorted_width 2176
+  undistorted_height 1088
+  overscan_width 0.9926470518
+  overscan_height 0.9926470518
+  name PFBarrel_85mm_OUT
+  xpos 1174
+  ypos 456
+ }
+clone $C590ee400 {
+  xpos 1174
+  ypos 714
+  selected false
+ }
+ Dot {
+  name Dot37
+  xpos 1208
+  ypos 774
+ }
+push $N590efc00
+ Dot {
+  name Dot18
+  xpos 987
+  ypos -62
+ }
+ Crop {
+  box {21 9 2139 1071}
+  reformat true
+  crop false
+  name Crop_65mm
+  xpos 953
+  ypos -8
+ }
+ Reformat {
+  format "2202 1101 0 0 2202 1101 1 2202x1101"
+  resize height
+  filter Mitchell
+  name Reformat_65mm_Undistorted_Size
+  xpos 953
+  ypos 218
+ }
+ PFBarrel {
+  file N:/Jobs/Team_Detroit/TDET-15-002_2016_Explorer_Product_Features_Animation/work/_common/img/plate/Ref_Grids_and_Charts_from_Shoot_04_13_15/Reel_A001/A001_0413VU.RDM/65_mm_A001_C007_0413U2_001.pfb
+  parameters 1
+  low_order 0.039386
+  distorted_width 2160
+  distorted_height 1080
+  distorted_pixel_aspect 1
+  undistorted_width 2202
+  undistorted_height 1101
+  overscan_width 0.9809264541
+  overscan_height 0.9809264541
+  name PFBarrel_65mm_OUT
+  xpos 953
+  ypos 456
+ }
+clone $C590ee400 {
+  xpos 953
+  ypos 714
+  selected false
+ }
+ Dot {
+  name Dot36
+  xpos 987
+  ypos 774
+ }
+push $N590efc00
+ Dot {
+  name Dot17
+  xpos 766
+  ypos -61
+ }
+ Crop {
+  box {13 5 2147 1075}
+  reformat true
+  crop false
+  name Crop_50mm
+  xpos 732
+  ypos -7
+ }
+ Reformat {
+  format "2219 1109 0 0 2219 1109 1 2219x1109"
+  resize height
+  filter Mitchell
+  name Reformat_50mm_Undistorted_Size
+  xpos 732
+  ypos 218
+ }
+ PFBarrel {
+  file N:/Jobs/Team_Detroit/TDET-15-002_2016_Explorer_Product_Features_Animation/work/_common/img/plate/Ref_Grids_and_Charts_from_Shoot_04_13_15/Reel_A001/A001_0413VU.RDM/50_mm_A001_C006_0413VK_001.pfb
+  parameters 1
+  low_order 0.054673
+  distorted_width 2160
+  distorted_height 1080
+  distorted_pixel_aspect 1
+  undistorted_width 2219
+  undistorted_height 1109
+  overscan_width 0.9734114408
+  overscan_height 0.9738503098
+  name PFBarrel_50mm_OUT
+  xpos 732
+  ypos 456
+ }
+clone $C590ee400 {
+  xpos 732
+  ypos 715
+  selected false
+ }
+ Dot {
+  name Dot35
+  xpos 766
+  ypos 774
+ }
+push $N590efc00
+ Dot {
+  name Dot16
+  xpos 545
+  ypos -62
+ }
+ Crop {
+  box {27 13 2133 1067}
+  reformat true
+  crop false
+  name Crop_40mm
+  xpos 511
+  ypos -8
+ }
+ Reformat {
+  format "2189 1094 0 0 2189 1094 1 2189x1094"
+  resize height
+  filter Mitchell
+  name Reformat_40mm_Undistorted_Size
+  xpos 511
+  ypos 217
+ }
+ PFBarrel {
+  file N:/Jobs/Team_Detroit/TDET-15-002_2016_Explorer_Product_Features_Animation/work/_common/img/plate/Ref_Grids_and_Charts_from_Shoot_04_13_15/Reel_A001/A001_0413VU.RDM/40_mm_A001_C005_0413QB_001.pfb
+  parameters 1
+  low_order 0.027176
+  distorted_width 2160
+  distorted_height 1080
+  distorted_pixel_aspect 1
+  undistorted_width 2189
+  undistorted_height 1094
+  overscan_width 0.986751914
+  overscan_height 0.9872029424
+  name PFBarrel_40mm_OUT
+  xpos 511
+  ypos 456
+ }
+clone $C590ee400 {
+  xpos 511
+  ypos 714
+  selected false
+ }
+ Dot {
+  name Dot34
+  xpos 545
+  ypos 774
+ }
+push $N590efc00
+ Dot {
+  name Dot15
+  xpos 324
+  ypos -62
+ }
+ Crop {
+  box {26 12 2134 1068}
+  reformat true
+  crop false
+  name Crop_32mm
+  xpos 290
+  ypos -8
+ }
+ Reformat {
+  format "2190 1095 0 0 2190 1095 1 2190x1095"
+  resize height
+  name Reformat_32mm_Undistorted_Size
+  xpos 290
+  ypos 217
+ }
+ PFBarrel {
+  file N:/Jobs/Team_Detroit/TDET-15-002_2016_Explorer_Product_Features_Animation/work/_common/img/plate/Ref_Grids_and_Charts_from_Shoot_04_13_15/Reel_A001/A001_0413VU.RDM/32_mm_A001_C004_0413BL_001.pfb
+  parameters 1
+  low_order 0.028425
+  distorted_width 2160
+  distorted_height 1080
+  distorted_pixel_aspect 1
+  undistorted_width 2190
+  undistorted_height 1095
+  overscan_width 0.9863013625
+  overscan_height 0.9863013625
+  name PFBarrel_32mm_OUT
+  xpos 290
+  ypos 456
+ }
+clone $C590ee400 {
+  xpos 290
+  ypos 714
+  selected false
+ }
+ Dot {
+  name Dot33
+  xpos 324
+  ypos 774
+ }
+push $N590efc00
+ Dot {
+  name Dot14
+  xpos 115
+  ypos -62
+ }
+ Crop {
+  box {25 12 2135 1068}
+  reformat true
+  crop false
+  name Crop_28mm
+  xpos 81
+  ypos -8
+ }
+ Reformat {
+  format "2193 1096 0 0 2193 1096 1 2193x1096"
+  resize height
+  filter Mitchell
+  name Reformat_28mm_Undistorted_Size
+  xpos 81
+  ypos 216
+ }
+ PFBarrel {
+  file N:/Jobs/Team_Detroit/TDET-15-002_2016_Explorer_Product_Features_Animation/work/_common/img/plate/Ref_Grids_and_Charts_from_Shoot_04_13_15/Reel_A001/A001_0413VU.RDM/28_mm_A001_C003_0413OY_001.pfb
+  parameters 1
+  low_order 0.030499
+  distorted_width 2160
+  distorted_height 1080
+  distorted_pixel_aspect 1
+  undistorted_width 2193
+  undistorted_height 1096
+  overscan_width 0.9849520922
+  overscan_height 0.9854014516
+  name PFBarrel_28mm_OUT
+  xpos 81
+  ypos 456
+ }
+clone $C590ee400 {
+  xpos 81
+  ypos 714
+  selected false
+ }
+ Dot {
+  name Dot32
+  xpos 115
+  ypos 774
+ }
+push $N590efc00
+ Dot {
+  name Dot13
+  xpos -99
+  ypos -62
+ }
+ Crop {
+  box {28 13 2132 1067}
+  reformat true
+  crop false
+  name Crop_24mm
+  xpos -133
+  ypos -8
+ }
+ Reformat {
+  format "2186 1093 0 0 2186 1093 1 2186x1093"
+  resize height
+  filter Mitchell
+  name Reformat_24mm_Undistorted_Size
+  xpos -133
+  ypos 217
+ }
+ PFBarrel {
+  file N:/Jobs/Team_Detroit/TDET-15-002_2016_Explorer_Product_Features_Animation/work/_common/img/plate/Ref_Grids_and_Charts_from_Shoot_04_13_15/Reel_A001/A001_0413VU.RDM/24_mm_A001_C002_04138R_001.pfb
+  parameters 1
+  low_order 0.024645
+  distorted_width 2160
+  distorted_height 1080
+  distorted_pixel_aspect 1
+  undistorted_width 2186
+  undistorted_height 1093
+  overscan_width 0.9881061316
+  overscan_height 0.9881061316
+  name PFBarrel_24mm_OUT
+  xpos -133
+  ypos 456
+ }
+clone $C590ee400 {
+  xpos -133
+  ypos 714
+  selected false
+ }
+ Dot {
+  name Dot31
+  xpos -99
+  ypos 774
+ }
+push $N590efc00
+ Dot {
+  name Dot11
+  xpos -300
+  ypos -62
+ }
+set N58f97800 [stack 0]
+ Crop {
+  box {31 15 2129 1065}
+  reformat true
+  crop false
+  name Crop_20mm
+  xpos -334
+  ypos -8
+ }
+ Reformat {
+  format "2180 1090 0 0 2180 1090 1 2180x1090"
+  resize height
+  filter Mitchell
+  name Reformat_20mm_Undistorted_Size
+  xpos -334
+  ypos 214
+ }
+set N58f97000 [stack 0]
+ PFBarrel {
+  file N:/Jobs/Team_Detroit/TDET-15-002_2016_Explorer_Product_Features_Animation/work/_common/img/plate/Ref_Grids_and_Charts_from_Shoot_04_13_15/Reel_A001/A001_0413VU.RDM/20_mm_A001_C001_0413AP_001.pfb
+  parameters 1
+  low_order 0.019158
+  distorted_width 2160
+  distorted_height 1080
+  distorted_pixel_aspect 1
+  undistorted_width 2180
+  undistorted_height 1090
+  overscan_width 0.9908257127
+  overscan_height 0.9908257127
+  name PFBarrel_20mm_OUT
+  xpos -334
+  ypos 449
+ }
+set N58f96800 [stack 0]
+clone $C590ee400 {
+  xpos -334
+  ypos 714
+  selected false
+ }
+set N58f96400 [stack 0]
+ Dot {
+  name Dot30
+  xpos -300
+  ypos 774
+ }
+ Switch {
+  inputs 9
+  which {{"\[python -execlocal node\\ =\\ nuke.thisGroup()\\nknob\\ =\\ node.knob('lens_size')\\nlenses\\ =\\ knob.values()\\nlens_list\\ =\\ \\\[lens\\ for\\ lens\\ in\\ enumerate(lenses)\\]\\n\\nselection\\ =\\ knob.value()\\n\\nfor\\ index,\\ lens\\ in\\ lens_list:\\n\\ \\ \\ \\ if\\ selection\\ ==\\ lens:\\n\\ \\ \\ \\ \\ \\ \\ \\ ret\\ =\\ index]"}}
+  name Switch1
+  xpos 511
+  ypos 1063
+ }
+ Transform {
+  scale 1.005
+  center {960 540}
+  filter Parzen
+  name Slight_Scale_to_Remove_Ragged_Edge
+  selected true
+  xpos 511
+  ypos 1177
+ }
+set N58fbd400 [stack 0]
+ Crop {
+  box {0 0 1920 1080}
+  reformat true
+  crop false
+  name Crop_to_1920x1080
+  xpos 511
+  ypos 1298
+ }
+set N58fbd000 [stack 0]
+ Output {
+  name Output1
+  xpos 511
+  ypos 1420
+ }
+push $N590c4000
+ Crop {
+  box {{Input1.bbox.x} {Input1.bbox.y} {Input1.bbox.r} {Input1.bbox.t}}
+  reformat true
+  crop false
+  name Crop_to_BoundingBox_Reformat
+  xpos 357
+  ypos -354
+ }
+push $N58fbd000
+push $N58fbd400
+push $N58f96400
+push $N58f96800
+push $N58f97000
+push $N58f97800
+ Viewer {
+  inputs 6
+  frame_range 1-100
+  input_number 5
+  name Viewer1
+  xpos 1166
+  ypos 1401
+ }
+end_group

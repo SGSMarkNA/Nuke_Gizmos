@@ -1,0 +1,186 @@
+#! C:/Program Files/Nuke9.0v4/nuke-9.0.4.dll -nx
+version 9.0 v4
+Gizmo {
+ inputs 0
+ addUserKnob {20 User}
+ addUserKnob {4 screen_pos l "Screen Position" M {Lower_Left Lower_Right Lower_Center Center_Screen ""}}
+ addUserKnob {41 Font_Size l "Font Size" T FONT_SIZE.Font_Size}
+ addUserKnob {41 white l gain T Grade1.white}
+}
+ NoOp {
+  inputs 0
+  name FONT_SIZE
+  xpos -541
+  ypos -414
+  addUserKnob {20 User}
+  addUserKnob {16 Font_Size l "Font Size"}
+  Font_Size 0.03
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  name Constant_root_format
+  xpos -327
+  ypos -420
+ }
+set N3f00400 [stack 0]
+ Text {
+  cliptype bbox
+  replace true
+  message "\[python \{str(int(((int(int(nuke.root().knob(\"frame\").value()) / int(nuke.root().knob(\"fps\").value())))) / int(60) / int(60) % int(24))).zfill(2)\} ]"
+  font C:/Windows/Fonts/arial.ttf
+  size {{(width*pixel_aspect)*FONT_SIZE.Font_Size}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {width} {height}}
+  translate {{(size/pixel_aspect)*-2.1} 0}
+  center {{width/2} {height/2}}
+  name Hours
+  xpos -634
+  ypos -286
+ }
+push $N3f00400
+ Text {
+  cliptype bbox
+  replace true
+  message :
+  font C:/Windows/Fonts/arial.ttf
+  size {{(width*pixel_aspect)*FONT_SIZE.Font_Size}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {width} {height}}
+  translate {{(size/pixel_aspect)*-1.4} 0}
+  center {{width/2} {height/2}}
+  name colon_3
+  xpos -535
+  ypos -288
+ }
+push $N3f00400
+ Text {
+  cliptype bbox
+  replace true
+  message :
+  font C:/Windows/Fonts/arial.ttf
+  size {{(width*pixel_aspect)*FONT_SIZE.Font_Size}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {width} {height}}
+  center {{width/2} {height/2}}
+  name colon_2
+  xpos -327
+  ypos -290
+ }
+push $N3f00400
+ Text {
+  cliptype bbox
+  replace true
+  message "\[python \{str(int(((int(int(nuke.root().knob(\"frame\").value()) / int(nuke.root().knob(\"fps\").value())))) / int(60) % int(60))).zfill(2)\} ]"
+  font C:/Windows/Fonts/arial.ttf
+  size {{(width*pixel_aspect)*FONT_SIZE.Font_Size}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {width} {height}}
+  translate {{(size/pixel_aspect)*-.7} 0}
+  center {{width/2} {height/2}}
+  name Minutes
+  xpos -424
+  ypos -289
+ }
+push $N3f00400
+ Text {
+  cliptype bbox
+  replace true
+  message "\[python \{str(int(nuke.root().knob(\"frame\").value()) % int(nuke.root().knob(\"fps\").value())).zfill(2)\} ]"
+  font C:/Windows/Fonts/arial.ttf
+  size {{(width*pixel_aspect)*FONT_SIZE.Font_Size}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {width} {height}}
+  translate {{(size/pixel_aspect)*2.1} 0}
+  center {{width/2} {height/2}}
+  name Frames
+  xpos -11
+  ypos -294
+ }
+push 0
+push $N3f00400
+ Text {
+  cliptype bbox
+  replace true
+  message "\[python \{str(int(((int(int(nuke.root().knob(\"frame\").value()) / int(nuke.root().knob(\"fps\").value())))) % int(60))).zfill(2)\} ]"
+  font C:/Windows/Fonts/arial.ttf
+  size {{(width*pixel_aspect)*FONT_SIZE.Font_Size}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {width} {height}}
+  translate {{(size/pixel_aspect)*.7} 0}
+  center {{width/2} {height/2}}
+  name Seconds
+  xpos -222
+  ypos -294
+ }
+push $N3f00400
+ Text {
+  cliptype bbox
+  replace true
+  message :
+  font C:/Windows/Fonts/arial.ttf
+  size {{(width*pixel_aspect)*FONT_SIZE.Font_Size}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {width} {height}}
+  translate {{(size/pixel_aspect)*1.4} 0}
+  center {{width/2} {height/2}}
+  name colon_1
+  xpos -120
+  ypos -295
+ }
+ Merge2 {
+  inputs 7+1
+  metainput A
+  name Merge8
+  xpos -327
+  ypos -243
+ }
+ Transform {
+  translate {{-root.format.width*.405} {-root.format.height*.460}}
+  center {{width/2} {height/2}}
+  name Lower_Left_TIMECODE
+  xpos -327
+  ypos -197
+  disable {{"\[python -execlocal if\\ nuke.thisGroup().knob('screen_pos').value()\\ ==\\ \\\"Lower_Left\\\":\\n\\ \\ \\ \\ ret\\ =\\ 0\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ 1]"}}
+ }
+ Transform {
+  translate {{-root.format.width*-.405} {-root.format.height*.460}}
+  center {{width/2} {height/2}}
+  name Lower_Right_TIMECODE
+  xpos -327
+  ypos -156
+  disable {{"\[python -execlocal if\\ nuke.thisGroup().knob('screen_pos').value()\\ ==\\ \\\"Lower_Right\\\":\\n\\ \\ \\ \\ ret\\ =\\ 0\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ 1]"}}
+ }
+ Transform {
+  translate {0 {-root.format.height*.460}}
+  center {{width/2} {height/2}}
+  name Lower_Center_TIMECODE
+  xpos -327
+  ypos -119
+  disable {{"\[python -execlocal if\\ nuke.thisGroup().knob('screen_pos').value()\\ ==\\ \\\"Lower_Center\\\":\\n\\ \\ \\ \\ ret\\ =\\ 0\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ 1]"}}
+ }
+ Grade {
+  name Grade1
+  xpos -327
+  ypos -29
+ }
+ Output {
+  name Output1
+  xpos -327
+  ypos 72
+ }
+end_group

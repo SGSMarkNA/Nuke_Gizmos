@@ -1,0 +1,242 @@
+#! C:/Program Files/Nuke5.1v2/Nuke5.1.exe -nx
+version 5.1200
+Gizmo {
+ inputs 13
+ lock_connections true
+}
+ Input {
+  inputs 0
+  name Matte03
+  xpos -436
+  ypos -756
+  number 12
+ }
+ Input {
+  inputs 0
+  name Matte02
+  xpos -436
+  ypos -783
+  number 11
+ }
+ Input {
+  inputs 0
+  name Matte01
+  xpos -436
+  ypos -810
+  number 10
+ }
+ Input {
+  inputs 0
+  name NormalMap
+  xpos -436
+  ypos -888
+  number 9
+ }
+ Input {
+  inputs 0
+  name OCC
+  xpos -436
+  ypos -915
+  number 8
+ }
+ Input {
+  inputs 0
+  name Specular2
+  xpos -436
+  ypos -942
+  number 7
+ }
+ Input {
+  inputs 0
+  name Fresnel
+  xpos -436
+  ypos -969
+  number 6
+ }
+ Input {
+  inputs 0
+  name BounceLight
+  xpos -436
+  ypos -996
+  number 5
+ }
+ Input {
+  inputs 0
+  name Flake
+  xpos -436
+  ypos -1023
+  number 4
+ }
+ Input {
+  inputs 0
+  name Specular
+  xpos -436
+  ypos -1050
+  number 3
+ }
+ Input {
+  inputs 0
+  name Reflection
+  xpos -436
+  ypos -1077
+  number 2
+ }
+ Input {
+  inputs 0
+  name Diffuse
+  xpos -436
+  ypos -1104
+  number 1
+ }
+ Input {
+  inputs 0
+  name RGBA
+  xpos -326
+  ypos -1176
+ }
+add_layer {Diffuse Diffuse.red Diffuse.green Diffuse.blue Diffuse.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Diffuse
+  name ShuffleCopy1
+  xpos -326
+  ypos -1104
+ }
+add_layer {Reflection Reflection.red Reflection.green Reflection.blue Reflection.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Reflection
+  name ShuffleCopy2
+  xpos -326
+  ypos -1077
+ }
+add_layer {Specular Specular.red Specular.green Specular.blue Specular.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Specular
+  name ShuffleCopy3
+  xpos -326
+  ypos -1050
+ }
+set N6c957e0 [stack 0]
+add_layer {Flake Flake.red Flake.green Flake.blue Flake.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Flake
+  name ShuffleCopy4
+  xpos -326
+  ypos -1023
+ }
+add_layer {BounceLight BounceLight.red BounceLight.green BounceLight.blue BounceLight.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out BounceLight
+  name ShuffleCopy5
+  xpos -326
+  ypos -996
+ }
+add_layer {Fresnel Fresnel.red Fresnel.green Fresnel.blue Fresnel.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Fresnel
+  name ShuffleCopy6
+  xpos -326
+  ypos -969
+ }
+add_layer {Specular2 Specular2.red Specular2.green Specular2.blue Specular2.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Specular2
+  name ShuffleCopy7
+  xpos -326
+  ypos -942
+ }
+add_layer {OCC OCC.red OCC.green OCC.blue OCC.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out OCC
+  name ShuffleCopy8
+  xpos -326
+  ypos -915
+ }
+add_layer {NormalMap NormalMap.red NormalMap.green NormalMap.blue NormalMap.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out NormalMap
+  name ShuffleCopy9
+  xpos -326
+  ypos -888
+ }
+add_layer {Matte_01 Matte_01.red Matte_01.green Matte_01.blue Matte_01.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Matte_01
+  name ShuffleCopy10
+  xpos -326
+  ypos -810
+ }
+add_layer {Matte_02 Matte_02.red Matte_02.green Matte_02.blue Matte_02.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Matte_02
+  name ShuffleCopy11
+  xpos -326
+  ypos -783
+ }
+add_layer {Matte_03 Matte_03.red Matte_03.green Matte_03.blue Matte_03.alpha}
+ ShuffleCopy {
+  inputs 2
+  red red
+  green green
+  blue blue
+  out Matte_03
+  name ShuffleCopy12
+  xpos -326
+  ypos -756
+ }
+ Output {
+  name Output1
+  xpos -326
+  ypos -589
+ }
+push $N6c957e0
+ Viewer {
+  channels Specular
+  name Viewer1
+  xpos -149
+  ypos -637
+ }
+end_group

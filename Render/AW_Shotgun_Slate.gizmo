@@ -1,0 +1,3717 @@
+#! C:/Program Files/Nuke9.0v4/nuke-9.0.4.dll -nx
+version 9.0 v4
+Gizmo {
+ addUserKnob {20 info_tab l "Shot Info"}
+ addUserKnob {26 shot_info l "Shot Info"}
+ addUserKnob {1 studio_name}
+ studio_name studio
+ addUserKnob {1 project_name}
+ project_name "project name"
+ addUserKnob {1 version_description}
+ version_description comment
+ addUserKnob {1 version_name}
+ version_name s002_Beauty
+ addUserKnob {4 version_type M {shot asset}}
+ addUserKnob {1 date_created}
+ date_created 2015.22.05
+ addUserKnob {1 shot_name}
+ shot_name shot_001
+ addUserKnob {1 artist_name}
+ artist_name Drew
+ addUserKnob {1 frame_range}
+ frame_range 1-250
+ addUserKnob {3 thumbnail_frame}
+ thumbnail_frame {{"int ((root.last_frame - root.first_frame) / 2)"}}
+ addUserKnob {3 slate_frame}
+ addUserKnob {26 slate_section l "Slate Options"}
+ addUserKnob {6 thumb l "use thumbnail" +STARTLINE}
+ thumb true
+ addUserKnob {6 bw_bar l "show grayscale bar" +STARTLINE}
+ bw_bar true
+ addUserKnob {6 rgb_bar l "show color bar" +STARTLINE}
+ rgb_bar true
+ addUserKnob {26 overlay_bug_text l Overlay/Bug}
+ addUserKnob {6 bug l "show overlay/bug" +STARTLINE}
+ bug true
+ addUserKnob {6 trnsp l "use transparency" +STARTLINE}
+ trnsp true
+ addUserKnob {26 watermark_text l Watermark}
+ addUserKnob {6 wtrmk l "show watermark" +STARTLINE}
+ wtrmk true
+ addUserKnob {26 timecode_text l Timecode}
+ addUserKnob {6 tcode l "show timecode" +STARTLINE}
+ tcode true
+}
+ BackdropNode {
+  inputs 0
+  name BackdropNode2
+  tile_color 0x7171c600
+  label Overlay/Bug/Timecode
+  note_font_size 42
+  xpos 469
+  ypos 678
+  bdwidth 1428
+  bdheight 693
+ }
+ BackdropNode {
+  inputs 0
+  name BackdropNode4
+  tile_color 0x8e8e3800
+  label thumbnail
+  note_font_size 42
+  xpos -711
+  ypos 1192
+  bdwidth 278
+  bdheight 397
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  name Constant8
+  xpos 1416
+  ypos 798
+ }
+set N5823e000 [stack 0]
+ Text {
+  cliptype bbox
+  replace true
+  message "\[python \{str(int(((int(int(nuke.root().knob(\"frame\").value()) / int(nuke.root().knob(\"fps\").value())))) / int(60) / int(60) % int(24))).zfill(2)\} ]"
+  font C:/Windows/Fonts/arial.ttf
+  size {{(width*pixel_aspect)/40}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {width} {height}}
+  translate {{(size/pixel_aspect)*-2.1} 0}
+  center {{width/2} {height/2}}
+  name Hours
+  xpos 1104
+  ypos 906
+ }
+push $N5823e000
+ Text {
+  cliptype bbox
+  replace true
+  message :
+  font C:/Windows/Fonts/arial.ttf
+  size {{(width*pixel_aspect)/40}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {width} {height}}
+  translate {{(size/pixel_aspect)*-1.4} 0}
+  center {{width/2} {height/2}}
+  name colon_4
+  xpos 1208
+  ypos 906
+ }
+push $N5823e000
+ Text {
+  cliptype bbox
+  replace true
+  message :
+  font C:/Windows/Fonts/arial.ttf
+  size {{(width*pixel_aspect)/40}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {width} {height}}
+  center {{width/2} {height/2}}
+  name colon_5
+  xpos 1416
+  ypos 906
+ }
+push $N5823e000
+ Text {
+  cliptype bbox
+  replace true
+  message "\[python \{str(int(((int(int(nuke.root().knob(\"frame\").value()) / int(nuke.root().knob(\"fps\").value())))) / int(60) % int(60))).zfill(2)\} ]"
+  font C:/Windows/Fonts/arial.ttf
+  size {{(width*pixel_aspect)/40}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {width} {height}}
+  translate {{(size/pixel_aspect)*-.7} 0}
+  center {{width/2} {height/2}}
+  name Minutes
+  xpos 1319
+  ypos 906
+ }
+push $N5823e000
+ Text {
+  cliptype bbox
+  replace true
+  message "\[python \{str(int(nuke.root().knob(\"frame\").value()) % int(nuke.root().knob(\"fps\").value())).zfill(2)\} ]"
+  font C:/Windows/Fonts/arial.ttf
+  size {{(width*pixel_aspect)/40}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {width} {height}}
+  translate {{(size/pixel_aspect)*2.1} 0}
+  center {{width/2} {height/2}}
+  name Frames
+  xpos 1732
+  ypos 906
+ }
+push 0
+push $N5823e000
+ Text {
+  cliptype bbox
+  replace true
+  message "\[python \{str(int(((int(int(nuke.root().knob(\"frame\").value()) / int(nuke.root().knob(\"fps\").value())))) % int(60))).zfill(2)\} ]"
+  font C:/Windows/Fonts/arial.ttf
+  size {{(width*pixel_aspect)/40}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {width} {height}}
+  translate {{(size/pixel_aspect)*.7} 0}
+  center {{width/2} {height/2}}
+  name Seconds
+  xpos 1521
+  ypos 906
+ }
+push $N5823e000
+ Text {
+  cliptype bbox
+  replace true
+  message :
+  font C:/Windows/Fonts/arial.ttf
+  size {{(width*pixel_aspect)/40}}
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 {width} {height}}
+  translate {{(size/pixel_aspect)*1.4} 0}
+  center {{width/2} {height/2}}
+  name colon_6
+  xpos 1623
+  ypos 906
+ }
+ Merge2 {
+  inputs 7+1
+  metainput A
+  name Merge3
+  xpos 1416
+  ypos 995
+ }
+ Transform {
+  translate {{-root.format.width*.405} {-root.format.height*.450}}
+  center {{width/2} {height/2}}
+  name Transform_TIMECODE1
+  xpos 1416
+  ypos 1045
+ }
+ Dot {
+  name Dot16
+  xpos 1450
+  ypos 1136
+ }
+push 0
+ Switch {
+  inputs 2
+  which {{"\[value parent.tcode]"}}
+  name Switch_TIMECODE2
+  label "Based on script's fps setting."
+  xpos 1236
+  ypos 1127
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  name Constant6
+  xpos 651
+  ypos 809
+ }
+ Text {
+  message "\[value parent.project_name]"
+  font C:/Windows/Fonts/arial.ttf
+  size {{(width*pixel_aspect)/40}}
+  xjustify center
+  yjustify top
+  Transform 1
+  box {0 0 {width} {height}}
+  translate {0 {-height*.03}}
+  center {{width/2} {height/2}}
+  name Project_Text_Overlay
+  label "top center"
+  xpos 651
+  ypos 931
+ }
+ Text {
+  message "\[value parent.date_created]"
+  font C:/Windows/Fonts/arial.ttf
+  size {{(width*pixel_aspect)/40}}
+  xjustify right
+  yjustify top
+  Transform 1
+  box {0 0 {width} {height}}
+  translate {{-width*.03} {-height*.03}}
+  center {{width/2} {height/2}}
+  name Date_Created_Overlay
+  label "top right"
+  xpos 651
+  ypos 976
+ }
+ Text {
+  message "\[value parent.version_name]"
+  font C:/Windows/Fonts/arial.ttf
+  size {{(width*pixel_aspect)/40}}
+  xjustify center
+  yjustify bottom
+  Transform 1
+  box {0 0 {width} {height}}
+  translate {0 {height*.025}}
+  center {{width/2} {height/2}}
+  name Version_Name_Overlay
+  label "bottom center"
+  xpos 651
+  ypos 1027
+ }
+ Text {
+  message "\[format %04d \[frame]]"
+  font C:/Windows/Fonts/arial.ttf
+  size {{(width*pixel_aspect)/40}}
+  xjustify right
+  yjustify bottom
+  Transform 1
+  box {0 0 {width} {height}}
+  translate {{-width*.03} {height*.025}}
+  center {{width/2} {height/2}}
+  name Frame_Number_Overlay
+  label "bottom right"
+  xpos 651
+  ypos 1076
+ }
+ Merge2 {
+  inputs 2
+  name Merge_Timecode_Overlay
+  xpos 651
+  ypos 1131
+ }
+ Group {
+  name armstrongWHITE_Logo_Bug
+  xpos 651
+  ypos 1170
+  addUserKnob {20 User}
+  addUserKnob {4 screen_pos l "Screen Position" M {Lower_Left Lower_Right Lower_Center Center_Screen Upper_Left Upper_Right Upper_Center "" ""}}
+  screen_pos Upper_Left
+  addUserKnob {41 scale T Scale.scale}
+  addUserKnob {41 translate T Position_Offsets.translate}
+  addUserKnob {41 white l gain T Opacity.white}
+ }
+  BackdropNode {
+   inputs 0
+   name BackdropNode1
+   tile_color 0x57767fff
+   label "Presets\n"
+   note_font_size 42
+   xpos -377
+   ypos -387
+   bdwidth 196
+   bdheight 385
+  }
+  Constant {
+   inputs 0
+   channels rgb
+   format "10576 1340 0 0 10576 1340 1 "
+   name Logo_Outlines
+   xpos -327
+   ypos -605
+  }
+  RotoPaint {
+   curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097664}
+    {t
+     {=width/2 0}
+     {=height/2 0}}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {curvegroup e_hole 512 bspline
+     {{cc
+       {f 8192}
+       {px 0
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x461db1b8 x443d233d}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x46205af3 x443d0e84}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x46205959 x44478ab9}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x46204c08 x4454bead}
+        {{a t
+	  {{0 x3f7f2e35}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x46200b90 x445ec6f5}
+        {{a t
+	  {{0 x3f7f972b}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x461f88a4 x44646d5b}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x461eed4e x44657968}
+        {{a t
+	  {{0 x3f7f7cee}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x461e4f46 x44632817}
+        {{a t
+	  {{0 x3f7fcb85}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x461de262 x445bc9f8}
+        {{a t
+	  {{0 x3f7fcb85}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x461db64a x44511301}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x461daf6c x44480b79}}}     idem}
+     {tx 0 x461f4e09 x44547b57}
+     {a r 0 g 0 b 0 a 0 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn 0 ltm 0 tt x40c00000}}
+    {curvegroup e 512 bspline
+     {{cc
+       {f 8192}
+       {px 0
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x461db35a x441d813e}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x4622c43c x441d839c}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x4622c050 x4444f7c3}
+        {{a t
+	  {{0 x3f7fbe77}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4622ac3d x44579b50}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x46225417 x44693a21}
+        {{a t
+	  {{0 x3f7f7cee}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4621917f x447a30a6}
+        {{a t
+	  {{0 x3f7f3b64}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x462036e7 x4481f42c}
+        {{a t
+	  {{0 x3f7f7cee}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x461f00e7 x448288eb}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x461d810d x44815b4a}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x461c5392 x44776f76}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x461b9d0d x446638f1}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x461b556c x4452b1d6}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x461b4862 x4444285a}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x461b48c2 x443a3434}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x461b48d4 x4408439d}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x461b4d6c x43f57900}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x461b8689 x43cff8fe}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x461bfc9b x43b20bf6}
+        {{a t
+	  {{0 x3f8020c5}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x461cd476 x4396d7cd}
+        {{a t
+	  {{0 x3f8020c5}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x461e2e2a x43896d25}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x461f5e3d x438878ff}
+        {{a t
+	  {{0 x3f804189}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4620717f x438d6ac6}
+        {{a t
+	  {{0 x3f8020c5}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x46219676 x439f0bf6}
+        {{a t
+	  {{0 x3f80624e}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x46226688 x43c37dbc}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4622b9a5 x43ed44da}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x4622c4af x4406b435}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x46205959 x4406aab9}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x46205ad4 x43fa5570}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4620402a x43e136a0}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x461fd70d x43cd3b5e}
+        {{a t
+	  {{0 x3f7fbe77}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x461f170d x43c6aac6}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x461e64c1 x43cace54}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x461de5f1 x43d8d0b2}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x461db159 x43f42608}
+        {{a t
+	  {{0 x3f7fbe77}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x461db1ca x4402f305}}}     idem}
+     {tx 0 x461f3925 x4417e492}
+     {a osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn 0 ltm 0 tt x40c00000}}
+    {curvegroup t 512 bspline
+     {{cc
+       {f 8192}
+       {px 0
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x46129b59 x4499755c}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x46150559 x4499655c}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x46150359 x44808891}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x46169e25 x44808891}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x46169fbf x44614452}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x461503c0 x44616ab9}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x4615028c x43ed223e}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x46151bbf x43d5ef0a}
+        {{a t
+	  {{0 x3f80624e}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4615ac26 x43ce7bd8}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x4616a08d x43cf2f0a}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x46169fbf x438d223d}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x46159558 x43879571}
+        {{a t
+	  {{0 x3f7e76c9}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x46141826 x438bfbd7}
+        {{a t
+	  {{0 x3f7f3b64}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4612efc0 x43a4af0a}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4612a025 x43c7223c}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x46129b59 x43e31570}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x46129b59 x44615dec}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x461146f2 x44619120}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x46114559 x4480955d}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x46129b59 x4480a22a}}}     idem}
+     {tx 0 x46149d1a x442fc19a}
+     {a osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn 0 ltm 0 tt x40c00000}}
+    {curvegroup i 512 bspline
+     {{cc
+       {f 8192}
+       {px 0
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x460a3fbf x4480922a}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x460ca6f3 x4480922a}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x460ca716 x43902740}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x460a3b0d x43900c89}}}     idem}
+     {tx 0 x460bc69a x4425c000}
+     {a osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn 0 ltm 0 tt x40c00000}}
+    {curvegroup i_dot 512 bspline
+     {{cc
+       {f 8192}
+       {px 0
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x460a3fa2 x44a0c9ef}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x460a3edf x448f3620}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x460ca7a3 x448f0869}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x460ca959 x44a0a9ef}}}     idem}
+     {tx 0 x460bc700 x4498c800}
+     {a osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn 0 ltm 0 tt x40c00000}}
+    {curvegroup h 512 bspline
+     {{cc
+       {f 8192}
+       {px 0
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45faefe0 x44a02136}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45ffbf6e x44a02982}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45ffc2fc x446f9b51}
+        {{a t
+	  {{0 x3f8020c5}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4600f793 x447ff7c4}
+        {{a t
+	  {{0 x3f804189}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x46023fde x4482f724}
+        {{a t
+	  {{0 x3f8020c5}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4603ae04 x4481ded9}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x460478fa x44758d18}
+        {{a t
+	  {{0 x3f7fbe77}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4604b8c1 x4464026d}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4604b050 x4459226d}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x4604aed5 x43905a2f}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x46024c51 x4390769f}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x46024a63 x4456a39d}
+        {{a t
+	  {{0 x3f7f3b64}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x46023f20 x44604e47}
+        {{a t
+	  {{0 x3f7ef9db}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4601a0c2 x4465ddaf}
+        {{a t
+	  {{0 x3f7f7cee}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4600fafa x4464426d}
+        {{a t
+	  {{0 x3f7f7cee}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x460064d5 x445f2ab9}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45ffbaae x4458eab9}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45ffc68c x438ff900}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45faebbb x43904738}}}     idem}
+     {tx 0 x4601e01b x445206bd}
+     {a osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn 0 ltm 0 tt x40c00000}}
+    {curvegroup w 512 bspline
+     {{cc
+       {f 8192}
+       {px 0
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45da894d x44808db6}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45df330a x44807ba0}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45e154c8 x440c3cd0}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45e47042 x44806130}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45e7fab1 x44805346}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45ea9e2c x440c60fb}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45ed44c7 x44809773}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45f1ef36 x4480a131}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45ec9ab1 x4390583a}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45e8be2b x43900fe1}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45e61415 x443de3c4}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45e2e521 x43900fe1}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45df0f37 x43907f2f}}}     idem}
+     {tx 0 x45e6b314 x443284ec}
+     {a osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn 0 ltm 0 tt x40c00000}}
+    {curvegroup g_hole2 512 bspline
+     {{cc
+       {f 8192}
+       {px 0
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45c606b0 x43a39e95}
+        {{a t
+	  {{0 x3f804189}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c86eb0 x439c1571}
+        {{a t
+	  {{0 x3f8020c5}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45cacbd6 x439370e0}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45cc3cf9 x4385f0df}
+        {{a t
+	  {{0 x3f7fbe77}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45ccaeb0 x436cbd2a}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45cc758c x433a2ae0}
+        {{a t
+	  {{0 x3f7f3b64}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45cb3067 x43103d29}
+        {{a t
+	  {{0 x3f7fbe77}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c913d5 x42ff9ee5}
+        {{a t
+	  {{0 x3f7f7cee}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c6df42 x4300f406}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c4cfd4 x430df405}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c36bd5 x432e1898}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c2df41 x43604f72}
+        {{a t
+	  {{0 x3f8020c5}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c34a1e x4386f0de}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c49ab0 x4398cc4d}}}     idem}
+     {tx 0 x45c86049 x43664000}
+     {a r 0 g 0 b 0 a 0 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn 0 ltm 0 tt x40c00000}}
+    {curvegroup g_hole 512 bspline
+     {{cc
+       {f 8192}
+       {px 0
+        {{a t
+	  {{0 x3f804189}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c77a3e x446dbb51}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c974e9 x4468000e}
+        {{a t
+	  {{0 x3f8020c5}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45ca65f3 x44583694}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45cabe64 x444504cc}
+        {{a t
+	  {{0 x3f804189}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45caa851 x442e90a6}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45ca3218 x4420898a}
+        {{a t
+	  {{0 x3f7f3b64}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c94da6 x44151434}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c7b405 x44106f77}
+        {{a t
+	  {{0 x3f7fbe77}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c5b721 x44137305}
+        {{a t
+	  {{0 x3f7fbe77}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c46b6e x4422826c}
+        {{a t
+	  {{0 x3f7fbe77}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c41b93 x443b1c80}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c439a7 x444de39d}
+        {{a t
+	  {{0 x3f80624e}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c49f47 x445c50a6}
+        {{a t
+	  {{0 x3f80624e}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c5a0c3 x44690ab9}}}     idem}
+     {tx 0 x45c81249 x44401db7}
+     {a r 0 g 0 b 0 a 0 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn 0 ltm 0 tt x40c00000}}
+    {curvegroup g 512 bspline
+     {{cc
+       {f 8192}
+       {px 0
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45cfab0a x447e5368}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45cfab71 x4467a710}
+        {{a t
+	  {{0 x3f7f971b}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45ce9bc5 x4468c193}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45cd83f1 x44663f4c}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45ccd534 x446165b1}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45cd1ab0 x4459f11f}
+        {{a t
+	  {{0 x3f800d17}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45cd996f x44490981}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45cd7d55 x4434b600}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45cd4977 x4427527f}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45cc9b50 x441639f6}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45cb4240 x44081d77}
+        {{a t
+	  {{0 x3f7fcb96}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c99d42 x4400a7ae}
+        {{a t
+	  {{0 x3f7fb158}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c7dd55 x43fd5e94}
+        {{a t
+	  {{0 x3f7fb158}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c673fa x43ff6857}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45c567a8 x44007f4b}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c4a84f x43fcdb8a}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c3ddc6 x43f1d9b6}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c3d5d9 x43e218ca}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c48304 x43d6a01c}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c61abf x43ce5cc2}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c83adc x43c92412}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45ca7965 x43c16ac8}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45cc8a15 x43b7ace8}
+        {{a t
+	  {{0 x3f800d1f}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45ce841d x43a39794}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45cf692a x43852ebc}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45cf7af0 x434b03de}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45cee942 x4313895b}
+        {{a t
+	  {{0 x3f7fe5d3}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45cd6cfe x42c65d11}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45cb7875 x42875488}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c8ebd4 x4256f985}
+        {{a t
+	  {{0 x3f7f62b0}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c68841 x425a16c7}
+        {{a t
+	  {{0 x3f7fb168}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c3ffc0 x4284a634}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c21ed7 x42b8be94}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c0a615 x4305adee}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c00cc3 x4342eae0}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c04d82 x437fe1bd}
+        {{a t
+	  {{0 x3f800d17}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c102bb x43939488}
+        {{a t
+	  {{0 x3f801a35}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c1b675 x439efcc2}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c28284 x43a8e5e6}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45c36dc0 x43afb523}
+        {{a t
+	  {{0 x3f7fcb85}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c24be8 x43b74d36}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c1619f x43c67742}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c0eb6f x43dbb918}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c126b0 x43f171c8}
+        {{a t
+	  {{0 x3f800d17}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c1cf25 x43ffcff3}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c2ac1d x440497fb}
+        {{a t
+	  {{0 x3f80346a}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c37f34 x44072a44}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45c3ee92 x4407d035}
+        {{a t
+	  {{0 x3f7fe5c3}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c3452a x440c0d76}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c26d20 x44154bca}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c1bb25 x4421f7d3}
+        {{a t
+	  {{0 x3f7fe5c3}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c14cc9 x44316bca}
+        {{a t
+	  {{0 x3f7fe5d3}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c1442c x4442bc8c}
+        {{a t
+	  {{0 x3f7fb158}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c18ddd x445302cd}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c21a13 x446075da}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c2f406 x446c5f72}
+        {{a t
+	  {{0 x3f7fcb85}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c41f3e x4475c5d9}
+        {{a t
+	  {{0 x3f7fcb96}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c55822 x447b5bf1}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c6d693 x447e9f4b}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c8412f x447e8cdc}
+        {{a t
+	  {{0 x3f801a35}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45c97f42 x447cc980}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45cab3b2 x44787981}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45cb84e1 x4472d601}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45cbe6cd x446de562}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45cc3f17 x4473370f}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45cd47f0 x447a7035}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45cea8f8 x447e670f}}}     idem}
+     {tx 0 x45c7f806 x44106ecf}
+     {a osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn 0 ltm 0 tt x40c00000}}
+    {curvegroup n 512 bspline
+     {{cc
+       {f 8192}
+       {px 0
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45a7b5e3 x447ad859}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45aaa131 x447ae947}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45aaa116 x446744f2}
+        {{a t
+	  {{0 x3f801a3d}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45abd3ab x447042e1}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45ad3ec4 x44780fae}
+        {{a t
+	  {{0 x3f801a3d}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45aedbab x447e6aee}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45b08c14 x447e79cb}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45b22c14 x447b8d34}
+        {{a t
+	  {{0 x3f801a3d}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45b399dc x4472e16e}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45b47ed2 x44632c94}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45b49dfe x44543750}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45b4a116 x4390665f}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45b18116 x4390528d}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45b18116 x444ecab9}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45b1755f x44573dec}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45b126eb x4460571c}
+        {{a t
+	  {{0 x3f7fcb96}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45b07c71 x44681d4d}
+        {{a t
+	  {{0 x3f7fcb96}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45aedc64 x446b15df}
+        {{a t
+	  {{0 x3f7fcb96}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45ad093e x4465cc60}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45abad87 x445bdc79}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45aacb0c x4453b330}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45aacfba x43902ee6}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45a7b2f2 x43907047}}}     idem}
+     {tx 0 x45af64ef x444eda27}
+     {a osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn 0 ltm 0 tt x40c00000}}
+    {curvegroup o_hole 512 bspline
+     {{cc
+       {f 8192}
+       {px 0
+        {{a t
+	  {{0 x3f8020c5}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4595c3a9 x446b1e29}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4597ae44 x4467d325}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4598b325 x445d536b}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45994737 x444c700d}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x459985da x44357bd7}
+        {{a t
+	  {{0 x3f7fbe77}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45999045 x441ebbd7}
+        {{a t
+	  {{0 x3f7fbe77}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45997eb0 x440b6ab9}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45994788 x43edbd3c}
+        {{a t
+	  {{0 x3f7fbe77}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4598d730 x43d302f2}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45983262 x43bf4db0}
+        {{a t
+	  {{0 x3f7f3b64}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x459736e7 x43b4b335}
+        {{a t
+	  {{0 x3f7f3b64}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4595d6e2 x43b0d3cd}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4593ff31 x43b62b38}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x459301a1 x43c8a686}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45926b86 x43e3d570}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x459222f8 x4404fe12}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45920dd9 x441c1e12}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4592108c x44312f31}
+        {{a t
+	  {{0 x3f8020c5}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4592349e x4442d2d4}
+        {{a t
+	  {{0 x3f7f7cee}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45927df3 x44529485}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45930c05 x445ea8b9}
+        {{a t
+	  {{0 x3f80624e}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4593eb12 x4467799b}}}     idem}
+     {tx 0 x459661a3 x4420c000}
+     {a r 0 g 0 b 0 a 0 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn 0 ltm 0 tt x40c00000}}
+    {curvegroup o 512 bspline
+     {{cc
+       {f 8192}
+       {px 0
+        {{a t
+	  {{0 x3f8020c5}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4595f71f x44801e03}
+        {{a t
+	  {{0 x3f8020c5}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x459936b0 x447a796d}
+        {{a t
+	  {{0 x3f8020c5}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x459b457f x4467f43c}
+        {{a t
+	  {{0 x3f804189}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x459c5486 x444d943c}
+        {{a t
+	  {{0 x3f7fbe77}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x459cb65d x442a4c74}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x459c98a2 x440bb281}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x459c37c5 x43e4026a}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x459b4609 x43b9cccb}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4599c0be x439a2347}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4597da94 x438bdaa2}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4595d180 x4387764e}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4592b06b x438eb493}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4590a7a9 x43b0572c}
+        {{a t
+	  {{0 x3f7fbe77}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x458fa0a3 x43d5311e}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x458eff3a x4406c821}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x458ee2e8 x4428de9d}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x458f2c33 x4443fe9d}
+        {{a t
+	  {{0 x3f8020c5}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x458fa295 x44577dc0}
+        {{a t
+	  {{0 x3f8020c5}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45909834 x44692821}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45919563 x4472fdc0}
+        {{a t
+	  {{0 x3f8020c5}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45930a94 x447baab9}}}     idem}
+     {tx 0 x45962092 x442253cf}
+     {a osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn 0 ltm 0 tt x40c00000}}
+    {curvegroup r 512 bspline
+     {{cc
+       {f 8192}
+       {px 0
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x457bd1ad x447ad97d}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45810354 x447ac368}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x458105c5 x4464ad1e}
+        {{a t
+	  {{0 x3f80624e}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x458260da x44737890}
+        {{a t
+	  {{0 x3f8020c5}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45840e42 x447c2d51}
+        {{a t
+	  {{0 x3f80624e}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4585a20a x447e63ce}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x4586c179 x447e6368}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x4586c1c4 x4466e0e0}
+        {{a t
+	  {{0 x3f7fbe77}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4585373a x44669282}
+        {{a t
+	  {{0 x3f7fbe77}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45837d64 x44612135}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4581fe5d x44555281}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45810300 x44474843}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45810126 x43905ae6}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x457bd07a x439046f0}}}     idem}
+     {tx 0 x45833a00 x4455d6db}
+     {a osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn 0 ltm 0 tt x40c00000}}
+    {curvegroup t 512 bspline
+     {{cc
+       {f 8192}
+       {px 0
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45581ae8 x449b5421}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45581386 x447acfa5}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45521385 x447acfa6}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45520e99 x44663e6a}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45581cc0 x446640e1}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45581423 x43cf41c0}
+        {{a t
+	  {{0 x3f804189}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45584aa8 x43b3d474}
+        {{a t
+	  {{0 x3f808312}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x455a2f17 x43954c94}
+        {{a t
+	  {{0 x3f8020c5}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x455e551e x4387ea1f}
+        {{a t
+	  {{0 x3f808312}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x456386f8 x43897bd8}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x4566826a x4390566c}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x4566822c x43b5927c}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4563cc62 x43ae41c1}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45609b86 x43aed086}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x455e9ae8 x43bd81bf}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x455e490f x43cd9570}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x455e424a x4466597d}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x456685fc x446640e1}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45668736 x447ae0e0}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x455e4ae7 x447ab97e}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x455e424a x449b57d2}}}     idem}
+     {tx 0 x455efe18 x4427c30c}
+     {a osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn 0 ltm 0 tt x40c00000}}
+    {curvegroup s 512 bspline
+     {{cc
+       {f 8192}
+       {px 0
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x453aa428 x444d7183}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x453fcd21 x4453c3f0}
+        {{a t
+	  {{0 x3f7fbe77}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x453e859c x44677f16}
+        {{a t
+	  {{0 x3f7f7cee}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x453a6657 x4479ae9a}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4533e2b2 x44803101}
+        {{a t
+	  {{0 x3f7f3b64}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x452cf7cb x447aef92}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4527fd5e x4465f27b}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45277af1 x444dfa3c}
+        {{a t
+	  {{0 x3f804189}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45289808 x443e0106}
+        {{a t
+	  {{0 x3f8020c5}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x452b8902 x442f04e7}
+        {{a t
+	  {{0 x3f804189}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x452f5ab3 x44239373}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4534c6d3 x4416aab9}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4539113f x44099374}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x453ac13e x43f5785a}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x453aaed2 x43d5fc3a}
+        {{a t
+	  {{0 x3f7fbe77}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45379bab x43b58bbe}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4532efca x43afa114}
+        {{a t
+	  {{0 x3f7fbe77}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x452f0884 x43c07478}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x452cd9f9 x43dea114}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x452c074f x43f1eea6}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45265bac x43e847de}
+        {{a t
+	  {{0 x3f8020c5}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45274ed2 x43cdc9ce}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4529f140 x43a99571}
+        {{a t
+	  {{0 x3f804189}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x452da140 x43921190}
+        {{a t
+	  {{0 x3f80624e}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4532e4e3 x4387c20c}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45386901 x4389d762}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x453ce008 x439f0fa0}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x453fb940 x43baf66a}
+        {{a t
+	  {{0 x3f804189}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45415848 x43e8020c}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x453ff656 x440ebc2d}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x453c3ab4 x441f6bb1}
+        {{a t
+	  {{0 x3f7f7cee}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45384710 x442a7183}
+        {{a t
+	  {{0 x3f7fbe77}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45337b6e x443609c0}
+        {{a t
+	  {{0 x3f7f3b64}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x453008c4 x4440200f}
+        {{a t
+	  {{0 x3f8020c5}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x452dfe94 x444b67d1}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x452da655 x445a165c}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x452fad20 x44676107}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4532db30 x446ab27b}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4536af11 x446807d0}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x45395618 x445d7183}}}     idem}
+     {tx 0 x4534e066 x442138cd}
+     {a osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn 0 ltm 0 tt x40c00000}}
+    {curvegroup m 512 bspline
+     {{cc
+       {f 8192}
+       {px 0
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x44c768a4 x447acab9}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x44c77aba x439044bf}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x44d40476 x4390183a}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x44d3daba x4456f5db}
+        {{a t
+	  {{0 x3f80624e}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x44d9bd82 x44652528}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x44e21740 x446b7f98}
+        {{a t
+	  {{0 x3f804189}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x44ea4e34 x44678ab9}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x44eca7f2 x445c98a3}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x44ece478 x4450468d}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x44ecd0fe x439028eb}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x44f92478 x43906623}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x44f93e34 x44573312}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x44fe7aba x446280fb}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4502118b x44697e33}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4506323c x446a9476}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4508a2ee x4463da07}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45091453 x44559e33}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x45090d5e x43901839}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x450f3c53 x43904fe0}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x450f4347 x44582ee6}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x450ed505 x4468ec1e}
+        {{a t
+	  {{0 x3f804189}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x450c1aef x44797b6a}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4506e9e4 x44801c52}
+        {{a t
+	  {{0 x3f7f7cee}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4501d296 x447bde34}
+        {{a t
+	  {{0 x3f7f3b64}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x44fc6262 x44715f97}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x44f7baba x4467fb6b}
+        {{a t
+	  {{0 x3f7f7cee}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x44f3cee8 x44777cd0}
+        {{a t
+	  {{0 x3f7eb852}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x44e8d0fc x44806fcc}
+        {{a t
+	  {{0 x3f7f7cee}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x44deb956 x447b4ab9}
+        {{a t
+	  {{0 x3f7e76c9}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x44d7c8a4 x447231af}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x44d2f312 x44675b6b}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x44d2f68e x447ad312}}}     idem}
+     {tx 0 x44f6e100 x444d1f00}
+     {a osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn 0 ltm 0 tt x40c00000}}
+    {curvegroup r 512 bspline
+     {{cc
+       {f 8192}
+       {px 0
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x44770b82 x447ae300}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x447763ca x43900c9d}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x4487f5c6 x439078c0}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x448801e6 x44474884}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x448d95c2 x445a9fb0}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x449637f6 x4465f5c2}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x449ef1e6 x4466d272}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x449ef5c2 x447e3c61}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4496e4a8 x447e299e}
+        {{a t
+	  {{0 x3f7fbe77}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x448f2272 x4476a769}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4489ffb2 x446a3912}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x44880fb2 x4464ce08}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x4487e6de x447accee}}}     idem}
+     {tx 0 x448f83b1 x4453fb14}
+     {a osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn 0 ltm 0 tt x40c00000}}
+    {curvegroup a_hole 512 bspline
+     {{cc
+       {f 8192}
+       {px 0
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x43f2223a x44284d51}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x43f22082 x43d772d8}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x43da3542 x43c11e18}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x43bf031a x43b2f493}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x43a25d0a x43b0ce86}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x43878d7a x43bcdaa1}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x43766711 x43d56bee}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4373b6a1 x43fc1fd2}
+        {{a t
+	  {{0 x3f8020c5}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x438f12aa x440e0666}
+        {{a t
+	  {{0 x3f804189}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x43aaeae2 x4418eab9}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x43ce6ae2 x44228589}}}     idem}
+     {tx 0 x43bd9174 x43f4e8ba}
+     {a r 0 g 0 b 0 a 0 osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn 0 ltm 0 tt x40c00000}}
+    {curvegroup a 512 bspline
+     {{cc
+       {f 8192}
+       {px 0
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x4380914a x4446b11f}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x43258901 x444a2453}
+        {{a t
+	  {{0 x3f80346e}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x43365001 x445b8509}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x43572c01 x446b7212}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4388280a x4478f92e}
+        {{a t
+	  {{0 x3f801a37}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x43af9bba x447fa362}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x43d99bba x447de3da}
+        {{a t
+	  {{0 x3f801a37}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x43fc960a x4477f7c3}
+        {{a t
+	  {{0 x3f801a37}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x440ba2ba x446a58f2}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x44118d62 x4458d786}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4411f442 x4440c8d3}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4411daaa x44186d54}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4411c10e x43dae23e}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4411daaa x43ba3d44}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x44136776 x43a111a7}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x44160a8a x43900b02}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x43f91caa x439069d4}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x43f33182 x43ade23e}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x43e45682 x43a1a49c}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x43ccceea x4392df64}
+        {{a t
+	  {{0 x3f7fcb91}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x43aeb642 x4387e058}
+        {{a t
+	  {{0 x3f7fb15b}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4384f7b2 x438b082b}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x43457f81 x439eb6a0}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x431c5201 x43bd9571}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x430ec001 x43e457d0}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x431cbe01 x44062ec0}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x43400621 x4416115c}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x436f4e31 x44214c25}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4394c47a x442bd70c}
+        {{a t
+	  {{0 x3f801a37}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x43ae77b2 x44320ff0}
+        {{a t
+	  {{0 x3f80346e}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x43cdef22 x4438570c}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 x40400000}}	 te
+	  {{0 x40800000}}}      x43f209b2 x443ce81e}
+        {{a t
+	  {{0 x3f7fcb92}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x43f240b2 x444a9b51}
+        {{a t
+	  {{0 x3f7fcb92}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x43f0438a x4456124e}
+        {{a t
+	  {{0 x3f7f9725}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x43e57a8a x44625e29}
+        {{a t
+	  {{0 x3f7f9724}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x43d118e2 x4468c490}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x43bad772 x446a7471}
+        {{a t
+	  {{0 x3f7fe5ca}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x43a3b27a x446730a6}
+        {{a t
+	  {{0 x3f7fcb92}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4393a072 x445f1f1b}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x4389710a x44563fd2}
+        {{a t
+	  {{0 1}}	 rp
+	  {{0 1}}	 te
+	  {{0 x40800000}}}      x43832eaa x444ce26d}}}     idem}
+     {tx 0 x43c7c0f0 x44295c68}
+     {a osw x41200000 osf 0 str 1 spx x44700000 spy x44070000 sb 1 ltn 0 ltm 0 tt x40c00000}}}}}}
+   toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 tt 6 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+   toolbar_brush_hardness 0.200000003
+   toolbar_source_transform_scale {1 1}
+   toolbar_source_transform_center {960 540}
+   color 0
+   colorOverlay {0 0 0 0}
+   lifetime_type "all frames"
+   lifetime_start 0
+   lifetime_end 0
+   view {}
+   motionblur_on true
+   motionblur_shutter_offset_type centred
+   source_black_outside true
+   name armstrong_white_Logo_MASKS
+   xpos -327
+   ypos -513
+  }
+  Reformat {
+   name Reformat_to_Root_Format
+   xpos -327
+   ypos -475
+  }
+  Transform {
+   scale 0.25
+   center {{width/2} {height/2}}
+   name Scale
+   xpos -327
+   ypos -436
+  }
+  Transform {
+   translate {{-root.format.width*.35} {-root.format.height*.450}}
+   center {{width/2} {height/2}}
+   name Lower_Left_TIMECODE
+   xpos -327
+   ypos -306
+   disable {{"\[python -execlocal if\\ nuke.thisGroup().knob('screen_pos').value()\\ ==\\ \\\"Lower_Left\\\":\\n\\ \\ \\ \\ ret\\ =\\ 0\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ 1]"}}
+  }
+  Transform {
+   translate {{-root.format.width*-.35} {-root.format.height*.450}}
+   center {{width/2} {height/2}}
+   name Lower_Right_TIMECODE
+   xpos -327
+   ypos -274
+   disable {{"\[python -execlocal if\\ nuke.thisGroup().knob('screen_pos').value()\\ ==\\ \\\"Lower_Right\\\":\\n\\ \\ \\ \\ ret\\ =\\ 0\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ 1]"}}
+  }
+  Transform {
+   translate {0 {-root.format.height*.450}}
+   center {{width/2} {height/2}}
+   name Lower_Center_TIMECODE
+   xpos -327
+   ypos -243
+   disable {{"\[python -execlocal if\\ nuke.thisGroup().knob('screen_pos').value()\\ ==\\ \\\"Lower_Center\\\":\\n\\ \\ \\ \\ ret\\ =\\ 0\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ 1]"}}
+  }
+  Transform {
+   center {{width/2} {height/2}}
+   clamp true
+   name Center_Screen_TIMECODE
+   xpos -327
+   ypos -174
+   disable {{"\[python -execlocal if\\ nuke.thisGroup().knob('screen_pos').value()\\ ==\\ \\\"Center_Screen\\\":\\n\\ \\ \\ \\ ret\\ =\\ 0\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ 1]"}}
+  }
+  Transform {
+   translate {{-root.format.width*.35} {-root.format.height*-.450}}
+   center {{width/2} {height/2}}
+   name Upper_Left_TIMECODE
+   xpos -327
+   ypos -114
+   disable {{"\[python -execlocal if\\ nuke.thisGroup().knob('screen_pos').value()\\ ==\\ \\\"Upper_Left\\\":\\n\\ \\ \\ \\ ret\\ =\\ 0\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ 1]"}}
+  }
+  Transform {
+   translate {{-root.format.width*-.35} {-root.format.height*-.450}}
+   center {{width/2} {height/2}}
+   name Upper_Right_TIMECODE
+   xpos -327
+   ypos -76
+   disable {{"\[python -execlocal if\\ nuke.thisGroup().knob('screen_pos').value()\\ ==\\ \\\"Upper_Right\\\":\\n\\ \\ \\ \\ ret\\ =\\ 0\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ 1]"}}
+  }
+  Transform {
+   translate {0 {-root.format.height*-.450}}
+   center {{width/2} {height/2}}
+   name Upper_Center_TIMECODE
+   xpos -327
+   ypos -44
+   disable {{"\[python -execlocal if\\ nuke.thisGroup().knob('screen_pos').value()\\ ==\\ \\\"Upper_Center\\\":\\n\\ \\ \\ \\ ret\\ =\\ 0\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ 1]"}}
+  }
+  Transform {
+   center {960 540}
+   name Position_Offsets
+   xpos -327
+   ypos 31
+  }
+  Grade {
+   channels rgba
+   name Opacity
+   xpos -327
+   ypos 76
+  }
+set N3dc55400 [stack 0]
+push $N3dc55400
+  Dot {
+   name Dot5
+   xpos -197
+   ypos 79
+  }
+  Dot {
+   name Dot6
+   xpos -197
+   ypos 131
+  }
+  Copy {
+   inputs 2
+   from0 rgba.alpha
+   to0 rgba.alpha
+   name Copy1
+   xpos -327
+   ypos 122
+  }
+  Input {
+   inputs 0
+   name Input1
+   xpos -128
+   ypos -731
+  }
+  Dot {
+   name Dot7
+   xpos -94
+   ypos 207
+  }
+  Merge2 {
+   inputs 2
+   name Merge_with_Input
+   xpos -327
+   ypos 204
+  }
+set N3dc89c00 [stack 0]
+  Output {
+   name Output1
+   xpos -327
+   ypos 272
+  }
+push $N3dc89c00
+  Viewer {
+   frame_range 0-1270
+   translate {-1.268000007 0.02600000054}
+   name Viewer1
+   xpos 31
+   ypos 320
+  }
+ end_group
+ Grade {
+  multiply 0.50363
+  name Overlay_Transparency
+  xpos 651
+  ypos 1214
+ }
+ Reformat {
+  resize fit
+  name Reformat_to_root_format
+  xpos 651
+  ypos 1287
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color {0.02549336106 0.02549336106 0.02549336106 0.9245702624}
+  name Constant3
+  xpos 210
+  ypos 963
+ }
+ Rectangle {
+  area {0 {root.format.height*.1 x13 280.08} {width} {root.format.height*.9 x13 2816.36}}
+  name Rectangle9
+  xpos 210
+  ypos 1059
+ }
+ Invert {
+  name Invert1
+  xpos 210
+  ypos 1102
+ }
+push 0
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos 210
+  ypos 1174
+ }
+ Premult {
+  name Premult1
+  xpos 210
+  ypos 1227
+ }
+ AddMix {
+  inputs 2
+  name AddMix2
+  xpos 210
+  ypos 1287
+ }
+set N3dcdd400 [stack 0]
+ Constant {
+  inputs 0
+  channels rgb
+  format "3000 3000 0 0 3000 3000 1 "
+  name _3K_x_3K_
+  xpos 959
+  ypos 763
+ }
+ RotoPaint {
+  curves {{{v x3f99999a}
+  {f 0}
+  {n
+   {layer Root
+    {f 2097664}
+    {t
+   {=width/2 x44800000}
+   {=height/2 x44428000}}
+    {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+    {layer LOGO
+     {f 2097664}
+     {t x44bb8000 x44d2a000 0 0 xc3390000 0 0 0 0 x3fa66666 x3fa66666}
+     {a pt1x 0 pt1y 0 pt2x 0 pt2y 0 pt3x 0 pt3y 0 pt4x 0 pt4y 0 ptex00 0 ptex01 0 ptex02 0 ptex03 0 ptex10 0 ptex11 0 ptex12 0 ptex13 0 ptex20 0 ptex21 0 ptex22 0 ptex23 0 ptex30 0 ptex31 0 ptex32 0 ptex33 0 ptof1x 0 ptof1y 0 ptof2x 0 ptof2y 0 ptof3x 0 ptof3y 0 ptof4x 0 ptof4y 0 pterr 0 ptrefset 0 ptmot x40800000 ptref 0}
+     {curvegroup hole 512 bezier
+      {{cc
+        {f 8192}
+        {px 1
+	 {0 0}
+	 {x448b9deb x44d4d6b2}
+	 {0 0}
+	 {0 0}
+	 {x448b8d67 x44c74f78}
+	 {0 0}
+	 {0 0}
+	 {x449bf399 x44d7bce3}
+	 {0 0}
+	 {0 0}
+	 {x44a5d38c x44d7b9b0}
+	 {0 0}
+	 {0 0}
+	 {x44a5d5ac x44df0631}
+	 {0 0}
+	 {0 0}
+	 {x4495ab59 x44df07f5}
+	 {0 0}}}      idem}
+      {tx 1 x4498c000 x44d6e000}
+      {a r 0 g 0 b 0 a 0 osw x41200000 osf 0 str 1 spx x44800000 spy x44428000 sb 1 tt x40800000}}
+     {curvegroup aw 512 bezier
+      {{cc
+        {f 8192}
+        {px 1
+	 {0 0}
+	 {x44799e1e x44d9e000}
+	 {0 0}
+	 {0 0}
+	 {x448fb3cc x44ece639}
+	 {0 0}
+	 {0 0}
+	 {x44b4a555 x44ecd769}
+	 {0 0}
+	 {0 0}
+	 {x44b47000 x44c70aaa}
+	 {0 0}
+	 {0 0}
+	 {x44c4e000 x44d7c000}
+	 {0 0}
+	 {0 0}
+	 {x44c97b14 x44d7bb14}
+	 {0 0}
+	 {0 0}
+	 {x44c9697b x44ecdb42}
+	 {0 0}
+	 {0 0}
+	 {x44d79426 x44ecbed1}
+	 {0 0}
+	 {0 0}
+	 {x44d773dd x44c772c2}
+	 {0 0}
+	 {0 0}
+	 {x44e787b9 x44d7c235}
+	 {0 0}
+	 {0 0}
+	 {x44ec47b9 x44d7cb09}
+	 {0 0}
+	 {0 0}
+	 {x44ec4000 x44ece000}
+	 {0 0}
+	 {0 0}
+	 {x44fa52f7 x44ecd426}
+	 {0 0}
+	 {0 0}
+	 {x44fa49ef x44c96000}
+	 {0 0}
+	 {0 0}
+	 {x44ed60ae x44c968da}
+	 {0 0}
+	 {0 0}
+	 {x44dd47b9 x44b9372c}
+	 {0 0}
+	 {0 0}
+	 {x44c988d4 x44b934f7}
+	 {0 0}
+	 {0 0}
+	 {x44c993b2 x44c88ec5}
+	 {0 0}
+	 {0 0}
+	 {x44ba8aaa x44b93b67}
+	 {0 0}
+	 {0 0}
+	 {x44a5c556 x44b937ff}
+	 {0 0}
+	 {0 0}
+	 {x44a5e800 x44c96800}
+	 {0 0}
+	 {0 0}
+	 {x44a18d55 x44c97556}
+	 {0 0}
+	 {0 0}
+	 {x44917000 x44b93aab}
+	 {0 0}
+	 {0 0}
+	 {x4479f4b4 x44b94000}
+	 {0 0}}}      idem}
+      {tx 1 x44c30800 x44d106ab}
+      {a osw x41200000 osf 0 str 1 spx x44800000 spy x44428000 sb 1 tt x40800000}}
+     {curvegroup Black_Circle 512 bezier
+      {{cc
+        {f 8192}
+        {px 1
+	 {xc3b40b78 0}
+	 {x44bbc000 x44818000}
+	 {x43b40b78 0}
+	 {0 xc3b40b78}
+	 {x4506a000 x44d30000}
+	 {0 x43b40b78}
+	 {x43b40b78 0}
+	 {x44bbc000 x45124000}
+	 {xc3b40b78 0}
+	 {0 x43b40b78}
+	 {x44548000 x44d30000}
+	 {0 xc3b40b78}}}      idem}
+      {tx 1 x44bb4000 x44d3c000 0 0 0 0 0 0 0
+   {{x3f8147ae -}}
+   {{x3f8147ae -}}}
+      {a r 0 g 0 b 0 a 0 osw x41200000 osf 0 str 1 spx x44800000 spy x44428000 sb 1 tt x40e00000}}
+     {curvegroup White_Soft_Circle 512 bezier
+      {{cc
+        {f 8192}
+        {px 1
+	 {xc3b40b78 0}
+	 {x44bbc000 x44818000}
+	 {x43b40b78 0}
+	 {0 xc3b40b78}
+	 {x4506a000 x44d30000}
+	 {0 x43b40b78}
+	 {x43b40b78 0}
+	 {x44bbc000 x45124000}
+	 {xc3b40b78 0}
+	 {0 x43b40b78}
+	 {x44548000 x44d30000}
+	 {0 xc3b40b78}}}      idem}
+      {tx 1 x44bb4000 x44d3c000 0 0 0 0 0 0 0
+   {{x3f8147ae -}}
+   {{x3f8147ae -}}}
+      {a osw x41200000 osf 0 str 1 spx x44800000 spy x44428000 sb 1 tt x40e00000 ff x40a00000 fx x440c0000 fy x440c0000 ft 1 opc x3f133333}}}}}}}
+  toolbox {selectAll {
+  { selectAll str 1 ssx 1 ssy 1 sf 1 }
+  { createBezier str 1 ssx 1 ssy 1 sf 1 sb 1 tt 4 }
+  { createBezierCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createBSpline str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createEllipse str 1 ssx 1 ssy 1 sf 1 sb 1 tt 7 }
+  { createRectangle str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { createRectangleCusped str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { brush str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { eraser src 2 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { clone src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { reveal src 3 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { dodge src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { burn src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { blur src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { sharpen src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+  { smear src 1 str 1 ssx 1 ssy 1 sf 1 sb 1 }
+} }
+  toolbar_constant_selection true
+  toolbar_brush_hardness 0.200000003
+  toolbar_source_transform_scale {1 1}
+  toolbar_source_transform_center {1024 778}
+  color 0
+  colorOverlay {0 0 0 0}
+  lifetime_type "all frames"
+  view {}
+  motionblur_on true
+  motionblur_shutter_offset_type centred
+  source_black_outside true
+  name aw_logo_circle
+  xpos 959
+  ypos 847
+ }
+ Reformat {
+  name Reformat_to_Root_Format
+  xpos 959
+  ypos 871
+ }
+ Transform {
+  scale 0.5
+  center {{width/2} {height/2}}
+  name Scale
+  xpos 959
+  ypos 895
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color 1
+  format "720 720 0 0 720 720 1 "
+  name Constant5
+  xpos 779
+  ypos 799
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 rgba.alpha
+  name Copy2
+  xpos 779
+  ypos 891
+ }
+ Dot {
+  name Dot12
+  xpos -254
+  ypos 900
+ }
+ Input {
+  inputs 0
+  name Input1
+  xpos -167
+  ypos 254
+ }
+ Shuffle {
+  alpha white
+  name Shuffle3
+  xpos -167
+  ypos 314
+ }
+set N3ed88c00 [stack 0]
+ Dot {
+  name Dot1
+  xpos -133
+  ypos 823
+ }
+set N3ed88800 [stack 0]
+ Dot {
+  name Dot8
+  xpos -133
+  ypos 1060
+ }
+set N3ed88400 [stack 0]
+ AddMix {
+  inputs 2
+  mix 0.1
+  name AddMix4
+  xpos -288
+  ypos 1057
+ }
+ Dot {
+  name Dot9
+  xpos -254
+  ypos 1148
+ }
+push $N3ed88400
+ Switch {
+  inputs 2
+  which {{"\[value parent.wtrmk]"}}
+  name Switch_WATERMARK
+  xpos -167
+  ypos 1145
+ }
+ Dot {
+  name Dot4
+  xpos -133
+  ypos 1290
+ }
+set N3edb9400 [stack 0]
+ Dot {
+  name Dot6
+  xpos -133
+  ypos 1350
+ }
+set N3edb9000 [stack 0]
+ AddMix {
+  inputs 2
+  mix 0.8
+  name AddMix3
+  xpos 210
+  ypos 1347
+ }
+ Dot {
+  name Dot7
+  xpos 244
+  ypos 1637
+ }
+push $N3dcdd400
+push $N3edb9400
+ AddMix {
+  inputs 2
+  name AddMix1
+  xpos 64
+  ypos 1287
+ }
+ Switch {
+  inputs 2
+  which {{"\[value parent.trnsp]"}}
+  name Switch_TRANSPARENCY
+  xpos 64
+  ypos 1634
+ }
+push $N3edb9000
+ Switch {
+  inputs 2
+  which {{"\[value parent.bug]"}}
+  name Switch_BUG
+  xpos -167
+  ypos 1634
+ }
+ Text {
+  inputs 0
+  cliptype none
+  message "frame \[value parent.thumbnail_frame]   "
+  font C:/Windows/Fonts/arial.ttf
+  size {{(width*pixel_aspect)/30}}
+  xjustify right
+  yjustify bottom
+  Transform 1
+  box {0 0 {width} {height}}
+  translate {0 {-size}}
+  center {{width/2} {height/2}}
+  color 0.5
+  name Text_freeze_frame_number
+  selected true
+  xpos -554
+  ypos 1475
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color 0.05
+  name Constant1
+  xpos -557
+  ypos 1307
+ }
+ AddChannels {
+  channels alpha
+  color 1
+  name AddChannels1
+  xpos -557
+  ypos 1393
+ }
+push $N3ed88800
+ Dot {
+  name Dot2
+  xpos -366
+  ypos 823
+ }
+ Dot {
+  name Dot5
+  xpos -366
+  ypos 1267
+ }
+ Crop {
+  box {0 0 {width} {height}}
+  reformat true
+  crop false
+  name Crop3
+  xpos -673
+  ypos 1264
+ }
+ FrameHold {
+  first_frame {{parent.thumbnail_frame}}
+  name FrameHold2
+  xpos -673
+  ypos 1297
+ }
+ Shuffle {
+  alpha white
+  name SetAlpha2
+  xpos -673
+  ypos 1333
+ }
+ Crop {
+  box {15 15 {width-15} {height-15}}
+  name Crop1
+  xpos -673
+  ypos 1357
+ }
+ Merge2 {
+  inputs 2
+  operation under
+  maskChannelInput -rgba.alpha
+  name Merge5
+  xpos -673
+  ypos 1399
+ }
+ Merge2 {
+  inputs 2
+  name Merge6
+  xpos -673
+  ypos 1475
+ }
+ Transform {
+  translate {{-width*.26} {height*.21}}
+  scale 0.38
+  center {{width/2 x1000 0} {height/2 x1000 0}}
+  name Transform_THUMBNAIL
+  xpos -673
+  ypos 1505
+ }
+ Dot {
+  name Dot3
+  xpos -639
+  ypos 1565
+ }
+push $N3ed88c00
+ Dot {
+  name Dot13
+  xpos -1176
+  ypos 317
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  name Constant11
+  xpos -1354
+  ypos 596
+  addUserKnob {20 User}
+  addUserKnob {7 text_column2_offset R 0 300}
+  text_column2_offset {{(Constant11.fount_size/pixel_aspect)*5.8}}
+  addUserKnob {7 fount_size R 0 100}
+  fount_size {{(width*pixel_aspect)/30}}
+ }
+ CopyMetaData {
+  inputs 2
+  name CopyMetaData1
+  xpos -1210
+  ypos 620
+ }
+ Text2 {
+  font_size_toolbar 64
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message studio:
+  old_message {{115 116 117 100 105 111 58}
+    }
+  box {{format.x} {format.y} {format.r} {format.t}}
+  transforms {{0 2}
+    }
+  font_size_values {{0 {Constant11.fount_size} 1 {Constant11.fount_size} 2 {Constant11.fount_size} 3 {Constant11.fount_size} 4 {Constant11.fount_size} 5 {Constant11.fount_size} 6 {Constant11.fount_size} 0 {curve} 1 {curve} 2 {curve} 3 {curve} 4 {curve} 5 {curve} 6 {curve}}
+    }
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  font_size 64
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 540}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 950 540 0 0 1 1 0 0 0 0}
+    }
+  enable_shadows true
+  shadow_opacity 1
+  shadow_angle 302
+  shadow_distance 11
+  shadow_softness 3.1
+  shadow_size 0.7
+  name Studio_Text
+  xpos -1210
+  ypos 680
+ }
+ Text2 {
+  font_size_toolbar 64
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "\[value parent.studio_name]"
+  old_message {{115 116 117 100 105 111}
+    }
+  old_expression_markers {{0 5}
+    }
+  box {{format.x} {format.y} {"format.r - Constant11.text_column2_offset"} {format.t}}
+  transforms {{0 2}
+    }
+  font_size_values {{0 {Constant11.fount_size} 1 {Constant11.fount_size} 2 {Constant11.fount_size} 3 {Constant11.fount_size} 4 {Constant11.fount_size} 5 {Constant11.fount_size} 0 {curve} 1 {curve} 2 {curve} 3 {curve} 4 {curve} 5 {curve}}
+    }
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  font_size 64
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 540}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 480 270 {Constant11.text_column2_offset} 0 1 1 0 0 0 0}
+    }
+  enable_shadows true
+  shadow_opacity 1
+  shadow_angle 302
+  shadow_distance 11
+  shadow_softness 3.1
+  shadow_size 0.7
+  name Studio_Value1
+  xpos -1210
+  ypos 710
+ }
+ Text2 {
+  font_size_toolbar 64
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message project:
+  old_message {{112 114 111 106 101 99 116 58}
+    }
+  box {{format.x} {format.y} {format.r} {format.t}}
+  transforms {{0 2}
+    }
+  font_size_values {{0 {Constant11.fount_size} 1 {Constant11.fount_size} 2 {Constant11.fount_size} 3 {Constant11.fount_size} 4 {Constant11.fount_size} 5 {Constant11.fount_size} 6 {Constant11.fount_size} 7 {Constant11.fount_size} 0 32 7 32}
+    }
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  font_size 64
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 540}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 480 270 0 {-Constant11.fount_size*1.6} 1 1 0 0 0 0}
+    }
+  enable_shadows true
+  shadow_opacity 1
+  shadow_angle 302
+  shadow_distance 11
+  shadow_softness 3.1
+  shadow_size 0.7
+  name Project_Text
+  xpos -1210
+  ypos 770
+ }
+ Text2 {
+  font_size_toolbar 64
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "\[value parent.project_name]"
+  old_message {{112 114 111 106 101 99 116 32 110 97 109 101}
+    }
+  old_expression_markers {{0 11}
+    }
+  box {0 {"(format.y + Constant11.fount_size)*1.6"} {"format.r - Constant11.text_column2_offset"} {format.t}}
+  transforms {{0 2}
+    }
+  font_size_values {{0 {Constant11.fount_size} 1 {Constant11.fount_size} 2 {Constant11.fount_size} 3 {Constant11.fount_size} 4 {Constant11.fount_size} 5 {Constant11.fount_size} 6 {Constant11.fount_size} 7 {Constant11.fount_size} 8 {Constant11.fount_size} 9 {Constant11.fount_size} 10 {Constant11.fount_size} 11 {Constant11.fount_size} 0 {curve} 1 {curve} 2 {curve} 3 {curve} 4 {curve} 5 {curve} 6 {curve} 7 {curve} 8 {curve} 9 {curve} 10 {curve} 11 {curve}}
+    }
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  font_size 64
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 540}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 480 270 {Constant11.text_column2_offset} {-Constant11.fount_size*1.6} 1 1 0 0 0 0}
+    }
+  enable_shadows true
+  shadow_opacity 1
+  shadow_angle 302
+  shadow_distance 11
+  shadow_softness 3.1
+  shadow_size 0.7
+  name Project_Value
+  xpos -1210
+  ypos 800
+ }
+ Text2 {
+  font_size_toolbar {{Constant11.fount_size}}
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "\[value parent.version_type]:"
+  old_message {{115 104 111 116 58}
+    }
+  old_expression_markers {{0 3}
+    }
+  box {0 475 {format.r} {format.t}}
+  transforms {{0 2}
+    }
+  font_size_values {{0 {Constant11.fount_size} 1 {Constant11.fount_size} 2 {Constant11.fount_size} 3 {Constant11.fount_size} 4 {Constant11.fount_size}}
+    }
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  font_size {{Constant11.fount_size}}
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 540}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 480 270 0 {-Constant11.fount_size*3} 1 1 0 0 0 0}
+    }
+  enable_shadows true
+  shadow_opacity 1
+  shadow_angle 302
+  shadow_distance 11
+  shadow_softness 3.1
+  shadow_size 0.7
+  name Shot_Text
+  xpos -1210
+  ypos 890
+ }
+ Text2 {
+  font_size_toolbar 64
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "\[value parent.shot_name]"
+  old_message {{115 104 111 116 95 48 48 49}
+    }
+  old_expression_markers {{0 7}
+    }
+  box {0 {"(format.y + Constant11.fount_size)*3"} {"format.r - Constant11.text_column2_offset"} {format.t}}
+  transforms {{0 2}
+    }
+  font_size_values {{0 {Constant11.fount_size} 1 {Constant11.fount_size} 2 {Constant11.fount_size} 3 {Constant11.fount_size} 4 {Constant11.fount_size} 5 {Constant11.fount_size} 6 {Constant11.fount_size} 7 {Constant11.fount_size} 0 {curve} 1 {curve} 2 {curve} 3 {curve} 4 {curve} 5 {curve} 6 {curve} 7 {curve}}
+    }
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  font_size 64
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 540}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 480 270 {Constant11.text_column2_offset} {-Constant11.fount_size*3} 1 1 0 0 0 0}
+    }
+  enable_shadows true
+  shadow_opacity 1
+  shadow_angle 302
+  shadow_distance 11
+  shadow_softness 3.1
+  shadow_size 0.7
+  name Shot_Value
+  xpos -1210
+  ypos 920
+ }
+ Text2 {
+  font_size_toolbar 64
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message frames:
+  old_message {{102 114 97 109 101 115 58}
+    }
+  box {0 475 {format.r} {format.t}}
+  transforms {{0 2}
+    }
+  font_size_values {{0 {Constant11.fount_size} 1 {Constant11.fount_size} 2 {Constant11.fount_size} 3 {Constant11.fount_size} 4 {Constant11.fount_size} 5 {Constant11.fount_size} 6 {Constant11.fount_size} 0 32 1 32 2 32 3 32 4 32 5 32 6 32}
+    }
+  cursor_position 7
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  font_size 64
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 540}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 480 270 0 {-Constant11.fount_size*4.4} 1 1 0 0 0 0}
+    }
+  enable_shadows true
+  shadow_opacity 1
+  shadow_angle 302
+  shadow_distance 11
+  shadow_softness 3.1
+  shadow_size 0.7
+  name Frames_Text
+  xpos -1210
+  ypos 980
+ }
+ Text2 {
+  font_size_toolbar {{curve x1 64}}
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "\[value parent.frame_range]1"
+  old_message {{49 45 50 53 48 49}
+    }
+  old_expression_markers {{0 4}
+    }
+  box {0 {"(format.y + Constant11.fount_size)*4.4"} {"format.r - Constant11.text_column2_offset"} {format.t}}
+  transforms {{0 2}
+    }
+  font_size_values {{0 {Constant11.fount_size x1 64} 1 {Constant11.fount_size x1 64} 2 {Constant11.fount_size x1 64} 3 {Constant11.fount_size x1 64} 4 {Constant11.fount_size x1 64} 5 {curve x1 64} 0 {curve x1 0} 1 {curve x1 0} 2 {curve x1 0} 3 {curve x1 0} 4 0}
+    }
+  cursor_position 6
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  font_size {{curve x1 64}}
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 540}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 480 270 {Constant11.text_column2_offset} {-Constant11.fount_size*4.4} 1 1 0 0 0 0}
+    }
+  enable_shadows true
+  shadow_opacity 1
+  shadow_angle 302
+  shadow_distance 11
+  shadow_softness 3.1
+  shadow_size 0.7
+  name Frames_Value
+  xpos -1210
+  ypos 1010
+ }
+ Text2 {
+  font_size_toolbar 64
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message date:
+  old_message {{100 97 116 101 58}
+    }
+  box {0 475 {format.r} {format.t}}
+  transforms {{0 2}
+    }
+  font_size_values {{0 {Constant11.fount_size} 1 {Constant11.fount_size} 2 {Constant11.fount_size} 3 {Constant11.fount_size} 4 {Constant11.fount_size} 0 32 1 32 2 32 3 32 4 32}
+    }
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  font_size 64
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 540}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 480 270 0 {-Constant11.fount_size*5.8} 1 1 0 0 0 0}
+    }
+  enable_shadows true
+  shadow_opacity 1
+  shadow_angle 302
+  shadow_distance 11
+  shadow_softness 3.1
+  shadow_size 0.7
+  name Date_Text
+  xpos -1210
+  ypos 1066
+ }
+ Text2 {
+  font_size_toolbar {{Constant11.fount_size}}
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "\[value parent.date_created]"
+  old_message {{50 48 49 53 46 50 50 46 48 53}
+    }
+  old_expression_markers {{0 9}
+    }
+  box {0 {"(format.y + Constant11.fount_size)*5.8"} {"format.r - Constant11.text_column2_offset"} {format.t}}
+  transforms {{0 2}
+    }
+  font_size_values {{0 {Constant11.fount_size 64} 1 {Constant11.fount_size 64} 2 {Constant11.fount_size 64} 3 {Constant11.fount_size 64} 4 {Constant11.fount_size 64} 5 {Constant11.fount_size 64} 6 {Constant11.fount_size 64} 7 {Constant11.fount_size 64} 8 {Constant11.fount_size 64} 9 {Constant11.fount_size 64} 0 {Constant11.fount_size 32} 1 32 2 32 3 32 4 32}
+    }
+  cursor_position 11
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  font_size {{Constant11.fount_size}}
+  translate {{Constant11.text_column2_offset} {-Constant11.fount_size*5.8}}
+  scale {1 1}
+  center {480 270}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 540}
+    }
+  group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+  animation_layers {{1 11 480 270 {Constant11.text_column2_offset} {-Constant11.fount_size*5.8} 1 1 0 0 0 0}
+    }
+  enable_shadows true
+  shadow_opacity 1
+  shadow_angle 302
+  shadow_distance 11
+  shadow_softness 3.1
+  shadow_size 0.7
+  name Date_Value
+  xpos -1210
+  ypos 1092
+ }
+ Text2 {
+  font_size_toolbar {{Constant11.fount_size}}
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message artist:
+  old_message {{97 114 116 105 115 116 58}
+    }
+  box {0 475 {format.r} {format.t}}
+  transforms {{0 2}
+    }
+  font_size_values {{0 {Constant11.fount_size} 1 {Constant11.fount_size} 2 {Constant11.fount_size} 3 {Constant11.fount_size} 4 {Constant11.fount_size} 5 {Constant11.fount_size} 6 {Constant11.fount_size} 0 32 1 32 2 32 3 32 6 32}
+    }
+  cursor_position 7
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  font_size {{Constant11.fount_size}}
+  translate {0 {-Constant11.fount_size*7.2}}
+  scale {1 1}
+  center {480 270}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 540}
+    }
+  group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+  animation_layers {{1 11 480 270 0 {-Constant11.fount_size*7.2} 1 1 0 0 0 0}
+    }
+  enable_shadows true
+  shadow_opacity 1
+  shadow_angle 302
+  shadow_distance 11
+  shadow_softness 3.1
+  shadow_size 0.7
+  name Artist_Text
+  xpos -1210
+  ypos 1163
+ }
+ Text2 {
+  font_size_toolbar {{Constant11.fount_size}}
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "\[value parent.artist_name]"
+  old_message {{68 114 101 119}
+    }
+  old_expression_markers {{0 3}
+    }
+  box {0 {"(format.y + Constant11.fount_size)*7.2"} {"format.r - Constant11.text_column2_offset"} {format.t}}
+  transforms {{0 2}
+    }
+  font_size_values {{0 {Constant11.fount_size} 1 {Constant11.fount_size} 2 {Constant11.fount_size} 3 {Constant11.fount_size} 0 {curve} 1 {curve} 2 {curve} 3 {curve}}
+    }
+  cursor_position 4
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  font_size {{Constant11.fount_size}}
+  translate {{Constant11.text_column2_offset} {-Constant11.fount_size*7.2}}
+  scale {1 1}
+  center {480 270}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 540}
+    }
+  group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+  animation_layers {{1 11 480 270 {Constant11.text_column2_offset} {-Constant11.fount_size*7.2} 1 1 0 0 0 0}
+    }
+  enable_shadows true
+  shadow_opacity 1
+  shadow_angle 302
+  shadow_distance 11
+  shadow_softness 3.1
+  shadow_size 0.7
+  name Artist_Value
+  xpos -1210
+  ypos 1199
+ }
+ Text2 {
+  font_size_toolbar {{Constant11.fount_size}}
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message version:
+  old_message {{118 101 114 115 105 111 110 58}
+    }
+  box {0 475 {format.r} {format.t}}
+  transforms {{0 2}
+    }
+  font_size_values {{0 {Constant11.fount_size} 1 {Constant11.fount_size} 2 {Constant11.fount_size} 3 {Constant11.fount_size} 4 {Constant11.fount_size} 5 {Constant11.fount_size} 6 {Constant11.fount_size} 7 {Constant11.fount_size} 0 32}
+    }
+  cursor_position 8
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  font_size {{Constant11.fount_size}}
+  translate {0 {-Constant11.fount_size*8.6}}
+  scale {1 1}
+  center {480 270}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 540}
+    }
+  group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+  animation_layers {{1 11 480 270 0 {-Constant11.fount_size*8.6} 1 1 0 0 0 0}
+    }
+  enable_shadows true
+  shadow_opacity 1
+  shadow_angle 302
+  shadow_distance 11
+  shadow_softness 3.1
+  shadow_size 0.7
+  name Version_Text
+  xpos -1210
+  ypos 1250
+ }
+ Text2 {
+  font_size_toolbar {{Constant11.fount_size}}
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "\[value parent.version_name]"
+  old_message {{115 48 48 50 95 66 101 97 117 116 121}
+    }
+  old_expression_markers {{0 10}
+    }
+  box {0 {"(format.y + Constant11.fount_size)*8.6"} {"format.r - Constant11.text_column2_offset"} {format.t}}
+  transforms {{0 2}
+    }
+  font_size_values {{0 {Constant11.fount_size} 1 {Constant11.fount_size} 2 {Constant11.fount_size} 3 {Constant11.fount_size} 4 {Constant11.fount_size} 5 {Constant11.fount_size} 6 {Constant11.fount_size} 7 {Constant11.fount_size} 8 {Constant11.fount_size} 9 {Constant11.fount_size} 10 {Constant11.fount_size} 0 32 1 32 2 32 3 32 4 32}
+    }
+  cursor_position 11
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  font_size {{Constant11.fount_size}}
+  translate {{Constant11.text_column2_offset} {-Constant11.fount_size*8.6}}
+  scale {1 1}
+  center {480 270}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 540}
+    }
+  group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+  animation_layers {{1 11 480 270 {Constant11.text_column2_offset} {-Constant11.fount_size*8.6} 1 1 0 0 0 0}
+    }
+  enable_shadows true
+  shadow_opacity 1
+  shadow_angle 302
+  shadow_distance 11
+  shadow_softness 3.1
+  shadow_size 0.7
+  name Version_Value
+  xpos -1210
+  ypos 1283
+ }
+ Text2 {
+  font_size_toolbar 64
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message description:
+  old_message {{100 101 115 99 114 105 112 116 105 111 110 58}
+    }
+  box {0 475 {format.r} {format.t}}
+  transforms {{0 2}
+    }
+  font_size_values {{0 {Constant11.fount_size} 1 {Constant11.fount_size} 2 {Constant11.fount_size} 3 {Constant11.fount_size} 4 {Constant11.fount_size} 5 {Constant11.fount_size} 6 {Constant11.fount_size} 7 {Constant11.fount_size} 8 {Constant11.fount_size} 9 {Constant11.fount_size} 10 {Constant11.fount_size} 11 {Constant11.fount_size} 0 32}
+    }
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  font_size 64
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 540}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 480 270 0 {-Constant11.fount_size*10.0} 1 1 0 0 0 0}
+    }
+  enable_shadows true
+  shadow_opacity 1
+  shadow_angle 302
+  shadow_distance 11
+  shadow_softness 3.1
+  shadow_size 0.7
+  name Description_Text
+  xpos -1210
+  ypos 1340
+ }
+ Text2 {
+  font_size_toolbar 64
+  font_width_toolbar 100
+  font_height_toolbar 100
+  message "\[value parent.version_description]"
+  old_message {{99 111 109 109 101 110 116}
+    }
+  old_expression_markers {{0 6}
+    }
+  box {0 {"(format.y + Constant11.fount_size)*10"} {"format.r - Constant11.text_column2_offset"} {format.t}}
+  transforms {{0 2}
+    }
+  font_size_values {{135 32 136 32 0 {Constant11.fount_size} 1 {Constant11.fount_size} 2 {Constant11.fount_size} 3 {Constant11.fount_size} 4 {Constant11.fount_size} 5 {Constant11.fount_size} 6 {Constant11.fount_size} 0 {curve} 1 {curve} 2 {curve} 3 {curve} 4 {curve} 5 {curve} 6 {curve}}
+    }
+  font {{ Arial : Regular : arial.ttf : 0 }}
+  font_size 64
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 540}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 480 270 {Constant11.text_column2_offset} {-Constant11.fount_size*10.0} 1 1 0 0 0 0}
+    }
+  enable_shadows true
+  shadow_opacity 1
+  shadow_angle 302
+  shadow_distance 11
+  shadow_softness 3.1
+  shadow_size 0.7
+  name Description_Value
+  xpos -1210
+  ypos 1390
+ }
+ Transform {
+  translate {{"(Transform_THUMBNAIL.bbox.w + Transform_THUMBNAIL.bbox.x) + 30"} {"(-Transform_THUMBNAIL.bbox.y + Transform_THUMBNAIL.bbox.h) - 5"}}
+  scale 0.53
+  center {{format.x} {format.t}}
+  filter Mitchell
+  shutter 0
+  name Transform_INFO1
+  xpos -1210
+  ypos 1450
+ }
+ Transform {
+  translate {{width*.2} {height*.15}}
+  scale 0.505
+  center {{width/2} {height/2}}
+  filter Mitchell
+  shutter 0
+  name Transform_INFO
+  xpos -1210
+  ypos 1490
+  disable true
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  color 0.015
+  name Constant2
+  xpos -1048
+  ypos 1093
+ }
+ Rectangle {
+  inputs 0
+  area {{parent.Rectangle1.area} {parent.Rectangle1.area} {parent.Rectangle1.area} {parent.Rectangle1.area}}
+  color {0.5 0.5 0.5 1}
+  name Rectangle19
+  label "White 235"
+  xpos -769
+  ypos 429
+ }
+ Rectangle {
+  area {{parent.Rectangle2.area} {parent.Rectangle2.area} {parent.Rectangle2.area} {parent.Rectangle2.area}}
+  color {0.5 0.5 0 1}
+  name Rectangle20
+  tile_color 0xffff00ff
+  label "Yellow 204"
+  xpos -769
+  ypos 477
+ }
+ Rectangle {
+  area {{parent.Rectangle3.area} {parent.Rectangle3.area} {parent.Rectangle3.area} {parent.Rectangle3.area}}
+  color {0 0.5 0.5 1}
+  name Rectangle21
+  tile_color 0xffffff
+  label "Cyan 172"
+  xpos -769
+  ypos 521
+ }
+ Rectangle {
+  area {{parent.Rectangle4.area} {parent.Rectangle4.area} {parent.Rectangle4.area} {parent.Rectangle4.area}}
+  color {0 0.5 0 0}
+  name Rectangle22
+  tile_color 0xff00ff
+  label "Green 140\n"
+  xpos -769
+  ypos 565
+ }
+ Rectangle {
+  area {{parent.Rectangle5.area} {parent.Rectangle5.area} {parent.Rectangle5.area} {parent.Rectangle5.area}}
+  color {0.5 0 0.5 0}
+  name Rectangle23
+  tile_color 0xff00ffff
+  label "Magenta 110\n\n"
+  xpos -769
+  ypos 609
+ }
+ Rectangle {
+  area {{parent.Rectangle6.area} {parent.Rectangle6.area} {parent.Rectangle6.area} {parent.Rectangle6.area}}
+  color {0.5 0 0 0}
+  name Rectangle24
+  tile_color 0xff0000ff
+  label "Red 78\n\n\n"
+  xpos -769
+  ypos 652
+ }
+ Rectangle {
+  area {{parent.Rectangle7.area} {parent.Rectangle7.area} {parent.Rectangle7.area} {parent.Rectangle7.area}}
+  color {0 0 0.5 0}
+  name Rectangle25
+  tile_color 0xffff
+  label "Blue 47\n\n\n\n"
+  xpos -769
+  ypos 696
+ }
+ Rectangle {
+  area {{parent.Rectangle8.area} {parent.Rectangle8.area} {parent.Rectangle8.area} {parent.Rectangle8.area}}
+  color 0
+  name Rectangle26
+  tile_color 0xff
+  label "Black 16\n\n\n\n"
+  xpos -769
+  ypos 739
+ }
+ Shuffle {
+  alpha white
+  name Shuffle1
+  xpos -769
+  ypos 788
+ }
+ Crop {
+  box {0 0 {width} {height/8}}
+  name Crop5
+  xpos -769
+  ypos 812
+ }
+ Rectangle {
+  inputs 0
+  area {0 0 {width/8} {height}}
+  name Rectangle1
+  label "White 235"
+  xpos -920
+  ypos 427
+ }
+ Rectangle {
+  area {{(width/8)*2} 0 {width/8} {height}}
+  color {{1-.143}}
+  name Rectangle2
+  label "White 204"
+  xpos -920
+  ypos 463
+ }
+ Rectangle {
+  area {{(width/8)*3} 0 {(width/8)*2} {height}}
+  color 0.714
+  name Rectangle3
+  label "White 172"
+  xpos -920
+  ypos 504
+ }
+ Rectangle {
+  area {{(width/8)*4} 0 {(width/8)*3} {height}}
+  color 0.571
+  name Rectangle4
+  label "White 140\n"
+  xpos -920
+  ypos 551
+ }
+ Rectangle {
+  area {{(width/8)*5} 0 {(width/8)*4} {height}}
+  color 0.428
+  name Rectangle5
+  label "White 110\n\n"
+  xpos -920
+  ypos 598
+ }
+ Rectangle {
+  area {{(width/8)*6} 0 {(width/8)*5} {height}}
+  color 0.285
+  name Rectangle6
+  label "White 78\n\n\n"
+  xpos -920
+  ypos 642
+ }
+ Rectangle {
+  area {{(width/8)*7} 0 {(width/8)*6} {height}}
+  color 0.142
+  name Rectangle7
+  label "White 47\n\n\n\n"
+  xpos -920
+  ypos 686
+ }
+ Rectangle {
+  area {{(width/8)*8} 0 {(width/8)*7} {height}}
+  color 0
+  name Rectangle8
+  label "White 16\n\n\n\n"
+  xpos -920
+  ypos 720
+ }
+ Shuffle {
+  alpha white
+  name Shuffle2
+  xpos -920
+  ypos 776
+ }
+ Crop {
+  box {0 0 {width} {height/8}}
+  name Crop4
+  xpos -920
+  ypos 800
+ }
+ Transform {
+  translate {0 {parent.Crop5.box.t}}
+  name Transform_GREY_BARS
+  xpos -920
+  ypos 840
+ }
+push 0
+ Switch {
+  inputs 2
+  which {{"\[value parent.bw_bar]"}}
+  name Switch_GRAY_BARS
+  xpos -920
+  ypos 951
+ }
+set N46535800 [stack 0]
+ Merge2 {
+  inputs 2
+  name Merge1
+  xpos -769
+  ypos 951
+ }
+ Dot {
+  name Dot11
+  xpos -735
+  ypos 999
+ }
+push $N46535800
+ Switch {
+  inputs 2
+  which {{"\[value parent.rgb_bar]"}}
+  name Switch_COLOR_BARS
+  xpos -920
+  ypos 996
+ }
+ Reformat {
+  name Reformat3
+  xpos -920
+  ypos 1031
+ }
+ Transform {
+  scale 0.9
+  center {{width/2} {height/2}}
+  name Transform_BARS_SECTION
+  xpos -920
+  ypos 1067
+ }
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge7
+  xpos -920
+  ypos 1117
+ }
+ Merge2 {
+  inputs 2
+  name Merge4
+  xpos -920
+  ypos 1490
+ }
+set N46563800 [stack 0]
+ Dot {
+  name Dot10
+  xpos -814
+  ypos 1493
+ }
+ Merge2 {
+  inputs 2
+  name Merge2
+  xpos -848
+  ypos 1562
+ }
+ Dot {
+  name Dot15
+  xpos -814
+  ypos 1634
+ }
+push $N46563800
+ Switch {
+  inputs 2
+  which {{"\[value parent.thumb]"}}
+  name Switch_THUMBNAIL
+  xpos -920
+  ypos 1631
+ }
+ Crop {
+  box {0 0 {root.format.width} {root.format.height}}
+  reformat true
+  crop false
+  name Crop2
+  xpos -920
+  ypos 1741
+ }
+ Switch {
+  inputs 2
+  which {{"x > \[value parent.slate_frame] ? 1 : 0"}}
+  name Switch_SLATE_FRAME
+  xpos -167
+  ypos 1741
+ }
+ Reformat {
+  name Reformat1
+  xpos -167
+  ypos 1823
+ }
+ Output {
+  name Output1
+  xpos -167
+  ypos 1912
+ }
+end_group
