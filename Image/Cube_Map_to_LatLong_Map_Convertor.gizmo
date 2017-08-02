@@ -3,6 +3,7 @@ version 9.0 v7
 Gizmo {
  inputs 0
  addUserKnob {20 User}
+ addUserKnob {26 note l "" +STARTLINE T "(1)  Select the CubeMap file to be converted to a LatLong format...\n\n(2)  Click the \[PRESS to generate LatLong Map] button...\n\n(3)  Attach a Write node to the output and render to file...\n      Use EXR or HDR format to preserve color range (.exr or .hdr)\n"}
  addUserKnob {41 file l "Cube Map: " t "Select a cross-shaped Cube Map image to be converted to a Lat Long format image.\n\nNote: Attach a Write node to the output and render to file. Normally, you should choose either the HDR or EXR formats to preserve color dynamic range." T Read_CubeMap.file}
  addUserKnob {26 ""}
  addUserKnob {41 Recalculate l "PRESS to generate LatLong Map" t "After selecting a Cube Map image, press this to set the cube face size and output LatLong map image." T Recalculate_Output_Size.Recalculate}
@@ -18,10 +19,31 @@ Gizmo {
   bdwidth 402
   bdheight 179
  }
+ NoOp {
+  inputs 0
+  name Get_Read_Size
+  xpos -247
+  ypos -32
+  addUserKnob {20 User}
+  addUserKnob {14 Read_Size R 0 100}
+  Read_Size {{"\[python -execlocal ret\\ =\\ nuke.toNode(\\\"Read_CubeMap\\\").width()]"} {"\[python -execlocal ret\\ =\\ nuke.toNode(\\\"Read_CubeMap\\\").height()]"}}
+  addUserKnob {3 Cube_Width}
+  Cube_Width {{"\[python -execlocal read_size\\ =\\ nuke.toNode(\\\"Get_Read_Size\\\").knob(\\\"Read_Size\\\")\\ncubeface_width,\\ cubeface_height\\ =\\ read_size.value()\\nret=(cubeface_width/4)]"}}
+ }
+ NoOp {
+  inputs 0
+  name Recalculate_Output_Size
+  xpos -87
+  ypos -32
+  addUserKnob {20 User}
+  addUserKnob {22 Recalculate T "# Get the Read node's format size...\nnode = nuke.toNode(\"Read_CubeMap\")\nfilepath = node.knob(\"file\").value()\nif filepath:\n    node\['file'].fromUserText(filepath)\n\nread_size_knob = nuke.toNode(\"Get_Read_Size\").knob(\"Read_Size\")\nread_width, read_height = read_size_knob.getValue()\n\nSphericalTransform_knob = nuke.toNode(\"SphericalTransform1\").knob(\"format\")\n\nformat_list_objects = nuke.formats()\nformat_list = \[]\n\nfor f in format_list_objects:\n    name = f.name()\n    format_list.append(name)\n\nif \"LatLongMap_Output\" not in format_list:\n    f = nuke.addFormat(\"%i %i LatLongMap_Output\" % (read_width, int(read_width/2)))\n    SphericalTransform_knob.setValue(f)\nelse:\n    for f in format_list_objects:\n        name = f.name()\n        if name == \"LatLongMap_Output\":\n            f.setWidth(int(read_width))\n            f.setHeight(int(read_width/2))\n            SphericalTransform_knob.setValue(f)\n            break" +STARTLINE}
+ }
  Read {
   inputs 0
-  format "14140 10605 0 0 14140 10605 1 "
+  file C:/Users/rbobo/Desktop/TEMP/CUBIC_TEST_crossmap.hdr
+  format "8000 6000 0 0 8000 6000 1 "
   origset true
+  version 1
   name Read_CubeMap
   xpos -508
   ypos -182
@@ -31,9 +53,9 @@ Gizmo {
   message "Image width must be multiple of 4."
   name Image_Width_Check
   xpos -508
-  ypos -41
+  ypos -32
  }
-set N58543800 [stack 0]
+set Nda1c8800 [stack 0]
  Crop {
   box {{Get_Read_Size.Cube_Width} {Get_Read_Size.Cube_Width*3} {Get_Read_Size.Cube_Width*2} {Get_Read_Size.Cube_Width*2}}
   reformat true
@@ -42,7 +64,7 @@ set N58543800 [stack 0]
   xpos -575
   ypos 107
  }
-push $N58543800
+push $Nda1c8800
  Crop {
   box {{Get_Read_Size.Cube_Width} {Get_Read_Size.Cube_Width} {Get_Read_Size.Cube_Width*2} 0}
   reformat true
@@ -51,7 +73,7 @@ push $N58543800
   xpos -445
   ypos 107
  }
-push $N58543800
+push $Nda1c8800
  Crop {
   box {{Get_Read_Size.Cube_Width*2} {Get_Read_Size.Cube_Width} {Get_Read_Size.Cube_Width*3} {Get_Read_Size.Cube_Width*2}}
   reformat true
@@ -60,7 +82,7 @@ push $N58543800
   xpos -830
   ypos 107
  }
-push $N58543800
+push $Nda1c8800
  Crop {
   box {0 {Get_Read_Size.Cube_Width*2} {Get_Read_Size.Cube_Width} {Get_Read_Size.Cube_Width}}
   reformat true
@@ -69,7 +91,7 @@ push $N58543800
   xpos -701
   ypos 107
  }
-push $N58543800
+push $Nda1c8800
  Crop {
   box {{Get_Read_Size.Cube_Width*3} {Get_Read_Size.Cube_Width*2} {Get_Read_Size.Cube_Width*4} {Get_Read_Size.Cube_Width}}
   reformat true
@@ -78,7 +100,7 @@ push $N58543800
   xpos -312
   ypos 107
  }
-push $N58543800
+push $Nda1c8800
  Crop {
   box {{Get_Read_Size.Cube_Width} {Get_Read_Size.Cube_Width*2} {Get_Read_Size.Cube_Width*2} {Get_Read_Size.Cube_Width}}
   reformat true
@@ -90,7 +112,8 @@ push $N58543800
  SphericalTransform {
   inputs 6
   input Cube
-  format "14140 7070 0 0 14140 7070 1 LatLongMap_Output"
+  format "8000 4000 0 0 8000 4000 1 LatLongMap_Output"
+  filter Keys
   fix true
   name SphericalTransform1
   xpos -508
@@ -100,25 +123,5 @@ push $N58543800
   name Output1
   xpos -508
   ypos 405
- }
- NoOp {
-  inputs 0
-  name Get_Read_Size
-  xpos -250
-  ypos -26
-  addUserKnob {20 User}
-  addUserKnob {14 Read_Size R 0 100}
-  Read_Size {{"\[python -execlocal ret\\ =\\ nuke.toNode(\\\"Read_CubeMap\\\").width()]"} {"\[python -execlocal ret\\ =\\ nuke.toNode(\\\"Read_CubeMap\\\").height()]"}}
-  addUserKnob {3 Cube_Width}
-  Cube_Width {{"\[python -execlocal read_size\\ =\\ nuke.toNode(\\\"Get_Read_Size\\\").knob(\\\"Read_Size\\\")\\ncubeface_width,\\ cubeface_height\\ =\\ read_size.value()\\nret=(cubeface_width/4)]"}}
- }
- NoOp {
-  inputs 0
-  name Recalculate_Output_Size
-  selected true
-  xpos -87
-  ypos -27
-  addUserKnob {20 User}
-  addUserKnob {22 Recalculate T "read_size_knob = nuke.toNode(\"Get_Read_Size\").knob(\"Read_Size\")\nread_width, read_height = read_size_knob.getValue()\n\nSphericalTransform_knob = nuke.toNode(\"SphericalTransform1\").knob(\"format\")\n\nformat_list_objects = nuke.formats()\nformat_list = \[]\n\nfor f in format_list_objects:\n    name = f.name()\n    format_list.append(name)\n\nif \"LatLongMap_Output\" not in format_list:\n    f = nuke.addFormat(\"%i %i LatLongMap_Output\" % (read_width, int(read_width/2)))\n    SphericalTransform_knob.setValue(f)\nelse:\n    for f in format_list_objects:\n        name = f.name()\n        if name == \"LatLongMap_Output\":\n            f.setWidth(int(read_width))\n            f.setHeight(int(read_width/2))\n            SphericalTransform_knob.setValue(f)\n            break" +STARTLINE}
  }
 end_group

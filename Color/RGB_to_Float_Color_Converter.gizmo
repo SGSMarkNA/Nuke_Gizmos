@@ -1,0 +1,59 @@
+#! C:/Program Files/Nuke9.0v7/nuke-9.0.7.dll -nx
+version 9.0 v7
+Gizmo {
+ inputs 0
+ addUserKnob {20 convert_tab l "Color Convert"}
+ addUserKnob {26 title_1 l "8 bit RGB Input:"}
+ addUserKnob {3 red_input l R t "0 -- 255"}
+ addUserKnob {3 green_input l G t "0 -- 255" -STARTLINE}
+ green_input 154
+ addUserKnob {3 blue_input l B t "0 -- 255" -STARTLINE}
+ blue_input 23
+ addUserKnob {6 srgb_toggle l "sRGB Colorspace" t "Applies sRGB ICC Colorspace gamma curve to output colors. (Usually what you want to do...)" +STARTLINE}
+ srgb_toggle true
+ addUserKnob {26 ""}
+ addUserKnob {26 "" +STARTLINE}
+ addUserKnob {41 color T Constant_OUTPUT.color}
+ addUserKnob {6 float_output_color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 output_color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+}
+ Constant {
+  inputs 0
+  channels rgb
+  color {{"\[python -execlocal Group\\ =\\ nuke.thisParent()\\nNode\\ =\\ nuke.toNode('sample_screen_color')\\nColor_Knob\\ =\\ Node.knob('pixelValues')\\n\\nret\\ =\\ Color_Knob.value()\\\[0\\]]"} {"\[python -execlocal Group\\ =\\ nuke.thisParent()\\nNode\\ =\\ nuke.toNode('sample_screen_color')\\nColor_Knob\\ =\\ Node.knob('pixelValues')\\n\\nret\\ =\\ Color_Knob.value()\\\[1\\]]"} {"\[python -execlocal Group\\ =\\ nuke.thisParent()\\nNode\\ =\\ nuke.toNode('sample_screen_color')\\nColor_Knob\\ =\\ Node.knob('pixelValues')\\n\\nret\\ =\\ Color_Knob.value()\\\[2\\]]"} 1}
+  name Constant_OUTPUT
+  xpos 504
+  ypos -429
+ }
+ Output {
+  name Output1
+  xpos 504
+  ypos -324
+ }
+ Constant {
+  inputs 0
+  color {{"\[python -execlocal Group\\ =\\ nuke.thisParent()\\nInput_Knob\\ =\\ Group.knob('red_input')\\n\\nret\\ =\\ (int(Input_Knob.value()))/255]"} {"\[python -execlocal Group\\ =\\ nuke.thisParent()\\nInput_Knob\\ =\\ Group.knob('green_input')\\n\\nret\\ =\\ (int(Input_Knob.value()))/255]"} {"\[python -execlocal Group\\ =\\ nuke.thisParent()\\nInput_Knob\\ =\\ Group.knob('blue_input')\\n\\nret\\ =\\ (int(Input_Knob.value()))/255]"} 1}
+  name Constant_INPUT
+  selected true
+  xpos 504
+  ypos -604
+ }
+ Colorspace {
+  colorspace_in sRGB
+  name sRGB
+  xpos 504
+  ypos -497
+  disable {{"\[python -execlocal Group\\ =\\ nuke.thisParent()\\nInput_Knob\\ =\\ Group.knob('srgb_toggle')\\n\\nif\\ Input_Knob.value():\\n\\ \\ ret\\ =\\ 0\\nelse:\\n\\ \\ ret\\ =\\ 1\\n\\n]"}}
+ }
+ NoOp {
+  name sample_screen_color
+  xpos 647
+  ypos -497
+  addUserKnob {20 User}
+  addUserKnob {12 pixelCoordinate}
+  pixelCoordinate {{width/2} {height/2}}
+  addUserKnob {18 pixelValues}
+  pixelValues {{"\[sample this red pixelCoordinate.x pixelCoordinate.y]"} {"\[sample this green pixelCoordinate.x pixelCoordinate.y]"} {"\[sample this blue pixelCoordinate.x pixelCoordinate.y]"}}
+  addUserKnob {6 pixelValues_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+end_group

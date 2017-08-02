@@ -3,6 +3,7 @@ version 9.0 v7
 Gizmo {
  inputs 0
  addUserKnob {20 User}
+ addUserKnob {26 note l "" +STARTLINE T "(1)  Select the LatLong file to be converted to a CubeMap format...\n\n(2)  Click the \[PRESS to generate Cross Map] button...\n\n(3)  Attach a Write node to the output and render to file...\n      Use EXR or HDR format to preserve color range (.exr or .hdr)\n"}
  addUserKnob {41 file l "Lat Long Map: " t "Select a Lat Long format map image to be converted to cube faces. These will be unfolded into a cross pattern.\n\nNote: Attach a Write node to the output and render to file. Normally, you should choose either the HDR or EXR formats to preserve color dynamic range." T Read_LatLongMap.file}
  addUserKnob {26 ""}
  addUserKnob {41 Recalculate l "PRESS to generate Cross Map" t "After selecting a Lat Long map, press this to set the cube face size and generate the output image." T Recalculate_Cube_Map.Recalculate}
@@ -14,24 +15,26 @@ Gizmo {
   label Lat_Long_Format_Image
   note_font_size 30
   xpos -714
-  ypos -422
+  ypos -511
   bdwidth 360
   bdheight 186
  }
  Read {
   inputs 0
-  format "14140 7070 0 0 14140 7070 1 LatLongMap_Output"
+  file "W:/HDRI/VariousDomes__HDR/630PM_Rancho_Oso_00001 Panorama_v3.hdr"
+  format "8000 6000 0 0 8000 6000 1 "
   origset true
+  version 29606
   name Read_LatLongMap
   xpos -569
-  ypos -346
+  ypos -443
  }
  Assert {
   expression {{"Get_Read_Size.Read_Size.w%4 == 0"}}
   message "Image width must be multiple of 4."
   name Image_Width_Check
   xpos -569
-  ypos -207
+  ypos -271
  }
  Dot {
   name Dot4
@@ -45,40 +48,42 @@ Gizmo {
   xpos -535
   ypos -82
  }
-set N59f63800 [stack 0]
+set N70288800 [stack 0]
  Dot {
   name Dot9
   xpos -535
   ypos 26
  }
-set N59f63400 [stack 0]
+set N70288400 [stack 0]
  Dot {
   name Dot2
   xpos -535
   ypos 119
  }
-set N59f63000 [stack 0]
+set N70288000 [stack 0]
  Dot {
   name Dot1
   xpos -535
   ypos 224
  }
-set N59f62c00 [stack 0]
+set N702b9c00 [stack 0]
  SphericalTransform {
   input "Lat Long map"
   rx -90
   output Cube
-  format "3535 3535 0 0 3535 3535 1 "
+  format "2000 2000 0 0 2000 2000 1 "
+  filter Keys
   fix true
   name Bottom_face3
-  xpos -470
+  xpos -472
   ypos 215
  }
  Transform {
   translate {{parent.Transform_Top.translate.x} 0}
   center {1767.5 1767.5}
+  filter Keys
   name Transform_Bottom
-  xpos -323
+  xpos -322
   ypos 221
  }
  Dot {
@@ -86,36 +91,38 @@ set N59f62c00 [stack 0]
   xpos -169
   ypos 224
  }
-push $N59f63000
+push $N70288000
  SphericalTransform {
   input "Lat Long map"
   rx 90
   output Cube
-  format "3535 3535 0 0 3535 3535 1 "
+  format "2000 2000 0 0 2000 2000 1 "
+  filter Keys
   fix true
   name Top_face2
-  xpos -475
+  xpos -472
   ypos 110
  }
  Transform {
   translate {{"\[python -execlocal cubeface_format\\ =\\ nuke.toNode(\\\"Top_face2\\\").knob(\\\"format\\\").value()\\n\\nread_size\\ =\\ nuke.toNode(\\\"Get_Read_Size\\\").knob(\\\"Read_Size\\\")\\n\\ncubeface_width,\\ cubeface_height\\ =\\ read_size.value()\\n\\nret\\ =\\ cubeface_width/4]"} {translate.x*2}}
   center {1767.5 1767.5}
+  filter Keys
   name Transform_Top
-  xpos -323
+  xpos -322
   ypos 116
  }
  Dot {
   name Dot21
-  xpos -170
+  xpos -169
   ypos 119
  }
-push $N59f62c00
+push $N702b9c00
  Dot {
   name Dot7
   xpos -535
   ypos 333
  }
-set N59c4a800 [stack 0]
+set N702df800 [stack 0]
  Dot {
   name Dot8
   xpos -535
@@ -125,62 +132,69 @@ set N59c4a800 [stack 0]
   input "Lat Long map"
   ry 180
   output Cube
-  format "3535 3535 0 0 3535 3535 1 "
+  format "2000 2000 0 0 2000 2000 1 "
+  filter Keys
   fix true
   name Back_face5
-  xpos -470
+  xpos -472
   ypos 421
  }
  Transform {
   translate {{parent.Transform_Top.translate.x*3} {parent.Transform_Top.translate.x}}
   center {1767.5 1767.5}
+  filter Keys
   name Transform_Back
-  xpos -323
+  xpos -322
   ypos 427
  }
  Dot {
   name Dot17
-  xpos -168
+  xpos -169
   ypos 430
  }
-push $N59f63800
+push $N70288800
  SphericalTransform {
   input "Lat Long map"
   ry -90
   output Cube
-  format "3535 3535 0 0 3535 3535 1 "
+  format "2000 2000 0 0 2000 2000 1 "
+  filter Keys
   fix true
   name Right_face0
-  xpos -475
+  xpos -472
   ypos -91
  }
  Transform {
   translate {{parent.Transform_Top.translate.y} {parent.Transform_Top.translate.x}}
   center {1767.5 1767.5}
+  filter Keys
   name Transform_Right
-  xpos -316
+  selected true
+  xpos -322
   ypos -85
  }
  Dot {
   name Dot16
-  xpos -170
-  ypos -82
+  xpos -169
+  ypos -81
  }
-push $N59c4a800
+push $N702df800
  SphericalTransform {
   input "Lat Long map"
   output Cube
-  format "3535 3535 0 0 3535 3535 1 "
+  format "2000 2000 0 0 2000 2000 1 "
+  filter Keys
   fix true
   name Front_face4
-  xpos -470
+  xpos -472
   ypos 324
  }
  Transform {
   translate {{parent.Transform_Top.translate.x} {parent.Transform_Top.translate.x}}
   center {1767.5 1767.5}
+  filter Keys
   name Transform_Front
-  xpos -323
+  xpos -322
   ypos 330
  }
  Dot {
@@ -189,37 +203,32 @@ push $N59c4a800
   ypos 333
  }
 push 0
-push $N59f63400
+push $N70288400
  SphericalTransform {
   input "Lat Long map"
   ry 90
   output Cube
-  format "3535 3535 0 0 3535 3535 1 "
+  format "2000 2000 0 0 2000 2000 1 "
+  filter Keys
   fix true
   name Left_face1
-  xpos -470
+  xpos -472
   ypos 17
  }
  Transform {
   translate {0 {parent.Transform_Top.translate.x}}
   center {1767.5 1767.5}
+  filter Keys
   name Transform_Left
   xpos -322
   ypos 23
  }
  Dot {
   name Dot14
-  xpos -170
+  xpos -169
   ypos 26
  }
- Constant {
-  inputs 0
-  channels rgb
-  format "14140 10605 0 0 14140 10605 1 "
-  name BLACK
-  xpos 327
-  ypos 145
- }
+push 0
  Merge2 {
   inputs 7+1
   name Merge_CubeFaces
@@ -227,12 +236,12 @@ push $N59f63400
   ypos 169
  }
  Crop {
-  box {0 0 {"\[python -execlocal knob\\ =\\ nuke.toNode(\\\"BLACK\\\").knob(\\\"format\\\").value()\\nret\\ =\\ knob.width()]"} {"\[python -execlocal knob\\ =\\ nuke.toNode(\\\"BLACK\\\").knob(\\\"format\\\").value()\\nret\\ =\\ knob.height()]"}}
+  box {0 0 {"\[python -execlocal knob\\ =\\ nuke.toNode(\\\"Read_LatLongMap\\\").knob(\\\"format\\\").value()\\nret\\ =\\ knob.width()]"} {"\[python -execlocal knob\\ =\\ nuke.toNode(\\\"Read_LatLongMap\\\").knob(\\\"format\\\").value()\\nret\\ =\\ knob.height()]"}}
   reformat true
   crop false
   name Crop1
   xpos 149
-  ypos 355
+  ypos 356
  }
  Dot {
   name Dot3
@@ -249,8 +258,8 @@ push $N59f63400
  NoOp {
   inputs 0
   name Get_Read_Size
-  xpos -305
-  ypos -298
+  xpos -332
+  ypos -271
   addUserKnob {20 User}
   addUserKnob {14 Read_Size R 0 100}
   Read_Size {{"\[python -execlocal knob\\ =\\ nuke.toNode(\\\"Read_LatLongMap\\\").knob(\\\"format\\\").value()\\nret\\ =\\ knob.width()]"} {"\[python -execlocal knob\\ =\\ nuke.toNode(\\\"Read_LatLongMap\\\").knob(\\\"format\\\").value()\\nret\\ =\\ knob.height()]"}}
@@ -258,10 +267,9 @@ push $N59f63400
  NoOp {
   inputs 0
   name Recalculate_Cube_Map
-  selected true
-  xpos -96
-  ypos -298
+  xpos -126
+  ypos -271
   addUserKnob {20 User}
-  addUserKnob {22 Recalculate T "cubeface_format = nuke.toNode(\"Top_face2\").knob(\"format\").value()\nread_size = nuke.toNode(\"Get_Read_Size\").knob(\"Read_Size\")\ncubeface_width, cubeface_height = read_size.value()\ncubeface_format.setWidth(int(cubeface_width/4))\ncubeface_format.setHeight(int(cubeface_width/4))\n\n\nCube_Map_format = nuke.toNode(\"BLACK\").knob(\"format\").value()\nCube_Map_width, Cube_Map_height = read_size.value()\nCube_Map_format.setWidth(int(Cube_Map_width))\nCube_Map_format.setHeight(int((Cube_Map_width/4)*3))" +STARTLINE}
+  addUserKnob {22 Recalculate T "# Get the Read node's format size...\nnode = nuke.toNode(\"Read_LatLongMap\")\nfilepath = node.knob(\"file\").value()\nif filepath:\n    node\['file'].fromUserText(filepath)\n\n\ncubeface_format = nuke.toNode(\"Top_face2\").knob(\"format\").value()\nread_size = nuke.toNode(\"Get_Read_Size\").knob(\"Read_Size\")\ncubeface_width, cubeface_height = read_size.value()\ncubeface_format.setWidth(int(cubeface_width/4))\ncubeface_format.setHeight(int(cubeface_width/4))\n\n\nCube_Map_format = nuke.toNode(\"Read_LatLongMap\").knob(\"format\").value()\nCube_Map_width, Cube_Map_height = read_size.value()\nCube_Map_format.setWidth(int(Cube_Map_width))\nCube_Map_format.setHeight(int((Cube_Map_width/4)*3))" +STARTLINE}
  }
 end_group
