@@ -1,5 +1,6 @@
-#! C:/Program Files/Nuke7.0v4/Nuke7.0.exe -nx
-version 7.0 v4
+#! C:/Program Files/Nuke9.0v7/nuke-9.0.7.dll -nx
+#write_info Write1 file:"R:/Jobs/Designory/Archive/Archive_2014/DESS-14-011_2015_Legacy_CG_Assets//work/common/img/comp/PREVIZ_INT_DOME/[python {nuke.thisGroup().input(0).knob('file').value().split('/').__getitem__(-1).split('.').__getitem__(0)}]_%04d.png" format:"2048 1556 1" chans:":rgba.red:rgba.green:rgba.blue:rgba.alpha:" framerange:"1 100" fps:"0" colorspace:"linear" datatype:"8 bit" transfer:"unknown" views:"main"
+version 9.0 v7
 Gizmo {
  inputs 2
  help "Use this tool to preview Latitude-Longitude format HDR images in the Nuke Viewer.\n\nA background image (\"HDR_INPUT\") can be combined with a vehicle interior image with alpha (\"VEHICLE_INTERIOR_INPUT\") to preview background images from the vehicle interior point of view.\n\nGeneral Requirements:\n-- Read nodes should be directly connected to the inputs - i.e., no intervening nodes.\n\n-- Images should be in the Lat-Long map format in order to be displayed properly (width = 2x height).\n\n-- If you use both an interior and a background image, they should be the same size.\n\n-- To interactively set the Camera focal length, switch to 3D view, select the \"Camera_VIEWER\" camera and click the camera lock icon. After you are finished, click to unlock the camera for interactive movement.\n\n\nTips:\n-- You don't have to connect images to both inputs. For instance, if you want to just see what your Lat-Long map image looks like in a 3d environment (a.k.a. a \"dome\"), just attach it to either input and interact with the 3D Camera_VIEWER.\n\n-- To change the resolution of the realtime 3D viewer preview, you can change the settings for the viewer's texture resolution. Go to Edit/Preferences/Viewers(tab). Use the dropdown menu, \"texture size\", to change the resolution. Note that your graphics card may not support higher resolutions.\n\n-- To switch between the 3D View and 2D View, make sure you have the Nuke Viewer window selected and your mouse is hovering over the viewer. You can switch back and forth by hitting the TAB key.\n\n-- When interacting with the 3D Camera_VIEWER, you can automatically change the 2D render view by CNTRL-clicking the camera lock button. It will turn green to let you know that you are modifying the camera. Then, when you switch between 3D and 2D views, they will be the same.\n\n-- If the sphere geometry wireframe becomes selected, click in the Viewer window to set the context and use CNTRL-a (select all) to deselect the wireframe.\n\n-- You can animate and render camera and pixel offsets. Set keyframes for the Camera and for the image offsets. These can also be motion blurred. Attach a Write node to the output to render the sequence, as usual.\n\n\n\nAny Questions:  Ask Rich Bobo -- rich.bobo@armstrong-white.com\n\n\n\n"
@@ -47,15 +48,15 @@ Gizmo {
 }
  BackdropNode {
   inputs 0
-  name BackdropNode4
-  tile_color 0x8e2929ff
-  label "HDR INPUT OFFSET"
+  name BackdropNode1
+  tile_color 0x8e6464ff
+  label "RENDER CURRENT COMBINATION\n(Name of file is same as HDR input.)\n\nFor future development..."
   note_font_size 30
   note_font_color 0xffffffff
-  xpos 980
-  ypos -768
-  bdwidth 658
-  bdheight 202
+  xpos 321
+  ypos -289
+  bdwidth 584
+  bdheight 260
  }
  BackdropNode {
   inputs 0
@@ -83,21 +84,22 @@ Gizmo {
  }
  BackdropNode {
   inputs 0
-  name BackdropNode1
-  tile_color 0x8e6464ff
-  label "RENDER CURRENT COMBINATION\n(Name of file is same as HDR input.)\n\nFor future development..."
+  name BackdropNode4
+  tile_color 0x8e2929ff
+  label "HDR INPUT OFFSET"
   note_font_size 30
   note_font_color 0xffffffff
-  xpos 321
-  ypos -289
-  bdwidth 584
-  bdheight 260
+  xpos 980
+  ypos -768
+  bdwidth 658
+  bdheight 202
  }
  Camera2 {
   inputs 0
   display off
   selectable false
   focal 10
+  version 1
   name Camera_VIEWER
   label "             SWITCH TO 3D IN THE VIEWER...\nSELECT THIS CAMERA...\n                   USE CNTRL-LEFT TO LOOK AROUND...\n"
   note_font_size 30
@@ -105,7 +107,7 @@ Gizmo {
   xpos 1702
   ypos -102
  }
-set N2e5eb560 [stack 0]
+set N6c9ba800 [stack 0]
  Dot {
   name Dot1
   xpos 1726
@@ -170,7 +172,7 @@ set N2e5eb560 [stack 0]
    xpos -18
    ypos -197
   }
-set N2e6c3820 [stack 0]
+set N6c9f6800 [stack 0]
   Dot {
    name Dot8
    xpos -220
@@ -184,7 +186,7 @@ set N2e6c3820 [stack 0]
    xpos -254
    ypos -150
   }
-set N2e6c3f00 [stack 0]
+set N6c9f6000 [stack 0]
   Transform {
    translate {0 {parent.origin%(height*2)-height}}
    center {1024 778}
@@ -202,7 +204,7 @@ set N2e6c3f00 [stack 0]
    xpos -87
    ypos -41
   }
-push $N2e6c3820
+push $N6c9f6800
   Dot {
    name Dot7
    xpos 168
@@ -216,7 +218,7 @@ push $N2e6c3820
    xpos 134
    ypos -149
   }
-set N2e6c4cc0 [stack 0]
+set N1cf7000 [stack 0]
   Transform {
    translate {0 {parent.origin%(height*2)-height}}
    center {1024 778}
@@ -235,7 +237,7 @@ set N2e6c4cc0 [stack 0]
    ypos -40
   }
 push 0
-push $N2e6c4cc0
+push $N1cf7000
   Transform {
    translate {0 {(parent.origin+height)%(height*2)-height}}
    center {1024 778}
@@ -251,7 +253,7 @@ push $N2e6c4cc0
    xpos 168
    ypos -2
   }
-push $N2e6c3f00
+push $N6c9f6000
   Transform {
    translate {0 {(parent.origin+height)%(height*2)-height}}
    center {1024 778}
@@ -325,8 +327,8 @@ push $N2e6c3f00
   xpos 1501
   ypos -359
  }
-set N2e77be40 [stack 0]
-push $N2e77be40
+set N1d4d800 [stack 0]
+push $N1d4d800
  Dot {
   name Dot6
   xpos 1501
@@ -340,13 +342,6 @@ push $N2e77be40
   note_font_size 20
   xpos 1235
   ypos -1052
- }
- Assert {
-  expression {{"\[python -execlocal if\\ nuke.thisGroup().input(0)\\ and\\ nuke.thisGroup().input(0).Class()\\ ==\\ (\\\"Read\\\"):\\n\\ \\ \\ \\ ret\\ =\\ 1\\nelif\\ not\\ nuke.thisGroup().input(0):\\n\\ \\ \\ \\ ret\\ =\\ 1\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ 0]"}}
-  message "HDR_INPUT is not connected to a Read node."
-  name Assert1
-  xpos 1235
-  ypos -981
  }
  Crop {
   box {0 0 2560 1278}
@@ -390,7 +385,7 @@ push $N2e77be40
    xpos -18
    ypos -197
   }
-set N2e77d9c0 [stack 0]
+set N1d79c00 [stack 0]
   Dot {
    name Dot8
    xpos -220
@@ -404,7 +399,7 @@ set N2e77d9c0 [stack 0]
    xpos -254
    ypos -151
   }
-set N2e77e0a0 [stack 0]
+set N1d79400 [stack 0]
   Transform {
    translate {0 {parent.origin%(height*2)-height}}
    center {1024 778}
@@ -422,7 +417,7 @@ set N2e77e0a0 [stack 0]
    xpos -87
    ypos -41
   }
-push $N2e77d9c0
+push $N1d79c00
   Dot {
    name Dot7
    xpos 168
@@ -436,7 +431,7 @@ push $N2e77d9c0
    xpos 134
    ypos -149
   }
-set N2e801b80 [stack 0]
+set N1d78400 [stack 0]
   Transform {
    translate {0 {parent.origin%(height*2)-height}}
    center {1024 778}
@@ -455,7 +450,7 @@ set N2e801b80 [stack 0]
    ypos -40
   }
 push 0
-push $N2e801b80
+push $N1d78400
   Transform {
    translate {0 {(parent.origin+height)%(height*2)-height}}
    center {1024 778}
@@ -471,7 +466,7 @@ push $N2e801b80
    xpos 168
    ypos -2
   }
-push $N2e77e0a0
+push $N1d79400
   Transform {
    translate {0 {(parent.origin+height)%(height*2)-height}}
    center {1024 778}
@@ -539,18 +534,20 @@ push $N2e77e0a0
   ypos -362
   disable {{"\[python -execlocal if\\ not\\ nuke.thisGroup().input(0)\\ or\\ not\\ nuke.thisGroup().input(1):\\n\\ \\ \\ \\ ret\\ =\\ 1\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ 0\\n]"}}
  }
-set N2e804150 [stack 0]
+set N1ddd400 [stack 0]
  Sphere {
   selectable false
   cast_shadow false
   receive_shadow false
+  rows 120
+  columns 120
   name Sphere
   tile_color 0x8e2929ff
   note_font_color 0xffffffff
   xpos 1235
   ypos -162
  }
-push $N2e5eb560
+push $N6c9ba800
  Scene {
   inputs 2
   name Scene1
@@ -600,14 +597,15 @@ push $N2e5eb560
   addUserKnob {7 offset_y R -1 1}
   offset_y {{"\[python -execlocal read_size\\ =\\ nuke.thisParent().node('Get_Read_Size_Vehicle').knob('Read_Size').value(1)\\ \\noffset\\ =\\ nuke.thisParent().node('Vehicle_Interior_Offset').knob('origin').value(1)\\npixel_offset_y\\ =\\ offset/read_size\\n\\nret\\ =\\ pixel_offset_y]"}}
  }
-push $N2e804150
+push $N1ddd400
  Dot {
   name Dot3
   xpos 498
   ypos -359
  }
  Write {
-  file "N:/Jobs/Designory/DESS-14-011_2015_Legacy_CG_Assets/work/common/img/comp/PREVIZ_INT_DOME/\[python \{nuke.thisGroup().input(0).knob('file').value().split('/').__getitem__(-1).split('.').__getitem__(0)\}]_####.png"
+  file "R:/Jobs/Designory/Archive/Archive_2014/DESS-14-011_2015_Legacy_CG_Assets//work/common/img/comp/PREVIZ_INT_DOME/\[python \{nuke.thisGroup().input(0).knob('file').value().split('/').__getitem__(-1).split('.').__getitem__(0)\}]_%04d.png"
+  colorspace linear
   file_type png
   checkHashOnRead false
   version 3
@@ -615,6 +613,17 @@ push $N2e804150
   xpos 464
   ypos -132
   disable true
+  addUserKnob {20 Metadata_Tab l Metadata}
+  addUserKnob {26 ICC_Section_Title l "" +STARTLINE T "<FONT COLOR=\"#7777EE\">ICC Profile (JPG, PNG & TIF images):<\\FONT>"}
+  addUserKnob {4 ICC_knob l "" +STARTLINE M {Empty sRGB.icc AdobeRGB1998.icc REC709.icc REC2020.icc "ACESCG Linear.icc"}}
+  addUserKnob {26 divider2 l "" +STARTLINE}
+  addUserKnob {26 divider2B l "" +STARTLINE}
+  addUserKnob {26 IPTC_Section_Title l "" +STARTLINE T "<FONT COLOR=\"#7777EE\">IPTC Data (TIF images only - Required for Innocean/Hyundai projects):<\\FONT>"}
+  addUserKnob {6 IPTC_knob l "Armstrong White Contact/Author Data" +STARTLINE}
+  addUserKnob {26 divider3 l "" +STARTLINE}
+  addUserKnob {26 divider3B l "" +STARTLINE}
+  addUserKnob {26 Hyundai_Folders_Title l "" +STARTLINE T "<FONT COLOR=\"#7777EE\">Views-Based Comp:<\\FONT>"}
+  addUserKnob {6 Hyundai_knob l "Rearrange Folders per Innocean/Hyundai requirements." +STARTLINE}
  }
  Text {
   message "\[value \[value input.name].file]"
@@ -662,5 +671,15 @@ push $N2e804150
   offset_x {{"\[python -execlocal read_size\\ =\\ nuke.thisParent().node('Get_Read_Size_HDR').knob('Read_Size').value(0)\\ \\noffset\\ =\\ nuke.thisParent().node('HDR_Input_Offset').knob('origin').value(0)\\npixel_offset_x\\ =\\ offset/read_size\\n\\nret\\ =\\ pixel_offset_x]"}}
   addUserKnob {7 offset_y R -1 1}
   offset_y {{"\[python -execlocal read_size\\ =\\ nuke.thisParent().node('Get_Read_Size_HDR').knob('Read_Size').value(1)\\ \\noffset\\ =\\ nuke.thisParent().node('HDR_Input_Offset').knob('origin').value(1)\\npixel_offset_y\\ =\\ offset/read_size\\n\\nret\\ =\\ pixel_offset_y]"}}
+ }
+ Assert {
+  inputs 0
+  expression {{"\[python -execlocal if\\ nuke.thisGroup().input(0)\\ and\\ nuke.thisGroup().input(0).Class()\\ ==\\ (\\\"Read\\\"):\\n\\ \\ \\ \\ ret\\ =\\ 1\\nelif\\ not\\ nuke.thisGroup().input(0):\\n\\ \\ \\ \\ ret\\ =\\ 1\\nelse:\\n\\ \\ \\ \\ ret\\ =\\ 0]"}}
+  message "HDR_INPUT is not connected to a Read node."
+  name Assert1
+  selected true
+  xpos 1346
+  ypos -964
+  disable true
  }
 end_group

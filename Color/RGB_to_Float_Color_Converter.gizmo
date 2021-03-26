@@ -1,40 +1,38 @@
-#! C:/Program Files/Nuke9.0v7/nuke-9.0.7.dll -nx
-version 9.0 v7
+#! C:/Program Files/Nuke10.5v4/nuke-10.5.4.dll -nx
+version 10.5 v4
 Gizmo {
  inputs 0
  addUserKnob {20 convert_tab l "Color Convert"}
  addUserKnob {26 title_1 l "8 bit RGB Input:"}
  addUserKnob {3 red_input l R t "0 -- 255"}
  addUserKnob {3 green_input l G t "0 -- 255" -STARTLINE}
- green_input 154
  addUserKnob {3 blue_input l B t "0 -- 255" -STARTLINE}
- blue_input 23
  addUserKnob {6 srgb_toggle l "sRGB Colorspace" t "Applies sRGB ICC Colorspace gamma curve to output colors. (Usually what you want to do...)" +STARTLINE}
  srgb_toggle true
  addUserKnob {26 ""}
+ addUserKnob {22 calculate_color l "Calculate 32 bit Color" T "Group = nuke.thisNode()\nwith Group:\n    CurveTool = nuke.toNode('CurveTool')\n    CurveTool\['operation'].setValue('Avg Intensities')\n    CurveTool.knob('go').execute()" +STARTLINE}
+ addUserKnob {26 title2 l "32 bit RGB Output:"}
+ addUserKnob {41 intensitydata T CurveTool.intensitydata}
  addUserKnob {26 "" +STARTLINE}
- addUserKnob {41 color T Constant_OUTPUT.color}
- addUserKnob {6 float_output_color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
- addUserKnob {6 output_color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {22 create_constant_color_node l "Create Constant Color Node" T "Group = nuke.thisNode()\n\nRootGroup = nuke.Root()\n\nwith RootGroup:\n    Constant = nuke.createNode(\"Constant\")\n    ColorKnob = Constant.knob('color')\n\n    ColorValues =Group.knob('intensitydata').value()\n    ColorKnob.setValue(ColorValues)\n" +STARTLINE}
 }
  Constant {
   inputs 0
   channels rgb
-  color {{"\[python -execlocal Group\\ =\\ nuke.thisParent()\\nNode\\ =\\ nuke.toNode('sample_screen_color')\\nColor_Knob\\ =\\ Node.knob('pixelValues')\\n\\nret\\ =\\ Color_Knob.value()\\\[0\\]]"} {"\[python -execlocal Group\\ =\\ nuke.thisParent()\\nNode\\ =\\ nuke.toNode('sample_screen_color')\\nColor_Knob\\ =\\ Node.knob('pixelValues')\\n\\nret\\ =\\ Color_Knob.value()\\\[1\\]]"} {"\[python -execlocal Group\\ =\\ nuke.thisParent()\\nNode\\ =\\ nuke.toNode('sample_screen_color')\\nColor_Knob\\ =\\ Node.knob('pixelValues')\\n\\nret\\ =\\ Color_Knob.value()\\\[2\\]]"} 1}
+  color {{"\[python -execlocal Group\\ =\\ nuke.thisParent()\\nNode\\ =\\ nuke.toNode('CurveTool')\\nColor_Knob\\ =\\ Node.knob('intensitydata')\\n\\nret\\ =\\ Color_Knob.value()\\\[0\\]]"} {"\[python -execlocal Group\\ =\\ nuke.thisParent()\\nNode\\ =\\ nuke.toNode('CurveTool')\\nColor_Knob\\ =\\ Node.knob('intensitydata')\\n\\nret\\ =\\ Color_Knob.value()\\\[1\\]]"} {"\[python -execlocal Group\\ =\\ nuke.thisParent()\\nNode\\ =\\ nuke.toNode('CurveTool')\\nColor_Knob\\ =\\ Node.knob('intensitydata')\\n\\nret\\ =\\ Color_Knob.value()\\\[2\\]]"} 1}
   name Constant_OUTPUT
   xpos 504
-  ypos -429
+  ypos -371
  }
  Output {
   name Output1
   xpos 504
-  ypos -324
+  ypos -266
  }
  Constant {
   inputs 0
   color {{"\[python -execlocal Group\\ =\\ nuke.thisParent()\\nInput_Knob\\ =\\ Group.knob('red_input')\\n\\nret\\ =\\ (int(Input_Knob.value()))/255]"} {"\[python -execlocal Group\\ =\\ nuke.thisParent()\\nInput_Knob\\ =\\ Group.knob('green_input')\\n\\nret\\ =\\ (int(Input_Knob.value()))/255]"} {"\[python -execlocal Group\\ =\\ nuke.thisParent()\\nInput_Knob\\ =\\ Group.knob('blue_input')\\n\\nret\\ =\\ (int(Input_Knob.value()))/255]"} 1}
   name Constant_INPUT
-  selected true
   xpos 504
   ypos -604
  }
@@ -42,18 +40,27 @@ Gizmo {
   colorspace_in sRGB
   name sRGB
   xpos 504
-  ypos -497
+  ypos -532
   disable {{"\[python -execlocal Group\\ =\\ nuke.thisParent()\\nInput_Knob\\ =\\ Group.knob('srgb_toggle')\\n\\nif\\ Input_Knob.value():\\n\\ \\ ret\\ =\\ 0\\nelse:\\n\\ \\ ret\\ =\\ 1\\n\\n]"}}
  }
- NoOp {
-  name sample_screen_color
-  xpos 647
-  ypos -497
-  addUserKnob {20 User}
-  addUserKnob {12 pixelCoordinate}
-  pixelCoordinate {{width/2} {height/2}}
-  addUserKnob {18 pixelValues}
-  pixelValues {{"\[sample this red pixelCoordinate.x pixelCoordinate.y]"} {"\[sample this green pixelCoordinate.x pixelCoordinate.y]"} {"\[sample this blue pixelCoordinate.x pixelCoordinate.y]"}}
-  addUserKnob {6 pixelValues_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ Shuffle {
+  alpha white
+  name Shuffle1
+  label "\[value in]"
+  xpos 504
+  ypos -506
+ }
+ CurveTool {
+  avgframes 0
+  ROI {{width/2-50} {height/2-50} {width/2+50} {height/2+50}}
+  autocropdata {160 120 480 360}
+  intensitydata {{curve x1 0} {curve x1 0} {curve x1 0} 1}
+  maxlumapixdata {{curve x1 910} {curve x1 490}}
+  maxlumapixvalue {{curve x1 0.00303526991} {curve x1 0.00303526991} {curve x1 0.00303526991}}
+  minlumapixdata {{curve x1 910} {curve x1 490}}
+  minlumapixvalue {{curve x1 0.00303526991} {curve x1 0.00303526991} {curve x1 0.00303526991}}
+  name CurveTool
+  xpos 504
+  ypos -437
  }
 end_group

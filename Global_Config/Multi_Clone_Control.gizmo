@@ -1,0 +1,31 @@
+#! C:/Program Files/Nuke10.5v4/nuke-10.5.4.dll -nx
+version 10.5 v4
+Gizmo {
+ onCreate "#----------------------------------------------------------------------\nimport Nuke_Scripts.Gizmo_Fns.Multi_Group_Clone_Builder\nimport Nuke_Scripts.Gizmo_Fns.Multi_Group_Clone_GUI\ndef _Multi_Clone_On_Create():\n    gizmo_node = nuke.thisNode()\n    if isinstance(gizmo_node,nuke.Gizmo):\n        if int(gizmo_node.knob(\"clone_id_tag\").value()) == 0:\n            vals = \[]\n            with nuke.root():\n                for node in nuke.allNodes(\"Multi_Clone_Control\"):\n                    vals.append(int(node.knob(\"clone_id_tag\").value()))\n            if len(vals):\n                next_val = max(vals)+1\n            else:\n                next_val = 1\n            gizmo_node.knob(\"clone_id_tag\").setValue(next_val)\n    else:\n        knb = gizmo_node.knobs()\[\"onCreate\"]\n        knb.clearFlag(nuke.INVISIBLE)\n_Multi_Clone_On_Create()"
+ knobChanged Nuke_Scripts.Gizmo_Fns.Gizmo_UI_Widgets._on_knob_changed()
+ note_font Verdana
+ addUserKnob {20 Clone_Controls_Widget_Tab l "Clone Contorls"}
+ addUserKnob {3 clone_offset l INVISIBLE t "At Creation Time This Value Is used\nTo Set How Far The Clone Group Is\nRelitive To The Node It's Being Created For" +INVISIBLE}
+ clone_offset 100
+ addUserKnob {4 clone_placement l INVISIBLE t "Sets The Clone Group \nAnd How Its Connected\nEather Above Or Below The Node" +INVISIBLE M {"Below Selected" "Above Selected" "" ""}}
+ addUserKnob {3 clone_id_tag l INVISIBLE t "This Is The Most importent Part.\nThis Is How This Gizmo Knows\nWhat it Has Created So It Know\nWhat It Has To Rebuild" -STARTLINE +INVISIBLE}
+ addUserKnob {22 select_clones l INVISIBLE +INVISIBLE T "import Nuke_Scripts.Gizmo_Fns.Multi_Group_Clone_Builder\nreload(Nuke_Scripts.Gizmo_Fns.Multi_Group_Clone_Builder)\nNuke_Scripts.Gizmo_Fns.Multi_Group_Clone_Builder.Select_Global_Correction_Groups(nuke.thisNode())" +STARTLINE}
+ addUserKnob {22 add_Global_Correction_Groups l INVISIBLE +INVISIBLE T "import Nuke_Scripts.Gizmo_Fns.Multi_Group_Clone_Builder\nreload(Nuke_Scripts.Gizmo_Fns.Multi_Group_Clone_Builder)\nNuke_Scripts.Gizmo_Fns.Multi_Group_Clone_Builder.make_Global_Correction_Groups(nuke.thisNode())" +STARTLINE}
+ addUserKnob {22 rebuild_clone_groups l INVISIBLE -STARTLINE +INVISIBLE T "import Nuke_Scripts.Gizmo_Fns.Multi_Group_Clone_Builder\nreload(Nuke_Scripts.Gizmo_Fns.Multi_Group_Clone_Builder)\nNuke_Scripts.Gizmo_Fns.Multi_Group_Clone_Builder.Rebuild_Global_Correction_Groups(nuke.thisNode())"}
+ addUserKnob {41 Assigned_Clone_Stop_Link l INVISIBLE +INVISIBLE T Stop_Node.name}
+ addUserKnob {52 Clone_Controls l "" -STARTLINE T "Nuke_Scripts.Gizmo_Fns.Multi_Group_Clone_GUI.Multi_Group_Clone_Controls(  nuke.thisNode()  )"}
+ addUserKnob {20 Info n 1}
+ addUserKnob {26 Usage -STARTLINE T "To Use Attach Clonable Nodes Under This nodes Pipe\nMake Sure That only one node is connected To This Gizmo \nIt will be connected To the Clone Groups Input\nand there is only one node at the end of the pipe \nWith nothing connected to its output\nit will be connected To the Clone Groups Output"}
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos 0
+  ypos 14
+ }
+ Output {
+  name Output1
+  xpos 0
+  ypos 300
+ }
+end_group
